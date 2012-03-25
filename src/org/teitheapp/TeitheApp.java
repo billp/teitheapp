@@ -25,10 +25,10 @@ public class TeitheApp extends TabActivity {
 		Intent emptyIntent = new Intent(this, Empty.class);
 		
 		
-		addTab(R.string.tab_1, R.drawable.tab_ic_home, emptyIntent);
-		addTab(R.string.tab_2, R.drawable.tab_ic_info, emptyIntent);
-		addTab(R.string.tab_3, R.drawable.tab_ic_services, emptyIntent);
-		addTab(R.string.tab_4, R.drawable.tab_ic_services_extra, emptyIntent);
+		addTab(R.string.tab_home_text, R.drawable.tab_ic_home, emptyIntent);
+		addTab(R.string.tab_info_text, R.drawable.tab_ic_info, new Intent(this, InformationsLauncher.class));
+		addTab(R.string.tab_services_text, R.drawable.tab_ic_services, emptyIntent);
+		addTab(R.string.tab_extra_services_text, R.drawable.tab_ic_services_extra, emptyIntent);
 	}
 
 	private void addTab(int labelId, int drawableId, Intent intent) {

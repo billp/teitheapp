@@ -1,0 +1,16 @@
+<resources>
+	<array name="icons">
+		<item>@drawable/information</item>
+		<item>@drawable/book</item>
+		<item>@drawable/link</item>
+		<item>@drawable/link_database</item>
+		<item>@drawable/camera</item>
+	</array>
+	<array name="icons_desc">
+		<item>Βασικές πληροφορίες</item>
+		<item>Πρόγραμμα σπουδών</item>
+		<item>Χρήσιμοι σύνδεσμοι</item>
+		<item>Ιστοσελίδες φοιτητών/καθηγητών</item>
+		<item>Φωτογραφίες</item>
+	</array>
+</resources>
