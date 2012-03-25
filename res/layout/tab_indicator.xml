@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="11dip"
+        android:textSize="12dip"
+        android:layout_alignBottom="@id/icon"
         style="?android:attr/tabWidgetStyle"
     />    
 </RelativeLayout>
