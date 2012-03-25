@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="LightTabWidget" parent="@android:style/Widget.TabWidget">
+	    <item name="android:textColor">@color/tab_indicator_text</item>
+	</style>
+</resources>

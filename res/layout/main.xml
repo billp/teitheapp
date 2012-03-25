@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:paddingTop="@dimen/tab_space_top" >
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/tab_relative_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:layout_height="fill_parent" >
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_below="@android:id/tabs"
+            android:layout_marginBottom="72dip" >
+        </FrameLayout>
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="3dip" >
+        </TabWidget>
+    </RelativeLayout>
+
+</TabHost> <!-- android:tabStripLeft="@drawable/tab_bottom_left" -->
+<!-- android:tabStripRight="@drawable/tab_bottom_right" -->

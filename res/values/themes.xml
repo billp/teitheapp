@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="MyLightTheme" parent="@android:style/Theme.Light.NoTitleBar">
+		<item name="android:windowBackground">@color/app_background</item>
+		<item name="android:colorBackground">@color/app_background</item>
+		<item name="android:tabWidgetStyle">@style/LightTabWidget</item>
+	</style>
+	<style name="MyLightTheme.NoShadow">
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+</resources>
