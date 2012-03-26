@@ -16,10 +16,11 @@ public final class R {
     }
     public static final class color {
         public static final int app_background=0x7f040000;
+        public static final int background=0x7f040006;
         public static final int dark_red=0x7f040002;
         public static final int icon_desc_color=0x7f040005;
         public static final int light_red=0x7f040001;
-        public static final int tab_indicator_text=0x7f040006;
+        public static final int tab_indicator_text=0x7f040007;
         public static final int text_tab_selected=0x7f040003;
         public static final int text_tab_unselected=0x7f040004;
     }
