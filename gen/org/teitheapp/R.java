@@ -27,8 +27,8 @@ public final class R {
     public static final class dimen {
         public static final int corner_radius=0x7f050000;
         public static final int tab_space=0x7f050002;
+        public static final int tab_space_bottom=0x7f050001;
         public static final int tab_space_plus1=0x7f050003;
-        public static final int tab_space_top=0x7f050001;
     }
     public static final class drawable {
         public static final int book=0x7f020000;

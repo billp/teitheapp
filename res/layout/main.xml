@@ -3,7 +3,7 @@
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingTop="@dimen/tab_space_top" >
+    android:paddingBottom="@dimen/tab_space_bottom" >
 
     <RelativeLayout
         android:id="@+id/tab_relative_layout"
@@ -14,8 +14,6 @@
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_below="@android:id/tabs"
             android:layout_marginBottom="72dip" >
         </FrameLayout>
 

@@ -5,7 +5,7 @@
     android:layout_weight="1"
     android:orientation="vertical"
     android:background="@drawable/tab_indicator"
-    android:padding="5dp">
+    android:padding="2dp">
 
     <ImageView android:id="@+id/icon"
         android:layout_width="wrap_content"
