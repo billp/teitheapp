@@ -4,4 +4,5 @@
     <dimen name="tab_space_bottom">2dp</dimen>
     <dimen name="tab_space">2dp</dimen>
     <dimen name="tab_space_plus1">3dp</dimen>
+    <dimen name="normal_text">11dp</dimen>
 </resources>

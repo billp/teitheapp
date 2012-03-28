@@ -3,7 +3,7 @@
 
     <string name="app_name">TeitheApp</string>
     <string name="tab_home_text">Αρχική</string>
-    <string name="tab_info_text">Πληρ/ρίες</string>
+    <string name="tab_info_text">Πληροφορίες</string>
     <string name="tab_services_text">Υπηρεσίες</string>
     <string name="tab_extra_services_text">Extra</string>
 

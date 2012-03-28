@@ -26,6 +26,7 @@ public final class R {
     }
     public static final class dimen {
         public static final int corner_radius=0x7f050000;
+        public static final int normal_text=0x7f050004;
         public static final int tab_space=0x7f050002;
         public static final int tab_space_bottom=0x7f050001;
         public static final int tab_space_plus1=0x7f050003;
