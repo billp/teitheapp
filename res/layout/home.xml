@@ -46,12 +46,18 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/arrow_left" />
 
-            <TextView
-                android:id="@+id/txtHomeArticle"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/sample_text" />
+            <ScrollView
+                android:layout_height="290dp"
+                android:layout_width="fill_parent"
+                android:layout_gravity="center"
+                android:scrollbars="none">
+                <TextView
+                    android:id="@+id/txtHomeArticle"
+                    android:layout_width="250dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_horizontal"
+                    android:text="@string/sample_text" />
+            </ScrollView>
 
             <ImageView
                 android:id="@+id/imgArrowRight"
@@ -67,16 +73,16 @@
                 android:id="@+id/txtHomeArticle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_span="3"
-                android:gravity="center_horizontal"
-                android:text="ΟΛΑ ΤΑ ΝΕΑ"
-                android:background="@color/home_small_text_background"
-                android:textColor="@color/home_small_text_color"
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginTop="8dp"
-                android:padding="10dp"/>
+                android:layout_span="3"
+                android:background="@color/home_small_text_background"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="ΟΛΑ ΤΑ ΝΕΑ"
+                android:textColor="@color/home_small_text_color" />
         </TableRow>
     </TableLayout>
 
