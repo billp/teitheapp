@@ -6,5 +6,5 @@
     <string name="tab_info_text">Πληροφορίες</string>
     <string name="tab_services_text">Υπηρεσίες</string>
     <string name="tab_extra_services_text">Extra</string>
-
+	<string name="sample_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim ultrices libero a pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam a nulla justo, quis malesuada lacus. Ut sit amet dolor sed metus egestas tempus. Phasellus sit amet elit suscipit turpis scelerisque mollis sed sed elit. Pellentesque porttitor congue interdum. Nulla vulputate pretium sapien vitae dapibus. Morbi mi orci, aliquam sed gravida id, faucibus sed lectus. Vivamus ornare risus a velit ornare et mollis ligula eleifend</string>
 </resources>
