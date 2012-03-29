@@ -2,39 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background"
+    android:gravity="center"
     android:orientation="vertical" >
 
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center" >
+        android:layout_height="wrap_content"
+        android:stretchColumns="1" >
 
-        <TableRow android:gravity="center" >
+        <TableRow android:gravity="center_horizontal" >
 
             <TextView
                 android:id="@+id/txtHomeTitle"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_span="3"
-                android:gravity="center"
-                android:padding="0dp"
-                android:text="Lorem ipsum dolor sit amet"
-                android:textSize="17dp" />
+                android:gravity="center_horizontal"
+                android:text="Λίγο πριν από την έναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)"
+                android:textSize="20dp" />
         </TableRow>
 
-        <TableRow android:gravity="center" >
+        <TableRow android:gravity="center_horizontal" >
 
             <TextView
                 android:id="@+id/separator"
                 android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/txtHomeTitle"
+                android:layout_height="0.5dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="4dp"
-               	android:layout_span="3"
+                android:layout_span="3"
                 android:background="@drawable/divider" />
         </TableRow>
 
@@ -42,27 +42,41 @@
 
             <ImageView
                 android:id="@+id/imgArrowLeft"
-                android:layout_width="2dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
                 android:src="@drawable/arrow_left" />
 
             <TextView
                 android:id="@+id/txtHomeArticle"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:text="@string/sample_text" />
 
             <ImageView
                 android:id="@+id/imgArrowRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/arrow_right" />
+        </TableRow>
+
+        <TableRow android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/txtHomeArticle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:gravity="center_horizontal"
+                android:text="ΟΛΑ ΤΑ ΝΕΑ"
+                android:background="@color/home_small_text_background"
+                android:textColor="@color/home_small_text_color"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="8dp"
+                android:padding="10dp"/>
         </TableRow>
     </TableLayout>
 
