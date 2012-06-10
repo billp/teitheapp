@@ -13,15 +13,22 @@
         android:stretchColumns="1" >
 
         <TableRow android:gravity="center_horizontal" >
-
+        <ScrollView
+            android:layout_height="77dp"
+            android:layout_width="300dp"
+            android:scrollbars="none"
+            android:layout_gravity="center_horizontal"
+            android:layout_span="3">
+            
             <TextView
                 android:id="@+id/txtHomeTitle"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_span="3"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                
                 android:gravity="center_horizontal"
-                android:text="Λίγο πριν από την έναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)"
+                android:text="Λίγο πριν από την έναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)d ahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakέναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)d ahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakέναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)d ahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjak "
                 android:textSize="20dp" />
+       </ScrollView>
         </TableRow>
 
         <TableRow android:gravity="center_horizontal" >
@@ -51,11 +58,11 @@
                 android:layout_width="fill_parent"
                 android:layout_gravity="center"
                 android:scrollbars="none">
-                <TextView
+                <WebView
                     android:id="@+id/txtHomeArticle"
-                    android:layout_width="250dp"
+                    android:layout_width="270dp"
                     android:layout_height="fill_parent"
-                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/sample_text" />
             </ScrollView>
 
@@ -74,8 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:layout_marginTop="8dp"
                 android:layout_span="3"
                 android:background="@color/home_small_text_background"
