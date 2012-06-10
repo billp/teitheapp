@@ -3,8 +3,21 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/background"
-    android:gravity="center"
+    android:gravity="top"
     android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txtHomeCategory"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/background"
+        android:gravity="center"
+
+        android:text="ΟΛΑ ΤΑ ΝΕΑ"
+        android:textColor="@color/home_category_text"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,39 +25,31 @@
         android:layout_height="wrap_content"
         android:stretchColumns="1" >
 
-        <TableRow android:gravity="center_horizontal" >
-        <ScrollView
-            android:layout_height="77dp"
-            android:layout_width="300dp"
-            android:scrollbars="none"
-            android:layout_gravity="center_horizontal"
-            android:layout_span="3">
-            
-            <TextView
-                android:id="@+id/txtHomeTitle"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                
-                android:gravity="center_horizontal"
-                android:text="Λίγο πριν από την έναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)d ahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakέναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)d ahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakέναρξη των διορθωτικών δηλώσεων μαθημάτων (Δέρβος)d ahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjakahs jdhsajk dhsajk dhsajk hdsjak "
-                android:textSize="20dp" />
-       </ScrollView>
-        </TableRow>
+        <TableRow android:gravity="center_horizontal|center_vertical" >
 
-        <TableRow android:gravity="center_horizontal" >
-
-            <TextView
-                android:id="@+id/separator"
+            <ScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="4dp"
+                android:layout_height="48dp"
                 android:layout_span="3"
-                android:background="@drawable/divider" />
-        </TableRow>
+                android:layout_gravity="center"
+                android:scrollbars="none"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                 >
 
+                <TextView
+                    android:id="@+id/txtHomeTitle"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+
+                    android:textStyle="bold"
+                    android:text="Παρουσίαση πτυχιακής εργασίας Αικατερίνης Μιχαήλ dsa djsai ojdsiao "
+                    android:textSize="18dp" 
+                    
+                    />
+            </ScrollView>
+        </TableRow>
         <TableRow>
 
             <ImageView
@@ -54,15 +59,16 @@
                 android:src="@drawable/arrow_left" />
 
             <ScrollView
-                android:layout_height="290dp"
                 android:layout_width="fill_parent"
+                android:layout_height="290dp"
                 android:layout_gravity="center"
-                android:scrollbars="none">
+                android:scrollbars="none" >
+
                 <WebView
                     android:id="@+id/txtHomeArticle"
                     android:layout_width="270dp"
                     android:layout_height="fill_parent"
-                    android:layout_gravity="center_horizontal"
+
                     android:text="@string/sample_text" />
             </ScrollView>
 
@@ -74,22 +80,35 @@
                 android:src="@drawable/arrow_right" />
         </TableRow>
 
-        <TableRow android:gravity="center_horizontal" >
+        <TableRow>
 
-            <TextView
-                android:id="@+id/txtHomeArticle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="8dp"
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom"
                 android:layout_span="3"
-                android:background="@color/home_small_text_background"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:text="ΟΛΑ ΤΑ ΝΕΑ"
-                android:textColor="@color/home_small_text_color" />
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/txtHomeTitle"
+                    android:layout_width="160dp"
+                    android:layout_height="30dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="33dp"
+                    android:text="11 Jun 2012"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/txtHomeTitle"
+                    android:layout_width="160dp"
+                    android:layout_height="30dp"
+                    android:gravity="right|center_vertical"
+                    android:paddingRight="33dp"
+                    android:text="Sidiropoulos A."
+                    android:textSize="13dp" />
+            </LinearLayout>
         </TableRow>
     </TableLayout>
 

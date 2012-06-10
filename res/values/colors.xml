@@ -4,6 +4,8 @@
 	<color name="light_red">#ba0305</color>
 	<color name="dark_red">#9d0c0f</color>
 	<color name="transparent">#00000000</color>
+	<color name="black">#000000</color>
+	<color name="home_category_text">#9277C7</color>
 	
 	<color name="text_tab_selected">#1456B3</color>
 	<color name="text_tab_unselected">#EBEBEB</color>
