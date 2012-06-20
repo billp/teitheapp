@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class InformationsLauncher extends Activity {
+public class InformationsLauncher extends Activity implements OnItemClickListener {
 
 	// references to our images
 	private TypedArray icons = null;
@@ -32,13 +32,9 @@ public class InformationsLauncher extends Activity {
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(new CustomAdapted(this));
 
-		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				Toast.makeText(InformationsLauncher.this,
-						"Έκανες κλικ στο '" + iconsDesc[position] + "'",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
+		//gridview.setOnClickListener(this);
+		gridview.setOnItemClickListener(this);
+		
 	}
 
 	public class CustomAdapted extends BaseAdapter {
@@ -83,4 +79,13 @@ public class InformationsLauncher extends Activity {
 			return itemView;
 		}
 	}
+
+
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		Toast.makeText(InformationsLauncher.this,
+				"Έκανες κλικ στο '" + iconsDesc[position] + "'",
+				Toast.LENGTH_SHORT).show();
+	}
+	
 }

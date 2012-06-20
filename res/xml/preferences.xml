@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/pref_hydra_login" >
+        <EditTextPreference
+            android:dialogTitle="@string/pref_hydra_login_user_summary"
+            android:key="hydra_login"
+            android:summary="@string/pref_hydra_login_user_summary"
+            android:title="@string/pref_hydra_login_user" />
+        <EditTextPreference
+            android:dialogTitle="@string/pref_hydra_login_pass_summary"
+            android:inputType="textPassword"
+            android:key="hydra_pass"
+            android:summary="@string/pref_hydra_login_pass_summary"
+            android:title="@string/pref_hydra_login_pass" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_pithia_login" >
+        <EditTextPreference
+            android:dialogTitle="@string/pref_pithia_login_user_summary"
+            android:key="pithia_login"
+            android:summary="@string/pref_pithia_login_user_summary"
+            android:title="@string/pref_pithia_login_user" />
+        <EditTextPreference
+            android:dialogTitle="@string/pref_pithia_login_pass_summary"
+            android:inputType="textPassword"
+            android:key="pithia_pass"
+            android:summary="@string/pref_pithia_login_pass_summary"
+            android:title="@string/pref_pithia_login_pass" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

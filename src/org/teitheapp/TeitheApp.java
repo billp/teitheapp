@@ -4,10 +4,14 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TeitheApp extends TabActivity {
 	private TabHost tabHost;
@@ -47,4 +51,36 @@ public class TeitheApp extends TabActivity {
 		tabHost.addTab(spec);
 
 	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Hold on to this
+       //mMenu = menu;
+        
+        // Inflate the currently selected menu XML resource.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.title_icon, menu);
+        
+        return true;
+    }
+	
+	 @Override
+	    public boolean onOptionsItemSelected(MenuItem item) {
+	        switch (item.getItemId()) {
+	            // For "Title only": Examples of matching an ID with one assigned in
+	            //                   the XML
+	            case R.id.menu_settings:
+	            	Intent intent = new Intent();
+	            	intent.setClass(this, Preferences.class);
+	                startActivity(intent);
+	                return true;
+
+	            case R.id.menu_about:
+	                Toast.makeText(this, "Dive into the water!", Toast.LENGTH_SHORT).show();
+	                return true;
+	        }
+	        
+	        return false;
+	    }
+	    
 }

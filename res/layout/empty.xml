@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_gravity="center"
-    android:background="@color/background" >
+    android:layout_gravity="center" >
 
     <TextView
+        android:id="@+id/infotext"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical|center_horizontal"
-        android:text="Lala">
+        android:padding="7dp">
     </TextView>
 
 </LinearLayout>

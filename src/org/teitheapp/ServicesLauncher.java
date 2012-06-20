@@ -2,9 +2,14 @@ package org.teitheapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,12 +20,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ServicesLauncher extends Activity {
+import org.teitheapp.classes.Setting;
+import org.teitheapp.utils.DatabaseManager;
+import org.teitheapp.utils.Trace;
 
+
+public class ServicesLauncher extends Activity implements OnItemClickListener {
+
+	//orizw final metavlites gia tis apaithseis pou exei to ka8e service
+	final static int HYDRA_LOGIN_REQUIRED = 1;
+	final static int PITHIA_LOGIN_REQUIRED = 2;
+	
+	private DatabaseManager dbManager = new DatabaseManager(this);
+	private SharedPreferences preferences;
+	
 	// references to our images
 	private TypedArray icons = null;
-	private String[] iconsDesc = null;
-
+	private String[] iconsDesc =  null;
+	private int[] requirements = {PITHIA_LOGIN_REQUIRED, PITHIA_LOGIN_REQUIRED, PITHIA_LOGIN_REQUIRED, PITHIA_LOGIN_REQUIRED, HYDRA_LOGIN_REQUIRED, HYDRA_LOGIN_REQUIRED};
+	private Setting hydraAccount, pithiaAccount;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.launcher_grid);
@@ -29,16 +48,14 @@ public class ServicesLauncher extends Activity {
 		icons = getResources().obtainTypedArray(R.array.services_icons);
 		iconsDesc = getResources().getStringArray(R.array.services_icons_desc);
 
+		hydraAccount = dbManager.getSetting("hydra_login");
+		pithiaAccount = dbManager.getSetting("pithia_account");
+	
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(new CustomAdapted(this));
-
-		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				Toast.makeText(ServicesLauncher.this,
-						"Έκανες κλικ στο '" + iconsDesc[position] + "'",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
+		gridview.setOnItemClickListener(this);
+		
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 	}
 
 	public class CustomAdapted extends BaseAdapter {
@@ -83,4 +100,29 @@ public class ServicesLauncher extends Activity {
 			return itemView;
 		}
 	}
+	
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		
+		if (requirements[position] == HYDRA_LOGIN_REQUIRED && (preferences.getString("hydra_login", "").equals("") || preferences.getString("hydra_pass", "").equals("")) ) {
+			Intent intent = new Intent();
+        	intent.setClass(this, InfoDialog.class);
+        	intent.putExtra("stringRes", R.string.info_hydra_login);
+            startActivity(intent);
+		}
+		else if (requirements[position] == PITHIA_LOGIN_REQUIRED && (preferences.getString("pithia_login", "").equals("") || preferences.getString("pithia_pass", "").equals(""))) {
+			Intent intent = new Intent();
+        	intent.setClass(this, InfoDialog.class);
+        	intent.putExtra("stringRes", R.string.info_pithia_login);
+            startActivity(intent);
+		} else {
+			Toast.makeText(ServicesLauncher.this,
+					"Έκανες κλικ στο '" + iconsDesc[position] + "'",
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+
+	
+	
 }

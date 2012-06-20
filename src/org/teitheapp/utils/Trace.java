@@ -1,4 +1,4 @@
-package org.teitheapp;
+package org.teitheapp.utils;
 
 import android.util.Log;
 
