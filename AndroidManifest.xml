@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".Empty" />
         <activity android:name=".InformationsLauncher" />
+        <activity android:name=".ServicesLauncher" />
+        <activity android:name=".ExtraLauncher" />
         <activity android:name=".Home" />
     </application>
 

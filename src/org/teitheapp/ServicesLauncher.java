@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class InformationsLauncher extends Activity {
+public class ServicesLauncher extends Activity {
 
 	// references to our images
 	private TypedArray icons = null;
@@ -26,15 +26,15 @@ public class InformationsLauncher extends Activity {
 		setContentView(R.layout.launcher_grid);
 
 		// Initialize the launcher icons
-		icons = getResources().obtainTypedArray(R.array.info_icons);
-		iconsDesc = getResources().getStringArray(R.array.info_icons_desc);
+		icons = getResources().obtainTypedArray(R.array.services_icons);
+		iconsDesc = getResources().getStringArray(R.array.services_icons_desc);
 
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(new CustomAdapted(this));
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				Toast.makeText(InformationsLauncher.this,
+				Toast.makeText(ServicesLauncher.this,
 						"Έκανες κλικ στο '" + iconsDesc[position] + "'",
 						Toast.LENGTH_SHORT).show();
 			}

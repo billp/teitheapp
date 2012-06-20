@@ -1,0 +1,48 @@
+<resources>
+	<array name="info_icons">
+		<item>@drawable/information</item>
+		<item>@drawable/book</item>
+		<item>@drawable/link</item>
+		<item>@drawable/link_database</item>
+		<item>@drawable/camera</item>
+		<item>@drawable/foititika</item>
+		<item>@drawable/support</item>
+		<item>@drawable/contact</item>
+	</array>
+	<array name="info_icons_desc">
+		<item>Βασικές πληροφορίες</item>
+		<item>Πρόγραμμα σπουδών</item>
+		<item>Χρήσιμοι σύνδεσμοι</item>
+		<item>Ιστοσελίδες καθηγητών</item>
+		<item>Φωτογραφίες</item>
+		<item>Φοιτητικά θέματα</item>
+		<item>Υποστήριξη</item>
+		<item>Επικοινωνία</item>
+	</array>
+	<array name="services_icons">
+		<item>@drawable/student_info</item>
+		<item>@drawable/my_statement</item>
+		<item>@drawable/grades</item>
+		<item>@drawable/course_number</item>
+		<item>@drawable/news</item>
+		<item>@drawable/teacher</item>
+	</array>
+	<array name="services_icons_desc">
+		<item>Τα στοίχεία μου</item>
+		<item>Η δήλωσή μου</item>
+		<item>Βαθμολογίες</item>
+		<item>Αριθμός μαθημάτων για πτυχίο</item>
+		<item>Ανακοινώσεις Hydra</item>
+		<item>Πληροφορίες διδάσκοντα</item>
+	</array>
+	
+		<array name="extra_icons">
+		<item>@drawable/bus</item>
+		<item>@drawable/people</item>
+	</array>
+	<array name="extra_icons_desc">
+		<item>Πληρότητα γραμμής 52</item>
+		<item>Φοιτητές στο Ίδρυμα</item>
+	</array>
+	
+</resources>

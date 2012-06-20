@@ -27,9 +27,7 @@ public class Home extends Activity {
 		int pixel=this.getWindowManager().getDefaultDisplay().getWidth();
 		int dp = (int)(pixel/getResources().getDisplayMetrics().density);
 		
-		Log.v("lol", dp+"");
-		 
-		 webview.setBackgroundColor(0x00000000);
+		webview.setBackgroundColor(0x00000000);
 		 
 		 
 	}

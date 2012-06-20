@@ -9,8 +9,12 @@ package org.teitheapp;
 
 public final class R {
     public static final class array {
-        public static final int icons=0x7f060000;
-        public static final int icons_desc=0x7f060001;
+        public static final int extra_icons=0x7f060004;
+        public static final int extra_icons_desc=0x7f060005;
+        public static final int info_icons=0x7f060000;
+        public static final int info_icons_desc=0x7f060001;
+        public static final int services_icons=0x7f060002;
+        public static final int services_icons_desc=0x7f060003;
     }
     public static final class attr {
     }
@@ -41,33 +45,41 @@ public final class R {
         public static final int arrow_left=0x7f020001;
         public static final int arrow_right=0x7f020002;
         public static final int book=0x7f020003;
-        public static final int camera=0x7f020004;
-        public static final int contact=0x7f020005;
-        public static final int divider=0x7f020006;
-        public static final int foititika=0x7f020007;
-        public static final int ic_home=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int ic_tab_ic_home_selected=0x7f02000a;
-        public static final int ic_tab_ic_home_unselected=0x7f02000b;
-        public static final int ic_tab_ic_info_selected=0x7f02000c;
-        public static final int ic_tab_ic_info_unselected=0x7f02000d;
-        public static final int ic_tab_ic_services_extra_selected=0x7f02000e;
-        public static final int ic_tab_ic_services_extra_unselected=0x7f02000f;
-        public static final int ic_tab_ic_services_selected=0x7f020010;
-        public static final int ic_tab_ic_services_unselected=0x7f020011;
-        public static final int information=0x7f020012;
-        public static final int link=0x7f020013;
-        public static final int link_database=0x7f020014;
-        public static final int support=0x7f020015;
-        public static final int tab_focus=0x7f020016;
-        public static final int tab_ic_home=0x7f020017;
-        public static final int tab_ic_info=0x7f020018;
-        public static final int tab_ic_services=0x7f020019;
-        public static final int tab_ic_services_extra=0x7f02001a;
-        public static final int tab_indicator=0x7f02001b;
-        public static final int tab_press=0x7f02001c;
-        public static final int tab_selected=0x7f02001d;
-        public static final int tab_unselected=0x7f02001e;
+        public static final int bus=0x7f020004;
+        public static final int camera=0x7f020005;
+        public static final int contact=0x7f020006;
+        public static final int course_number=0x7f020007;
+        public static final int divider=0x7f020008;
+        public static final int foititika=0x7f020009;
+        public static final int grades=0x7f02000a;
+        public static final int ic_home=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int ic_tab_ic_home_selected=0x7f02000d;
+        public static final int ic_tab_ic_home_unselected=0x7f02000e;
+        public static final int ic_tab_ic_info_selected=0x7f02000f;
+        public static final int ic_tab_ic_info_unselected=0x7f020010;
+        public static final int ic_tab_ic_services_extra_selected=0x7f020011;
+        public static final int ic_tab_ic_services_extra_unselected=0x7f020012;
+        public static final int ic_tab_ic_services_selected=0x7f020013;
+        public static final int ic_tab_ic_services_unselected=0x7f020014;
+        public static final int information=0x7f020015;
+        public static final int link=0x7f020016;
+        public static final int link_database=0x7f020017;
+        public static final int my_statement=0x7f020018;
+        public static final int news=0x7f020019;
+        public static final int people=0x7f02001a;
+        public static final int student_info=0x7f02001b;
+        public static final int support=0x7f02001c;
+        public static final int tab_focus=0x7f02001d;
+        public static final int tab_ic_home=0x7f02001e;
+        public static final int tab_ic_info=0x7f02001f;
+        public static final int tab_ic_services=0x7f020020;
+        public static final int tab_ic_services_extra=0x7f020021;
+        public static final int tab_indicator=0x7f020022;
+        public static final int tab_press=0x7f020023;
+        public static final int tab_selected=0x7f020024;
+        public static final int tab_unselected=0x7f020025;
+        public static final int teacher=0x7f020026;
     }
     public static final class id {
         public static final int gridview=0x7f090005;
