@@ -19,14 +19,16 @@
 	<string name="info_pithia_login">Πρέπει να ορίσεις τα στοιχεία του λογαριασμού σου στο Pithia για να χρησιμοποιήσεις την υπηρεσία.\n(Ρυθμίσεις > Pithia Account)</string>
 	<string name="pref_hydra_login">Hydra login</string>
 
-	<string name="pref_hydra_login_user">Hydra login</string>
-	<string name="pref_hydra_login_user_summary">Όνομα χρήστη για το Hydra</string>
-	<string name="pref_hydra_login_pass">Hydra password</string>
-	<string name="pref_hydra_login_pass_summary">Κωδικός πρόσβασης για το Hydra</string>
-	
-	<string name="pref_pithia_login">Pithia login</string>
-	<string name="pref_pithia_login_user">Pithia login</string>
-	<string name="pref_pithia_login_user_summary">Όνομα χρήστη για το Pithia</string>
-	<string name="pref_pithia_login_pass">Pithia password</string>
-	<string name="pref_pithia_login_pass_summary">Κωδικός πρόσβασης για το Pithia</string>
+	<string name="pref_accounts">Λογαριασμοί</string>
+	<string name="pref_hydra">Συνδεση με το Hydra</string>
+	<string name="pref_hydra_summary">Λογαριασμός στο Hydra</string>
+	<string name="pref_pithia">Σύνδεση με το Pithia</string>
+	<string name="pref_pithia_summary">Λογαριασμός στο Pithia</string>
+	<string name="login_text">Όνομα χρήστη</string>
+	<string name="password_text">Κωδικός πρόσβασης</string>
+	<string name="login_login_btn">Είσοδος</string>
+	<string name="login_cancel_btn">Ακύρωση</string>
+	<string name="login_loading">Γίνεται είσοδος...</string>
+	<string name="wrong_user_pass">Έδωσες λάθος στοιχεία</string>
+	<string name="login_success">Επιτυχής είσοδος ως </string>
 </resources>
