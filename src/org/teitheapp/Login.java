@@ -2,6 +2,7 @@ package org.teitheapp;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,20 +10,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 import org.teitheapp.utils.Trace;
 
 import android.app.Activity;
@@ -123,13 +117,15 @@ public class Login extends Activity implements OnClickListener {
 
 	private class DownloadWebPageTask extends AsyncTask<Void, Void, String> {
 		protected String doInBackground(Void... params) {
-			ByteArrayOutputStream content = new ByteArrayOutputStream();
-
+			StringBuilder strData = new StringBuilder();
+			
+			
 			try {
 				HttpPost post = null;
 
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
+				String encoding = "utf-8";
+				
 				if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 					post = new HttpPost(new URI(Constants.URL_HYDRA_LOGIN));
 					
@@ -142,8 +138,20 @@ public class Login extends Activity implements OnClickListener {
 				}
 
 				else if (LOGIN_MODE == LOGIN_MODE_PITHIA) {
+					HttpGet get = new HttpGet(new URI(Constants.URL_PITHIA_LOGIN));
+
 					post = new HttpPost(new URI(Constants.URL_PITHIA_LOGIN));
 
+					DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+		            
+					HttpResponse response = defaultHttpClient.execute(get);	
+					
+					post.addHeader("Host", "pithia.teithe.gr");
+					post.addHeader("Content-Type", "application/x-www-form-urlencoded");
+					post.addHeader("Cookie", response.getFirstHeader("Set-Cookie").getValue().split(";")[0]);
+
+
+					
 					nameValuePairs.add(new BasicNameValuePair("userName",
 							editLogin.getText().toString()));
 					nameValuePairs.add(new BasicNameValuePair("pwd", editPass
@@ -152,34 +160,44 @@ public class Login extends Activity implements OnClickListener {
 							"Είσοδος"));
 					nameValuePairs.add(new BasicNameValuePair("loginTrue",
 							"login"));
+					
+					encoding = "windows-1253";
 				}
 
 
-				
+	
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-	            
-				HttpResponse response = defaultHttpClient.execute(post);				
-				
-				Trace.i("Das", response.getFirstHeader("Set-Cookie").getValue());
-				
 				post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-				
+				Trace.i("headers", Arrays.toString(post.getAllHeaders()));
+				HttpResponse response = defaultHttpClient.execute(post);				
+
 				InputStream data = response.getEntity().getContent();
 
-				byte[] buffer = new byte[512];
+				InputStreamReader isr = new InputStreamReader(data, encoding);
+				
+				String line = "";
+				char[] buff = new char[512];
 
+				int charNum;
+				while ((charNum = isr.read(buff)) != -1) {
+					strData.append(buff);
+				}
+				
+				Trace.i("das", strData.toString());
+				
+				/*byte[] buffer = new byte[512];
 				int bytesReaded = 0;
 				while ((bytesReaded = data.read(buffer)) != -1) {
 					content.write(buffer, 0, bytesReaded);
 					
-					//Trace.i("http", new String(buffer));
+					Trace.i("http", new String(buffer));
 					
-				}
+				}*/
 				
 			} catch (Exception e) {
 				Trace.e("neterror", e.toString());
 			}
-			return content.toString();
+			return strData.toString();
 		}
 
 		protected void onPostExecute(String result) {
@@ -225,13 +243,13 @@ public class Login extends Activity implements OnClickListener {
 			}
 
 			else if (LOGIN_MODE == LOGIN_MODE_PITHIA) {
-				if (result.contains("<div class=\"error\"")) {
+				if (result.contains("Λάθος όνομα χρήστη") || result.contains("Λάθος κωδικός πρόσβασης")) {
 					Toast.makeText(Login.this, R.string.wrong_user_pass,
 							Toast.LENGTH_SHORT).show();
 
 					Trace.i("err", "error");
 				} else {
-					
+					//Trace.i("html", result);
 				}
 			}
 
