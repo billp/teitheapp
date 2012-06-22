@@ -5,15 +5,42 @@
         <Preference
             android:dialogTitle="@string/pref_hydra"
             android:key="hydra_login"
-            android:title="@string/pref_hydra"
-            android:summary="@string/pref_hydra_summary" />
-        
+            android:summary="@string/pref_hydra_summary"
+            android:title="@string/pref_hydra" />
         <Preference
             android:dialogTitle="@string/pref_pithia"
             android:key="pithia_login"
-            android:title="@string/pref_pithia"
-            android:summary="@string/pref_pithia_summary" />
-</PreferenceCategory>
-      
+            android:summary="@string/pref_pithia_summary"
+            android:title="@string/pref_pithia" />
+    </PreferenceCategory>
+    
+        <PreferenceCategory android:title="@string/pref_hydra_announcements" >
+          <CheckBoxPreference
+                android:key="hydra_notifications_enabled"
+                android:title="@string/pref_hydra_announcements_notifications"
+                android:summary="@string/pref_hydra_announcements_notifications_summary" />          
+          <ListPreference
+                android:key="hydra_notifications_interval"
+                android:title="@string/pref_hydra_announcements_notifications_interval"
+                android:summary="@string/pref_hydra_announcements_notifications_interval_summary"
+                android:entries="@array/hydra_intervals_labels"
+                android:entryValues="@array/hydra_intervals"
+                android:dialogTitle="@string/pref_hydra_announcements_notifications_interval" 
+                android:dependency="hydra_notifications_enabled" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/pref_location" >
+          <CheckBoxPreference
+                android:key="location_enabled"
+                android:title="@string/pref_location_checkin"
+                android:summary="@string/pref_location_checkin_summary" />
+          <CheckBoxPreference
+                android:key="location_name_enabled"
+                android:title="@string/pref_location_checkin_name"
+                android:summary="@string/pref_location_checkin_name_summary"
+                android:dependency="location_enabled" />
+    </PreferenceCategory>
 
+
+    
 </PreferenceScreen>

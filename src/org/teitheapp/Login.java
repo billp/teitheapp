@@ -1,6 +1,7 @@
 package org.teitheapp;
 
 import java.io.InputStream;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
 
@@ -184,7 +188,20 @@ public class Login extends Activity implements OnClickListener {
 					encoding = "windows-1253";
 				}
 
-				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+				HttpParams httpParameters = new BasicHttpParams();
+				// Set the timeout in milliseconds until a connection is established.
+				// The default value is zero, that means the timeout is not used. 
+				int timeoutConnection = 5000;
+				HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+				// Set the default socket timeout (SO_TIMEOUT) 
+				// in milliseconds which is the timeout for waiting for data.
+				int timeoutSocket = 15000;
+				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+				
+				
+			      
+				
+				DefaultHttpClient defaultHttpClient = new DefaultHttpClient(httpParameters);
 				post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				Trace.i("headers", Arrays.toString(post.getAllHeaders()));
 				HttpResponse response = defaultHttpClient.execute(post);
@@ -204,8 +221,10 @@ public class Login extends Activity implements OnClickListener {
 				 * }
 				 */
 
+			} catch (SocketTimeoutException e) {
+				return "timeout";
 			} catch (Exception e) {
-				Trace.e("neterror", e.toString());
+				Trace.e("error", e.toString());
 			}
 			return strResponse;
 		}
@@ -214,6 +233,12 @@ public class Login extends Activity implements OnClickListener {
 
 			dialog.dismiss();
 
+			if (result.equals("timeout")) {
+				Toast.makeText(Login.this, R.string.net_timeout,
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
 			if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 
 				if (result.contains("Bad username/password")) {

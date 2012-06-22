@@ -30,7 +30,7 @@
 	<array name="services_icons_desc">
 		<item>Τα στοίχεία μου</item>
 		<item>Η δήλωσή μου</item>
-		<item>Βαθμολογίες</item>
+		<item>Οι βαθμολογίες μου</item>
 		<item>Αριθμός μαθημάτων για πτυχίο</item>
 		<item>Ανακοινώσεις Hydra</item>
 		<item>Πληροφορίες διδάσκοντα</item>
@@ -42,7 +42,7 @@
 	</array>
 	<array name="extra_icons_desc">
 		<item>Πληρότητα γραμμής 52</item>
-		<item>Φοιτητές στο Ίδρυμα</item>
+		<item>Φοιτητές που βρίσκονται στο Ίδρυμα</item>
 	</array>
 	
 </resources>

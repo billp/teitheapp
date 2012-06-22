@@ -9,36 +9,40 @@ package org.teitheapp;
 
 public final class R {
     public static final class array {
-        public static final int extra_icons=0x7f070004;
-        public static final int extra_icons_desc=0x7f070005;
-        public static final int info_icons=0x7f070000;
-        public static final int info_icons_desc=0x7f070001;
-        public static final int services_icons=0x7f070002;
-        public static final int services_icons_desc=0x7f070003;
+        public static final int extra_icons=0x7f050006;
+        public static final int extra_icons_desc=0x7f050007;
+        public static final int hydra_intervals=0x7f050001;
+        /**  Used in View/Spinner1.java 
+         */
+        public static final int hydra_intervals_labels=0x7f050000;
+        public static final int info_icons=0x7f050002;
+        public static final int info_icons_desc=0x7f050003;
+        public static final int services_icons=0x7f050004;
+        public static final int services_icons_desc=0x7f050005;
     }
     public static final class attr {
     }
     public static final class color {
-        public static final int app_background=0x7f050000;
-        public static final int background=0x7f05000b;
-        public static final int black=0x7f050004;
-        public static final int dark_red=0x7f050002;
-        public static final int home_category_text=0x7f050005;
-        public static final int home_small_text_background=0x7f050009;
-        public static final int home_small_text_color=0x7f050008;
-        public static final int icon_desc_color=0x7f05000a;
-        public static final int light_red=0x7f050001;
-        public static final int tab_indicator_text=0x7f05000c;
-        public static final int text_tab_selected=0x7f050006;
-        public static final int text_tab_unselected=0x7f050007;
-        public static final int transparent=0x7f050003;
+        public static final int app_background=0x7f060000;
+        public static final int background=0x7f06000b;
+        public static final int black=0x7f060004;
+        public static final int dark_red=0x7f060002;
+        public static final int home_category_text=0x7f060005;
+        public static final int home_small_text_background=0x7f060009;
+        public static final int home_small_text_color=0x7f060008;
+        public static final int icon_desc_color=0x7f06000a;
+        public static final int light_red=0x7f060001;
+        public static final int tab_indicator_text=0x7f06000c;
+        public static final int text_tab_selected=0x7f060006;
+        public static final int text_tab_unselected=0x7f060007;
+        public static final int transparent=0x7f060003;
     }
     public static final class dimen {
-        public static final int corner_radius=0x7f060000;
-        public static final int normal_text=0x7f060004;
-        public static final int tab_space=0x7f060002;
-        public static final int tab_space_bottom=0x7f060001;
-        public static final int tab_space_plus1=0x7f060003;
+        public static final int corner_radius=0x7f070000;
+        public static final int normal_text=0x7f070004;
+        public static final int tab_space=0x7f070002;
+        public static final int tab_space_bottom=0x7f070001;
+        public static final int tab_space_plus1=0x7f070003;
     }
     public static final class drawable {
         public static final int arrow_down=0x7f020000;
@@ -149,17 +153,28 @@ public final class R {
         public static final int app_name=0x7f080000;
         public static final int info_hydra_login=0x7f080006;
         public static final int info_pithia_login=0x7f080007;
-        public static final int login_cancel_btn=0x7f080011;
-        public static final int login_loading=0x7f080012;
-        public static final int login_login_btn=0x7f080010;
-        public static final int login_success=0x7f080015;
-        public static final int login_text=0x7f08000e;
-        public static final int password_text=0x7f08000f;
-        public static final int pithia_down=0x7f080013;
+        public static final int login_cancel_btn=0x7f08001b;
+        public static final int login_loading=0x7f08001c;
+        public static final int login_login_btn=0x7f08001a;
+        public static final int login_success=0x7f08001f;
+        public static final int login_text=0x7f080018;
+        public static final int net_timeout=0x7f080020;
+        public static final int password_text=0x7f080019;
+        public static final int pithia_down=0x7f08001d;
         public static final int pref_accounts=0x7f080009;
         public static final int pref_hydra=0x7f08000a;
+        public static final int pref_hydra_announcements=0x7f080013;
+        public static final int pref_hydra_announcements_notifications=0x7f080014;
+        public static final int pref_hydra_announcements_notifications_interval=0x7f080016;
+        public static final int pref_hydra_announcements_notifications_interval_summary=0x7f080017;
+        public static final int pref_hydra_announcements_notifications_summary=0x7f080015;
         public static final int pref_hydra_login=0x7f080008;
         public static final int pref_hydra_summary=0x7f08000b;
+        public static final int pref_location=0x7f08000e;
+        public static final int pref_location_checkin=0x7f08000f;
+        public static final int pref_location_checkin_name=0x7f080011;
+        public static final int pref_location_checkin_name_summary=0x7f080012;
+        public static final int pref_location_checkin_summary=0x7f080010;
         public static final int pref_pithia=0x7f08000c;
         public static final int pref_pithia_summary=0x7f08000d;
         public static final int sample_text=0x7f080005;
@@ -167,7 +182,7 @@ public final class R {
         public static final int tab_home_text=0x7f080001;
         public static final int tab_info_text=0x7f080002;
         public static final int tab_services_text=0x7f080003;
-        public static final int wrong_user_pass=0x7f080014;
+        public static final int wrong_user_pass=0x7f08001e;
     }
     public static final class style {
         public static final int LightTabWidget=0x7f090000;

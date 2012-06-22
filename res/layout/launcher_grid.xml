@@ -3,6 +3,7 @@
     android:id="@+id/gridview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:paddingTop="8dip"
     android:background="@color/background"
     android:columnWidth="90dp"
     android:gravity="center"
