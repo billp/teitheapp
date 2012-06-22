@@ -128,9 +128,10 @@ public final class R {
         public static final int login_cancel_btn=0x7f080011;
         public static final int login_loading=0x7f080012;
         public static final int login_login_btn=0x7f080010;
-        public static final int login_success=0x7f080014;
+        public static final int login_success=0x7f080015;
         public static final int login_text=0x7f08000e;
         public static final int password_text=0x7f08000f;
+        public static final int pithia_down=0x7f080013;
         public static final int pref_accounts=0x7f080009;
         public static final int pref_hydra=0x7f08000a;
         public static final int pref_hydra_login=0x7f080008;
@@ -142,7 +143,7 @@ public final class R {
         public static final int tab_home_text=0x7f080001;
         public static final int tab_info_text=0x7f080002;
         public static final int tab_services_text=0x7f080003;
-        public static final int wrong_user_pass=0x7f080013;
+        public static final int wrong_user_pass=0x7f080014;
     }
     public static final class style {
         public static final int LightTabWidget=0x7f090000;

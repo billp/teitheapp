@@ -29,6 +29,7 @@
 	<string name="login_login_btn">Είσοδος</string>
 	<string name="login_cancel_btn">Ακύρωση</string>
 	<string name="login_loading">Γίνεται είσοδος...</string>
+	<string name="pithia_down">Το σύστημα Pithia δεν είναι διαθέσιμο αυτή τη στιγμή</string>
 	<string name="wrong_user_pass">Έδωσες λάθος στοιχεία</string>
 	<string name="login_success">Έχεις συνδεθεί ως </string>
 </resources>
