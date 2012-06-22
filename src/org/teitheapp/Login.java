@@ -90,6 +90,9 @@ public class Login extends Activity implements OnClickListener {
 
 			SharedPreferences.Editor editor = preferences.edit();
 
+			if (editLogin.getText().toString().equals("")) return;
+			if (editPass.getText().toString().equals("")) return;
+			
 			if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 				editor.putString("hydra_login", editLogin.getText().toString());
 				editor.putString("hydra_pass", editPass.getText().toString());
