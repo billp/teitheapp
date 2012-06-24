@@ -19,6 +19,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.teitheapp.classes.LoginService;
+import org.teitheapp.classes.LoginServiceDelegate;
 import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
 
@@ -37,7 +39,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Login extends Activity implements OnClickListener {
+public class Login extends Activity implements OnClickListener,
+		LoginServiceDelegate {
 
 	public final static int LOGIN_MODE_HYDRA = 1;
 	public final static int LOGIN_MODE_PITHIA = 2;
@@ -81,8 +84,6 @@ public class Login extends Activity implements OnClickListener {
 			editLogin.setText(preferences.getString("pithia_login", ""));
 			editPass.setText(preferences.getString("pithia_pass", ""));
 		}
-		
-
 
 	}
 
@@ -94,16 +95,25 @@ public class Login extends Activity implements OnClickListener {
 
 			SharedPreferences.Editor editor = preferences.edit();
 
-			if (editLogin.getText().toString().equals("")) return;
-			if (editPass.getText().toString().equals("")) return;
-			
+			if (editLogin.getText().toString().equals(""))
+				return;
+			if (editPass.getText().toString().equals(""))
+				return;
+
 			if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 				editor.putString("hydra_login", editLogin.getText().toString());
 				editor.putString("hydra_pass", editPass.getText().toString());
 				editor.commit();
 
-				DownloadWebPageTask task = new DownloadWebPageTask();
-				task.execute();
+				// DownloadWebPageTask task = new DownloadWebPageTask();
+				// task.execute();
+				LoginService ls = new LoginService(
+								LoginService.LOGIN_MODE_HYDRA, 
+								editLogin.getText().toString(), 
+								editPass.getText().toString(),
+								this);
+				
+				ls.login();
 				dialog = ProgressDialog.show(Login.this, "", getResources()
 						.getString(R.string.login_loading), true);
 
@@ -112,25 +122,31 @@ public class Login extends Activity implements OnClickListener {
 				editor.putString("pithia_pass", editPass.getText().toString());
 				editor.commit();
 
-				DownloadWebPageTask task = new DownloadWebPageTask();
-				task.execute();
+				LoginService ls = new LoginService(
+						LoginService.LOGIN_MODE_PITHIA, 
+						editLogin.getText().toString(), 
+						editPass.getText().toString(),
+						this);
+		
+				ls.login();
+				
+				
 				dialog = ProgressDialog.show(Login.this, "", getResources()
 						.getString(R.string.login_loading), true);
 			}
-			InputMethodManager imm = (InputMethodManager)getSystemService(
-				      Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(editLogin.getWindowToken(), 0);
-				imm.hideSoftInputFromWindow(editPass.getWindowToken(), 0);
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(editLogin.getWindowToken(), 0);
+			imm.hideSoftInputFromWindow(editPass.getWindowToken(), 0);
 
 			break;
 		case R.id.login_cancel_button:
 			finish();
 			break;
-			
+
 		}
 	}
 
-	private class DownloadWebPageTask extends AsyncTask<Void, Void, String> {
+	/*private class DownloadWebPageTask extends AsyncTask<Void, Void, String> {
 		protected String doInBackground(Void... params) {
 			String strResponse = null;
 
@@ -153,7 +169,7 @@ public class Login extends Activity implements OnClickListener {
 
 				else if (LOGIN_MODE == LOGIN_MODE_PITHIA) {
 					encoding = "windows-1253";
-					
+
 					HttpGet get = new HttpGet(new URI(
 							Constants.URL_PITHIA_LOGIN));
 
@@ -163,12 +179,15 @@ public class Login extends Activity implements OnClickListener {
 
 					HttpResponse response = defaultHttpClient.execute(get);
 
-					if (Net.readStringFromInputStream(response.getEntity().getContent(), encoding).contains("Ανακοίνωση")) {
+					if (Net.readStringFromInputStream(
+							response.getEntity().getContent(), encoding)
+							.contains("Ανακοίνωση")) {
 						return "service unavailable";
 					}
 
-					Trace.i("headers", Arrays.toString(response.getAllHeaders()));
-					
+					Trace.i("headers",
+							Arrays.toString(response.getAllHeaders()));
+
 					post.addHeader("Host", "pithia.teithe.gr");
 					post.addHeader("Content-Type",
 							"application/x-www-form-urlencoded");
@@ -189,19 +208,21 @@ public class Login extends Activity implements OnClickListener {
 				}
 
 				HttpParams httpParameters = new BasicHttpParams();
-				// Set the timeout in milliseconds until a connection is established.
-				// The default value is zero, that means the timeout is not used. 
+				// Set the timeout in milliseconds until a connection is
+				// established.
+				// The default value is zero, that means the timeout is not
+				// used.
 				int timeoutConnection = 5000;
-				HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-				// Set the default socket timeout (SO_TIMEOUT) 
+				HttpConnectionParams.setConnectionTimeout(httpParameters,
+						timeoutConnection);
+				// Set the default socket timeout (SO_TIMEOUT)
 				// in milliseconds which is the timeout for waiting for data.
 				int timeoutSocket = 15000;
-				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-				
-				
-			      
-				
-				DefaultHttpClient defaultHttpClient = new DefaultHttpClient(httpParameters);
+				HttpConnectionParams
+						.setSoTimeout(httpParameters, timeoutSocket);
+
+				DefaultHttpClient defaultHttpClient = new DefaultHttpClient(
+						httpParameters);
 				post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				Trace.i("headers", Arrays.toString(post.getAllHeaders()));
 				HttpResponse response = defaultHttpClient.execute(post);
@@ -209,7 +230,6 @@ public class Login extends Activity implements OnClickListener {
 				InputStream data = response.getEntity().getContent();
 
 				strResponse = Net.readStringFromInputStream(data, encoding);
-			
 
 				/*
 				 * byte[] buffer = new byte[512]; int bytesReaded = 0; while
@@ -221,7 +241,7 @@ public class Login extends Activity implements OnClickListener {
 				 * }
 				 */
 
-			} catch (SocketTimeoutException e) {
+		/*	} catch (SocketTimeoutException e) {
 				return "timeout";
 			} catch (Exception e) {
 				Trace.e("error", e.toString());
@@ -238,7 +258,7 @@ public class Login extends Activity implements OnClickListener {
 						Toast.LENGTH_SHORT).show();
 				return;
 			}
-			
+
 			if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 
 				if (result.contains("Bad username/password")) {
@@ -282,7 +302,7 @@ public class Login extends Activity implements OnClickListener {
 				if (result.equals("service unavailable")) {
 					msg = getResources().getString(R.string.pithia_down);
 				}
-				
+
 				else if (result.contains("Λάθος όνομα χρήστη")
 						|| result.contains("Λάθος κωδικός πρόσβασης")) {
 					msg = getResources().getString(R.string.wrong_user_pass);
@@ -290,13 +310,40 @@ public class Login extends Activity implements OnClickListener {
 				} else {
 					msg = "Logged in";
 				}
-				
-				Toast.makeText(Login.this, msg,
-						Toast.LENGTH_SHORT).show();
+
+				Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
 
 			}
 
 		}
+	}*/
+
+	public void loginSuccess(String cookie, String am, String surname, String name, int loginMode) {
+		dialog.dismiss();
+		Trace.i("cookie", cookie);
+		Toast.makeText(
+				Login.this,
+				getResources().getString(R.string.login_success)
+						+ " " + name + " " + surname,
+				Toast.LENGTH_LONG).show();
+
+		finish();
 	}
 
+	public void loginFailed(int status) {
+		dialog.dismiss();
+		if (status == LoginService.RESPONSE_BADUSERPASS) {
+			Toast.makeText(getBaseContext(), R.string.wrong_user_pass,
+					Toast.LENGTH_SHORT).show();
+		}
+		else if (status == LoginService.RESPONSE_TIMEOUT) {
+		
+			Toast.makeText(getBaseContext(), R.string.net_timeout,
+				Toast.LENGTH_SHORT).show();
+		}
+		else if (status == LoginService.RESPONSE_SERVICEUNAVAILABLE) {
+			Toast.makeText(getBaseContext(), getResources().getString(R.string.pithia_down), Toast.LENGTH_SHORT).show();
+		}
+		
+	}
 }
