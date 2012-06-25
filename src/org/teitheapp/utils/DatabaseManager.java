@@ -1,5 +1,7 @@
 package org.teitheapp.utils;
 
+import java.util.Arrays;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,7 +15,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	static final String tableSettingsName = "settings";
 	
 	public DatabaseManager(Context context) {
-		super(context, dbName, null, 1); 
+		super(context, dbName, null, 2); 
 	}
 
 	@Override
@@ -26,16 +28,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 
-		db.execSQL("delete table if exists " + tableSettingsName);
+		db.execSQL("drop table if exists " + tableSettingsName);
 		onCreate(db);
 	}
 	
 	public void insertSetting(Setting s) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues cv=new ContentValues();
+		ContentValues cv = new ContentValues();
 		
 		cv.put("name", s.getName());
-		cv.put("text", s.getText());
+		cv.put("data", s.getText());
 	
 		db.insert(tableSettingsName, null, cv);
 		//db.execSQL(@"insert into settings(name, text) values (")
@@ -49,8 +51,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		
 		c.moveToFirst();
 		
-		Setting s = new Setting(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("name")), c.getString(c.getColumnIndex("text")));
+		Setting s = new Setting(c.getInt(0), c.getString(1), c.getString(2));
 		
 		return s;
+	}
+	
+	public void deleteSetting(String name) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		db.execSQL("delete from " + tableSettingsName + " where name = '" + name + "'");
 	}
 }

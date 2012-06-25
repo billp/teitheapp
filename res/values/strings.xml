@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TeitheApp</string>
+    <string name="app_name">Υπηρεσίες ΑΤΕΙΘ</string>
     <string name="tab_home_text">Αρχική</string>
     <string name="tab_info_text">Πληροφορίες</string>
     <string name="tab_services_text">Υπηρεσίες</string>
@@ -15,8 +15,8 @@
 <li>Διαμαντάρας Κωνσταντίνος</li>
 <li>Ηλιούδης Χρήστος</li>
 <li>Ράπτης Πασχάλης</li></ul>  ]]> </Data></string>
-	<string name="info_hydra_login">Πρέπει να ορίσεις τα στοιχεία του λογαριασμού σου στο Hydra για να χρησιμοποιήσεις την υπηρεσία.\n(Ρυθμίσεις > Hydra Account)</string>
-	<string name="info_pithia_login">Πρέπει να ορίσεις τα στοιχεία του λογαριασμού σου στο Pithia για να χρησιμοποιήσεις την υπηρεσία.\n(Ρυθμίσεις > Pithia Account)</string>
+	<string name="info_hydra_login">Πρέπει να συνδεθείς με το Hydra για να χρησιμοποιήσεις την υπηρεσία.\n (Ρυθμίσεις > Λογαριασμοί)</string>
+	<string name="info_pithia_login">Πρέπει να συνδεθείς με το Pithia για να χρησιμοποιήσεις την υπηρεσία.\n(Ρυθμίσεις > Λογαριασμοί)</string>
 	<string name="pref_hydra_login">Hydra login</string>
 
 

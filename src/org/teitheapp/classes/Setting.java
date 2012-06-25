@@ -5,11 +5,15 @@ public class Setting {
 	private String name;
 	private String text;
 	
-	public Setting(int id, String name, String text) {
+	public Setting(String name, String text) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.text = text;
+	}
+	
+	public Setting(int id, String name, String text) {
+		this(name,text);
+		this.id = id;
 	}
 	
 	public int getId() {

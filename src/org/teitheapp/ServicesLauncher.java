@@ -31,31 +31,33 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 	final static int HYDRA_LOGIN_REQUIRED = 1;
 	final static int PITHIA_LOGIN_REQUIRED = 2;
 	
-	private DatabaseManager dbManager = new DatabaseManager(this);
+	private DatabaseManager dbManager;
 	private SharedPreferences preferences;
 	
 	// references to our images
 	private TypedArray icons = null;
 	private String[] iconsDesc =  null;
 	private int[] requirements = {PITHIA_LOGIN_REQUIRED, PITHIA_LOGIN_REQUIRED, PITHIA_LOGIN_REQUIRED, PITHIA_LOGIN_REQUIRED, HYDRA_LOGIN_REQUIRED, HYDRA_LOGIN_REQUIRED};
-	private Setting hydraAccount, pithiaAccount;
+	private Setting hydraStudent, pithiaStudent;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.launcher_grid);
 
+		dbManager = new DatabaseManager(this);
+		
 		// Initialize the launcher icons
 		icons = getResources().obtainTypedArray(R.array.services_icons);
 		iconsDesc = getResources().getStringArray(R.array.services_icons_desc);
-
-		hydraAccount = dbManager.getSetting("hydra_login");
-		pithiaAccount = dbManager.getSetting("pithia_account");
 	
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(new CustomAdapted(this));
 		gridview.setOnItemClickListener(this);
 		
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		hydraStudent = dbManager.getSetting("hydra_student");
+		pithiaStudent = dbManager.getSetting("pithia_student");
 	}
 
 	public class CustomAdapted extends BaseAdapter {
@@ -103,14 +105,13 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 	
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 		// TODO Auto-generated method stub
-		
-		if (requirements[position] == HYDRA_LOGIN_REQUIRED && (preferences.getString("hydra_login", "").equals("") || preferences.getString("hydra_pass", "").equals("")) ) {
+		if (requirements[position] == HYDRA_LOGIN_REQUIRED && (hydraStudent == null || preferences.getString("hydra_login", "").equals("") || preferences.getString("hydra_pass", "").equals("")) ) {
 			Intent intent = new Intent();
         	intent.setClass(this, InfoDialog.class);
         	intent.putExtra("stringRes", R.string.info_hydra_login);
             startActivity(intent);
 		}
-		else if (requirements[position] == PITHIA_LOGIN_REQUIRED && (preferences.getString("pithia_login", "").equals("") || preferences.getString("pithia_pass", "").equals(""))) {
+		else if (requirements[position] == PITHIA_LOGIN_REQUIRED && (pithiaStudent == null || preferences.getString("pithia_login", "").equals("") || preferences.getString("pithia_pass", "").equals(""))) {
 			Intent intent = new Intent();
         	intent.setClass(this, InfoDialog.class);
         	intent.putExtra("stringRes", R.string.info_pithia_login);
@@ -120,9 +121,5 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 					"Έκανες κλικ στο '" + iconsDesc[position] + "'",
 					Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-
-	
-	
+	}	
 }

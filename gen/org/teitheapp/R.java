@@ -115,27 +115,28 @@ public final class R {
         public static final int teacher=0x7f020043;
     }
     public static final class id {
-        public static final int gridview=0x7f0b000d;
-        public static final int icon=0x7f0b0011;
-        public static final int imagepart=0x7f0b000e;
-        public static final int imgArrowLeft=0x7f0b000a;
-        public static final int imgArrowRight=0x7f0b000c;
-        public static final int infotext=0x7f0b0007;
-        public static final int login_cancel_button=0x7f0b0006;
-        public static final int login_dialog_title=0x7f0b0000;
-        public static final int login_login_button=0x7f0b0005;
-        public static final int menu_about=0x7f0b0014;
-        public static final int menu_settings=0x7f0b0013;
-        public static final int password_edit=0x7f0b0004;
-        public static final int password_view=0x7f0b0003;
-        public static final int tab_relative_layout=0x7f0b0010;
-        public static final int textpart=0x7f0b000f;
-        public static final int title=0x7f0b0012;
-        public static final int txtHomeArticle=0x7f0b000b;
-        public static final int txtHomeCategory=0x7f0b0008;
-        public static final int txtHomeTitle=0x7f0b0009;
-        public static final int username_edit=0x7f0b0002;
-        public static final int username_view=0x7f0b0001;
+        public static final int gridview=0x7f0b000e;
+        public static final int icon=0x7f0b0012;
+        public static final int imagepart=0x7f0b000f;
+        public static final int imgArrowLeft=0x7f0b000b;
+        public static final int imgArrowRight=0x7f0b000d;
+        public static final int infotext=0x7f0b0008;
+        public static final int login_cancel_button=0x7f0b0007;
+        public static final int login_dialog_title=0x7f0b0001;
+        public static final int login_layout=0x7f0b0000;
+        public static final int login_login_button=0x7f0b0006;
+        public static final int menu_about=0x7f0b0015;
+        public static final int menu_settings=0x7f0b0014;
+        public static final int password_edit=0x7f0b0005;
+        public static final int password_view=0x7f0b0004;
+        public static final int tab_relative_layout=0x7f0b0011;
+        public static final int textpart=0x7f0b0010;
+        public static final int title=0x7f0b0013;
+        public static final int txtHomeArticle=0x7f0b000c;
+        public static final int txtHomeCategory=0x7f0b0009;
+        public static final int txtHomeTitle=0x7f0b000a;
+        public static final int username_edit=0x7f0b0003;
+        public static final int username_view=0x7f0b0002;
     }
     public static final class layout {
         public static final int alert_dialog_text_entry=0x7f030000;

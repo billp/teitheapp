@@ -18,8 +18,9 @@
     android:layout_width="280dip"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dip" >
-
+    android:padding="10dip"
+    android:id="@+id/login_layout">
+    
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="40dip" 
