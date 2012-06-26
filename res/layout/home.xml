@@ -22,7 +22,7 @@
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:stretchColumns="1" >
 
         <TableRow android:gravity="center_horizontal|center_vertical" >
@@ -50,7 +50,7 @@
                     />
             </ScrollView>
         </TableRow>
-        <TableRow>
+        <TableRow android:layout_height="0px" android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/imgArrowLeft"
@@ -60,7 +60,7 @@
 
             <ScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="290dp"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:scrollbars="none" >
 

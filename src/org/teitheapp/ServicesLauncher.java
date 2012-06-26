@@ -30,8 +30,7 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 	//orizw final metavlites gia tis apaithseis pou exei to ka8e service
 	final static int HYDRA_LOGIN_REQUIRED = 1;
 	final static int PITHIA_LOGIN_REQUIRED = 2;
-	
-	private DatabaseManager dbManager;
+
 	private SharedPreferences preferences;
 	
 	// references to our images
@@ -44,7 +43,7 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.launcher_grid);
 
-		dbManager = new DatabaseManager(this);
+
 		
 		// Initialize the launcher icons
 		icons = getResources().obtainTypedArray(R.array.services_icons);
@@ -56,8 +55,7 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 		
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		hydraStudent = dbManager.getSetting("hydra_student");
-		pithiaStudent = dbManager.getSetting("pithia_student");
+
 	}
 
 	public class CustomAdapted extends BaseAdapter {
@@ -105,6 +103,10 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 	
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 		// TODO Auto-generated method stub
+		DatabaseManager dbManager = new DatabaseManager(this);
+		hydraStudent = dbManager.getSetting("hydra_student");
+		pithiaStudent = dbManager.getSetting("pithia_student");
+		
 		if (requirements[position] == HYDRA_LOGIN_REQUIRED && (hydraStudent == null || preferences.getString("hydra_login", "").equals("") || preferences.getString("hydra_pass", "").equals("")) ) {
 			Intent intent = new Intent();
         	intent.setClass(this, InfoDialog.class);

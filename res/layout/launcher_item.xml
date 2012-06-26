@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/imagepart"
         android:layout_width="fill_parent"
-        android:layout_height="64px" />
+        android:layout_height="41dp" />
 
     <TextView
         android:id="@+id/textpart"
