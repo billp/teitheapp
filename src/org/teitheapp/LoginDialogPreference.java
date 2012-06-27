@@ -13,5 +13,4 @@ public class LoginDialogPreference extends DialogPreference {
 		
 		
 	}
-
 }

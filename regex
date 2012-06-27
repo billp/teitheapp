@@ -1,0 +1,4 @@
+va8mologies
+
+<td colspan="10" class="groupHeader">([^>]+)</td> => "==\1=="
+<.*?> => ""

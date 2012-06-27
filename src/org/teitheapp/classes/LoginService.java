@@ -115,12 +115,10 @@ public class LoginService extends Activity {
 				HttpParams httpParameters = new BasicHttpParams();
 				// Set the timeout in milliseconds until a connection is established.
 				// The default value is zero, that means the timeout is not used. 
-				int timeoutConnection = 5000;
-				HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+				HttpConnectionParams.setConnectionTimeout(httpParameters, Constants.TIMEOUT_CONNECTION);
 				// Set the default socket timeout (SO_TIMEOUT) 
 				// in milliseconds which is the timeout for waiting for data.
-				int timeoutSocket = 15000;
-				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+				HttpConnectionParams.setSoTimeout(httpParameters, Constants.TIMEOUT_SOCKET_CONNECTION);
 				
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient(httpParameters);
 				post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -158,14 +156,14 @@ public class LoginService extends Activity {
 
 			if (result[1].equals("timeout")) {
 				
-				delegate.loginFailed(RESPONSE_TIMEOUT);
+				delegate.loginFailed(RESPONSE_TIMEOUT, LOGIN_MODE);
 				return;
 			}
 			
 			if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 
 				if (result[1].contains("Bad username/password")) {
-					delegate.loginFailed(RESPONSE_BADUSERPASS);
+					delegate.loginFailed(RESPONSE_BADUSERPASS, LOGIN_MODE);
 				} else {
 
 					String pattern = "<div class=\"txt\">([^<]+)<\\/div>";
@@ -184,8 +182,8 @@ public class LoginService extends Activity {
 					String namePart = m.group(1).trim().replace(" of ", " ");
 					String[] parts = namePart.split("\\W");
 
-					name = parts[0];
-					surName = parts[1];
+					surName = parts[0];
+					name = parts[1];
 					fatherName = parts[2];
 
 					//Toast.makeText(
@@ -195,24 +193,41 @@ public class LoginService extends Activity {
 					//		Toast.LENGTH_LONG).show();
 
 					//finish();
-					delegate.loginSuccess(result[0], am, surName, name, LOGIN_MODE_HYDRA);
+					delegate.loginSuccess(result[0], am, surName, name, LOGIN_MODE);
 				}
 			}
 
 			else if (LOGIN_MODE == LOGIN_MODE_PITHIA) {
 				
 				if (result[1].equals("service unavailable")) {
-					delegate.loginFailed(RESPONSE_SERVICEUNAVAILABLE);
+					delegate.loginFailed(RESPONSE_SERVICEUNAVAILABLE, LOGIN_MODE);
 					return;
 				}
 				
 				else if (result[1].contains("Λάθος όνομα χρήστη")
 						|| result[1].contains("Λάθος κωδικός πρόσβασης")) {
 					
-					delegate.loginFailed(RESPONSE_BADUSERPASS);
+					delegate.loginFailed(RESPONSE_BADUSERPASS, LOGIN_MODE);
 					
 				} else {
-					delegate.loginSuccess(result[0], null, null, null, LOGIN_MODE_PITHIA);
+					
+					String am, name, surName;
+					Matcher m = null;
+
+					
+					m = Pattern.compile("<td class=\"tableBold\">ΑEΜ: </td>[^<]+<td colspan=\"3\">([^<]+)").matcher(result[1]);
+					m.find();
+					am = m.group(1).trim();
+					
+					m = Pattern.compile("<td class=\"tableBold\">Επώνυμο: </td>[^<]+<td>([^<]+)").matcher(result[1]);
+					m.find();
+					surName = m.group(1).trim();
+					
+					m = Pattern.compile("<td class=\"tableBold\">Όνομα: </td>[^<]+<td>([^<]+)").matcher(result[1]);
+					m.find();
+					name = m.group(1).trim();
+
+					delegate.loginSuccess(result[0], am, surName, name, LOGIN_MODE);
 				}
 				
 				//Toast.makeText(getBaseContext(), msg,

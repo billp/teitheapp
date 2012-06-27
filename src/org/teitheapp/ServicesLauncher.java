@@ -30,6 +30,13 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 	//orizw final metavlites gia tis apaithseis pou exei to ka8e service
 	final static int HYDRA_LOGIN_REQUIRED = 1;
 	final static int PITHIA_LOGIN_REQUIRED = 2;
+	
+	final static int ITEM_MY_INFO = 0;
+	final static int ITEM_MY_STATEMENT = 1;
+	final static int ITEM_MY_GRADES = 2;
+	final static int ITEM_NUMBER_OF_COURSES_LEFT = 3;
+	final static int ITEM_HYDRA_ANNOUNCEMENTS = 4;
+	final static int ITEM_TEACHER_INFO = 5;
 
 	private SharedPreferences preferences;
 	
@@ -119,9 +126,24 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
         	intent.putExtra("stringRes", R.string.info_pithia_login);
             startActivity(intent);
 		} else {
-			Toast.makeText(ServicesLauncher.this,
-					"Έκανες κλικ στο '" + iconsDesc[position] + "'",
-					Toast.LENGTH_SHORT).show();
+			startService(position);
 		}
-	}	
+	}
+	
+	private void startService(int pos) {
+		Intent intent = new Intent();
+		
+		switch (pos) {
+			case ITEM_MY_GRADES:
+	        	intent.setClass(this, MyGrades.class);
+	        	startActivity(intent);
+				
+				break;
+			default:
+				Toast.makeText(ServicesLauncher.this,
+						"Έκανες κλικ στο '" + iconsDesc[pos] + "'",
+						Toast.LENGTH_SHORT).show();
+				break;
+		}
+	}
 }

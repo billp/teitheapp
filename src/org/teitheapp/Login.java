@@ -138,136 +138,6 @@ public class Login extends Activity implements OnClickListener,
 		dbManager.close();
 	}
 
-	/*
-	 * private class DownloadWebPageTask extends AsyncTask<Void, Void, String> {
-	 * protected String doInBackground(Void... params) { String strResponse =
-	 * null;
-	 * 
-	 * try { HttpPost post = null;
-	 * 
-	 * List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	 * String encoding = "utf-8";
-	 * 
-	 * if (LOGIN_MODE == LOGIN_MODE_HYDRA) { post = new HttpPost(new
-	 * URI(Constants.URL_HYDRA_LOGIN));
-	 * 
-	 * nameValuePairs.add(new BasicNameValuePair("am", editLogin
-	 * .getText().toString())); nameValuePairs.add(new
-	 * BasicNameValuePair("pass", editPass .getText().toString()));
-	 * nameValuePairs .add(new BasicNameValuePair("login", "Login")); }
-	 * 
-	 * else if (LOGIN_MODE == LOGIN_MODE_PITHIA) { encoding = "windows-1253";
-	 * 
-	 * HttpGet get = new HttpGet(new URI( Constants.URL_PITHIA_LOGIN));
-	 * 
-	 * post = new HttpPost(new URI(Constants.URL_PITHIA_LOGIN));
-	 * 
-	 * DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-	 * 
-	 * HttpResponse response = defaultHttpClient.execute(get);
-	 * 
-	 * if (Net.readStringFromInputStream( response.getEntity().getContent(),
-	 * encoding) .contains("Ανακοίνωση")) { return "service unavailable"; }
-	 * 
-	 * Trace.i("headers", Arrays.toString(response.getAllHeaders()));
-	 * 
-	 * post.addHeader("Host", "pithia.teithe.gr");
-	 * post.addHeader("Content-Type", "application/x-www-form-urlencoded");
-	 * post.addHeader("Cookie", response.getFirstHeader("Set-Cookie").getValue()
-	 * .split(";")[0]);
-	 * 
-	 * nameValuePairs.add(new BasicNameValuePair("userName",
-	 * editLogin.getText().toString())); nameValuePairs.add(new
-	 * BasicNameValuePair("pwd", editPass .getText().toString()));
-	 * nameValuePairs.add(new BasicNameValuePair("submit1", "Είσοδος"));
-	 * nameValuePairs.add(new BasicNameValuePair("loginTrue", "login"));
-	 * 
-	 * encoding = "windows-1253"; }
-	 * 
-	 * HttpParams httpParameters = new BasicHttpParams(); // Set the timeout in
-	 * milliseconds until a connection is // established. // The default value
-	 * is zero, that means the timeout is not // used. int timeoutConnection =
-	 * 5000; HttpConnectionParams.setConnectionTimeout(httpParameters,
-	 * timeoutConnection); // Set the default socket timeout (SO_TIMEOUT) // in
-	 * milliseconds which is the timeout for waiting for data. int timeoutSocket
-	 * = 15000; HttpConnectionParams .setSoTimeout(httpParameters,
-	 * timeoutSocket);
-	 * 
-	 * DefaultHttpClient defaultHttpClient = new DefaultHttpClient(
-	 * httpParameters); post.setEntity(new
-	 * UrlEncodedFormEntity(nameValuePairs)); Trace.i("headers",
-	 * Arrays.toString(post.getAllHeaders())); HttpResponse response =
-	 * defaultHttpClient.execute(post);
-	 * 
-	 * InputStream data = response.getEntity().getContent();
-	 * 
-	 * strResponse = Net.readStringFromInputStream(data, encoding);
-	 * 
-	 * /* byte[] buffer = new byte[512]; int bytesReaded = 0; while
-	 * ((bytesReaded = data.read(buffer)) != -1) { content.write(buffer, 0,
-	 * bytesReaded);
-	 * 
-	 * Trace.i("http", new String(buffer));
-	 * 
-	 * }
-	 */
-
-	/*
-	 * } catch (SocketTimeoutException e) { return "timeout"; } catch (Exception
-	 * e) { Trace.e("error", e.toString()); } return strResponse; }
-	 * 
-	 * protected void onPostExecute(String result) {
-	 * 
-	 * dialog.dismiss();
-	 * 
-	 * if (result.equals("timeout")) { Toast.makeText(Login.this,
-	 * R.string.net_timeout, Toast.LENGTH_SHORT).show(); return; }
-	 * 
-	 * if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
-	 * 
-	 * if (result.contains("Bad username/password")) {
-	 * Toast.makeText(Login.this, R.string.wrong_user_pass,
-	 * Toast.LENGTH_SHORT).show(); } else {
-	 * 
-	 * String pattern = "<div class=\"txt\">([^<]+)<\\/div>";
-	 * 
-	 * // Create a Pattern object Pattern r = Pattern.compile(pattern);
-	 * 
-	 * // Now create matcher object. Matcher m = r.matcher(result);
-	 * 
-	 * String am, name, surName, fatherName;
-	 * 
-	 * m.find(); am = m.group(1).trim(); m.find(); String namePart =
-	 * m.group(1).trim().replace(" of ", " "); String[] parts =
-	 * namePart.split("\\W");
-	 * 
-	 * name = parts[0]; surName = parts[1]; fatherName = parts[2];
-	 * 
-	 * Toast.makeText( Login.this,
-	 * getResources().getString(R.string.login_success) + " " + name + " " +
-	 * surName, Toast.LENGTH_LONG).show();
-	 * 
-	 * finish();
-	 * 
-	 * } }
-	 * 
-	 * else if (LOGIN_MODE == LOGIN_MODE_PITHIA) { String msg = null; if
-	 * (result.equals("service unavailable")) { msg =
-	 * getResources().getString(R.string.pithia_down); }
-	 * 
-	 * else if (result.contains("Λάθος όνομα χρήστη") ||
-	 * result.contains("Λάθος κωδικός πρόσβασης")) { msg =
-	 * getResources().getString(R.string.wrong_user_pass);
-	 * 
-	 * } else { msg = "Logged in"; }
-	 * 
-	 * Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
-	 * 
-	 * }
-	 * 
-	 * } }
-	 */
-
 	public void loginSuccess(String cookie, String am, String surname,
 			String name, int loginMode) {
 		dialog.dismiss();
@@ -301,17 +171,25 @@ public class Login extends Activity implements OnClickListener,
 
 		Toast.makeText(
 				Login.this,
-				getResources().getString(R.string.login_success) + " " + name
-						+ " " + surname, Toast.LENGTH_LONG).show();
+				getResources().getString(R.string.login_success) + " " + surname
+						+ " " + name, Toast.LENGTH_LONG).show();
 
 		finish();
 	}
 
-	public void loginFailed(int status) {
+	public void loginFailed(int status, int loginMode) {
 		dialog.dismiss();
 		if (status == LoginService.RESPONSE_BADUSERPASS) {
+			String studentColumnName = (loginMode == LoginService.LOGIN_MODE_HYDRA ? "hydra_student" : "pithia_student");
+			String cookieColumnName = (loginMode == LoginService.LOGIN_MODE_HYDRA ? "hydra_cookie" : "pithia_cookie");
+			
 			Toast.makeText(getBaseContext(), R.string.wrong_user_pass,
 					Toast.LENGTH_SHORT).show();
+			
+			DatabaseManager dbManager = new DatabaseManager(this);
+			dbManager.deleteSetting(studentColumnName);
+			dbManager.deleteSetting(cookieColumnName);
+			
 		} else if (status == LoginService.RESPONSE_TIMEOUT) {
 
 			Toast.makeText(getBaseContext(), R.string.net_timeout,

@@ -26,6 +26,7 @@
         <activity android:name=".ServicesLauncher" />
         <activity android:name=".ExtraLauncher" />
         <activity android:name=".Home" />
+        <activity android:name=".MyGrades" />
         <activity android:name=".Preferences" />
         <activity
             android:name=".Login"
