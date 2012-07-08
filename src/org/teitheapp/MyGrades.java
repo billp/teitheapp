@@ -3,7 +3,9 @@ package org.teitheapp;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpResponse;
@@ -22,21 +24,26 @@ import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
 
 import android.app.Activity;
+import android.app.ExpandableListActivity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.ExpandableListAdapter;
+import android.widget.SimpleExpandableListAdapter;
 
-public class MyGrades extends Activity implements LoginServiceDelegate {
+public class MyGrades extends ExpandableListActivity implements LoginServiceDelegate {
 	private ProgressDialog dialog;
 	private DatabaseManager dbManager;
 	private String cookie;
+	private ExpandableListAdapter mAdapter;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		dbManager = new DatabaseManager(this);
+	    
 		
 		Long time = Long.parseLong(dbManager.getSetting("pithia_cookie").getText().split("\\s")[1]);
 		int minutesElapsed = (int)(TimeUnit.MILLISECONDS.toSeconds(new java.util.Date().getTime())-TimeUnit.MILLISECONDS.toSeconds(time))/60;
@@ -62,9 +69,18 @@ public class MyGrades extends Activity implements LoginServiceDelegate {
 		
 	}
 	
-	private class DownloadWebPageTask extends AsyncTask<Void, Void, String[]> {
-		protected String[] doInBackground(Void... params) {
+	private class DownloadWebPageTask extends AsyncTask<Void, Void, Object[]> {
+		private List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+		private List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
+		private List<Map<String, String>> children = new ArrayList<Map<String, String>>();
+		 
+		protected Object[] doInBackground(Void... params) {
 		
+			 List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
+		     List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
+		     List<Map<String, String>> children = new ArrayList<Map<String, String>>();
+		   
+			
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("Cookie", cookie));
 			
@@ -85,15 +101,39 @@ public class MyGrades extends Activity implements LoginServiceDelegate {
 				Elements tables = doc.getElementsByTag("table").get(12).getElementsByTag("td");
 				
 
+				  
 				for (Element row : tables) {
+					
+					
 					
 					if (row.attr("class").equals("groupHeader")) {
 					
 						Trace.i("row", row.text());
+						Map<String, String> curGroupMap = new HashMap<String, String>();
+			           
+						if (groupData.size() > 0) {
+							//Trace.i("childData", children.size() + "");
+							childData.add(children);
+							children = new ArrayList<Map<String, String>>();
+						}
+						
+						groupData.add(curGroupMap);
+			            curGroupMap.put("NAME", row.text());
+						
+						
 					}
 					if (row.text().matches("\\(.+\\)\\s+.+")) {
-						Trace.i("row", row.text() + " -> " + row.siblingElements().get(row.siblingIndex()+4).text());
+		                Map<String, String> curChildMap = new HashMap<String, String>();
+		                children.add(curChildMap);
+						
+						
+						//Trace.i("row", row.text() + " -> " + row.siblingElements().get(row.siblingIndex()+4).text());
+					
+		                curChildMap.put("NAME", row.text());
+		                curChildMap.put("GRADE", getResources().getString(R.string.grade) + ": " + row.siblingElements().get(row.siblingIndex()+4).text());
 					}
+					
+
 
 					
 					
@@ -104,6 +144,9 @@ public class MyGrades extends Activity implements LoginServiceDelegate {
 					
 
 				}
+				
+				//Add last children to last group
+				childData.add(children);
 
 
 				
@@ -115,11 +158,26 @@ public class MyGrades extends Activity implements LoginServiceDelegate {
 			
 			dialog.dismiss();
 			
-			return null;
+			//Trace.i("childData", childData.size() + "");
+			
+			return new Object[]{groupData, childData};
 		}
 		
-		protected void onPostExecute(String[] result) {
-			
+		protected void onPostExecute(Object[] result) {
+	        // Set up our adapter
+			//mAdapter = new SimpleExpandableListAdapter(context, groupData, expandedGroupLayout, collapsedGroupLayout, groupFrom, groupTo, childData, childLayout, lastChildLayout, childFrom, childTo)
+	        mAdapter = new SimpleExpandableListAdapter(
+	                MyGrades.this,
+	                (List<Map<String, String>>)result[0], 
+	                R.layout.expanded_list_item1,
+	                new String[] { "NAME" },
+	                new int[] { R.id.explist_grouptext },
+	                (List<List<Map<String, String>>>)result[1],
+	                R.layout.expanded_list_item2,
+	                new String[] { "NAME", "GRADE" },
+	                new int[] { R.id.explist_text1, R.id.explist_text2 }
+	                );
+	        setListAdapter(mAdapter);
 		}
 	}
 
