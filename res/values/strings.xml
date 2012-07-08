@@ -44,4 +44,5 @@
 	<string name="wrong_user_pass">Έδωσες λάθος στοιχεία</string>
 	<string name="login_success">Έχεις συνδεθεί ως </string>
 	<string name="net_timeout">Λήξη χρονικού ορίου σύνδεσης</string>
+	<string name="reading_data">Γίνεται λήψη δεδομένων...</string>
 </resources>

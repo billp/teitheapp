@@ -178,6 +178,7 @@ public final class R {
         public static final int pref_location_checkin_summary=0x7f080010;
         public static final int pref_pithia=0x7f08000c;
         public static final int pref_pithia_summary=0x7f08000d;
+        public static final int reading_data=0x7f080021;
         public static final int sample_text=0x7f080005;
         public static final int tab_extra_services_text=0x7f080004;
         public static final int tab_home_text=0x7f080001;

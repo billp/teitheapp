@@ -46,7 +46,7 @@ public class Login extends Activity implements OnClickListener,
 		setContentView(R.layout.alert_dialog_text_entry);
 
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		dbManager = new DatabaseManager(this);
+		//dbManager = new DatabaseManager(this);
 
 		tvDialogTitle = (TextView) findViewById(R.id.login_dialog_title);
 		editLogin = (EditText) findViewById(R.id.username_edit);
@@ -135,39 +135,12 @@ public class Login extends Activity implements OnClickListener,
 	public void onDestroy() {
 		super.onDestroy();
 
-		dbManager.close();
 	}
 
 	public void loginSuccess(String cookie, String am, String surname,
 			String name, int loginMode) {
 		dialog.dismiss();
 		// Trace.i("cookie", cookie);
-
-		Date date = new java.util.Date();
-
-		String settingCookieName = null;
-		String settingStudentName = null;
-
-		if (loginMode == LoginService.LOGIN_MODE_HYDRA) {
-			settingCookieName = "hydra_cookie";
-			settingStudentName = "hydra_student";
-		} else if (loginMode == LoginService.LOGIN_MODE_PITHIA) {
-			settingCookieName = "pithia_cookie";
-			settingStudentName = "pithia_student";
-		}
-
-		if (dbManager.getSetting(settingStudentName) != null) {
-			dbManager.deleteSetting(settingStudentName);
-		}
-
-		if (dbManager.getSetting(settingCookieName) != null) {
-			dbManager.deleteSetting(settingCookieName);
-		}
-
-		dbManager.insertSetting(new Setting(settingStudentName, am + ";"
-				+ surname + ";" + name));
-		dbManager.insertSetting(new Setting(settingCookieName, cookie + " "
-				+ date.getTime()));
 
 		Toast.makeText(
 				Login.this,

@@ -5,6 +5,7 @@ import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,15 +22,17 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.teitheapp.Constants;
 import org.teitheapp.R;
+import org.teitheapp.utils.DatabaseManager;
 import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-public class LoginService extends Activity {
+public class LoginService {
 	public final static int LOGIN_MODE_HYDRA = 1;
 	public final static int LOGIN_MODE_PITHIA = 2;
 	
@@ -40,6 +43,8 @@ public class LoginService extends Activity {
 	
 	private LoginServiceDelegate delegate;
 	
+
+
 	private String user, pass;
 
 	public int LOGIN_MODE;
@@ -51,13 +56,15 @@ public class LoginService extends Activity {
 		this.pass = pass;
 		this.delegate = delegate;
 	}
-
+	
 	public void login() {
 		new DownloadWebPageTask().execute();
 	}
 
 	private class DownloadWebPageTask extends AsyncTask<Void, Void, String[]> {
+		
 		protected String[] doInBackground(Void... params) {
+			
 			String strResponse = null;
 			String strCookie =  null;
 			
@@ -70,7 +77,6 @@ public class LoginService extends Activity {
 
 				if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 					strCookie = new DefaultHttpClient().execute(new HttpGet(new URI(Constants.URL_HYDRA_LOGIN))).getFirstHeader("Set-Cookie").getValue().split(";")[0];
-					
 					
 					post = new HttpPost(new URI(Constants.URL_HYDRA_LOGIN));
 
@@ -193,7 +199,30 @@ public class LoginService extends Activity {
 					//		Toast.LENGTH_LONG).show();
 
 					//finish();
-					delegate.loginSuccess(result[0], am, surName, name, LOGIN_MODE);
+					
+					
+					String cookie = result[0];
+					
+					//Insert login data to database
+					Date date = new java.util.Date();
+					
+					DatabaseManager dbManager = new DatabaseManager((Context)delegate);
+
+					String studentFieldName = "hydra_student";
+					String cookieFileldName = "hydra_cookie";
+					
+					//Remove previous login sessions from db
+					dbManager.deleteSetting(studentFieldName);
+					dbManager.deleteSetting(cookieFileldName);
+
+					dbManager.insertSetting(new Setting(studentFieldName, am + ";"
+							+ surName + ";" + name));
+					dbManager.insertSetting(new Setting(cookieFileldName, cookie + " "
+							+ date.getTime()));
+					
+					dbManager.close();
+
+					delegate.loginSuccess(cookie, am, surName, name, LOGIN_MODE);
 				}
 			}
 
@@ -227,7 +256,29 @@ public class LoginService extends Activity {
 					m.find();
 					name = m.group(1).trim();
 
-					delegate.loginSuccess(result[0], am, surName, name, LOGIN_MODE);
+					String cookie = result[0];
+					
+					//Insert login data to database
+					Date date = new java.util.Date();
+					
+					DatabaseManager dbManager = new DatabaseManager((Context)delegate);
+
+					String studentFieldName = "pithia_student";
+					String cookieFileldName = "pithia_cookie";
+					
+					//Remove previous login sessions from db
+					dbManager.deleteSetting(studentFieldName);
+					dbManager.deleteSetting(cookieFileldName);
+
+					dbManager.insertSetting(new Setting(studentFieldName, am + ";"
+							+ surName + ";" + name));
+					dbManager.insertSetting(new Setting(cookieFileldName, cookie + " "
+							+ date.getTime()));
+
+					dbManager.close();
+					dbManager = null;
+
+					delegate.loginSuccess(cookie, am, surName, name, LOGIN_MODE);
 				}
 				
 				//Toast.makeText(getBaseContext(), msg,
