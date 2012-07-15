@@ -25,8 +25,15 @@
         <activity android:name=".InformationsLauncher" />
         <activity android:name=".ServicesLauncher" />
         <activity android:name=".ExtraLauncher" />
+        <activity
+            android:name=".DiplomaNumber"
+            android:theme="@style/MyLightTheme.NoShadow"
+             android:configChanges="orientation" />
         <activity android:name=".Home" />
-        <activity android:name=".MyGrades" />
+        <activity
+            android:name=".MyGrades"
+            android:theme="@style/MyLightTheme.NoShadow"
+             android:configChanges="orientation" />
         <activity android:name=".Preferences" />
         <activity
             android:name=".Login"

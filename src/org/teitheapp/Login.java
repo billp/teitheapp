@@ -36,7 +36,7 @@ public class Login extends Activity implements OnClickListener,
 
 	private SharedPreferences preferences;
 	private ProgressDialog dialog;
-	private DatabaseManager dbManager;
+	//private DatabaseManager dbManager;
 
 	public int LOGIN_MODE;
 

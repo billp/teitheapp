@@ -46,4 +46,10 @@
 	<string name="net_timeout">Λήξη χρονικού ορίου σύνδεσης</string>
 	<string name="reading_data">Γίνεται λήψη δεδομένων...</string>
 	<string name="grade">Βαθμός</string>
+	<string name="grades_average">Γενικός μέσος όρος</string>
+	<string name="diploma_number_text1">Σου απομένουν</string>
+	<string name="diploma_number_text2">Σου απομένει</string>
+	<string name="diploma_number_text3">μάθημα για να πάρεις πτυχίο</string>
+	<string name="diploma_number_text4">μαθήματα για να πάρεις πτυχίο</string>
+	<string name="diploma_number_text5">Συγχαρητήρια!!! Είσαι πτυχιούχος!</string>
 </resources>

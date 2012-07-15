@@ -115,49 +115,57 @@ public final class R {
         public static final int teacher=0x7f020043;
     }
     public static final class id {
-        public static final int explist_grouptext=0x7f0b0009;
-        public static final int explist_text1=0x7f0b000a;
-        public static final int explist_text2=0x7f0b000b;
-        public static final int gridview=0x7f0b0011;
-        public static final int icon=0x7f0b0015;
-        public static final int imagepart=0x7f0b0012;
-        public static final int imgArrowLeft=0x7f0b000e;
-        public static final int imgArrowRight=0x7f0b0010;
-        public static final int infotext=0x7f0b0008;
+        public static final int diploma_text=0x7f0b0008;
+        public static final int explist_grouptext=0x7f0b000a;
+        public static final int explist_text1=0x7f0b000b;
+        public static final int explist_text2=0x7f0b000c;
+        public static final int gridview=0x7f0b0012;
+        public static final int icon=0x7f0b0016;
+        public static final int imagepart=0x7f0b0013;
+        public static final int imgArrowLeft=0x7f0b000f;
+        public static final int imgArrowRight=0x7f0b0011;
+        public static final int infotext=0x7f0b0009;
         public static final int login_cancel_button=0x7f0b0007;
         public static final int login_dialog_title=0x7f0b0001;
         public static final int login_layout=0x7f0b0000;
         public static final int login_login_button=0x7f0b0006;
-        public static final int menu_about=0x7f0b0018;
-        public static final int menu_settings=0x7f0b0017;
+        public static final int menu_about=0x7f0b0019;
+        public static final int menu_settings=0x7f0b0018;
         public static final int password_edit=0x7f0b0005;
         public static final int password_view=0x7f0b0004;
-        public static final int tab_relative_layout=0x7f0b0014;
-        public static final int textpart=0x7f0b0013;
-        public static final int title=0x7f0b0016;
-        public static final int txtHomeArticle=0x7f0b000f;
-        public static final int txtHomeCategory=0x7f0b000c;
-        public static final int txtHomeTitle=0x7f0b000d;
+        public static final int tab_relative_layout=0x7f0b0015;
+        public static final int textpart=0x7f0b0014;
+        public static final int title=0x7f0b0017;
+        public static final int txtHomeArticle=0x7f0b0010;
+        public static final int txtHomeCategory=0x7f0b000d;
+        public static final int txtHomeTitle=0x7f0b000e;
         public static final int username_edit=0x7f0b0003;
         public static final int username_view=0x7f0b0002;
     }
     public static final class layout {
         public static final int alert_dialog_text_entry=0x7f030000;
-        public static final int empty=0x7f030001;
-        public static final int expanded_list_item1=0x7f030002;
-        public static final int expanded_list_item2=0x7f030003;
-        public static final int home=0x7f030004;
-        public static final int launcher_grid=0x7f030005;
-        public static final int launcher_item=0x7f030006;
-        public static final int main=0x7f030007;
-        public static final int tab_indicator=0x7f030008;
+        public static final int diploma=0x7f030001;
+        public static final int empty=0x7f030002;
+        public static final int expanded_list_item1=0x7f030003;
+        public static final int expanded_list_item2=0x7f030004;
+        public static final int home=0x7f030005;
+        public static final int launcher_grid=0x7f030006;
+        public static final int launcher_item=0x7f030007;
+        public static final int main=0x7f030008;
+        public static final int tab_indicator=0x7f030009;
     }
     public static final class menu {
         public static final int title_icon=0x7f0a0000;
     }
     public static final class string {
         public static final int app_name=0x7f080000;
+        public static final int diploma_number_text1=0x7f080024;
+        public static final int diploma_number_text2=0x7f080025;
+        public static final int diploma_number_text3=0x7f080026;
+        public static final int diploma_number_text4=0x7f080027;
+        public static final int diploma_number_text5=0x7f080028;
         public static final int grade=0x7f080022;
+        public static final int grades_average=0x7f080023;
         public static final int info_hydra_login=0x7f080006;
         public static final int info_pithia_login=0x7f080007;
         public static final int login_cancel_btn=0x7f08001b;

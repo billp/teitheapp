@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.ExpandableListAdapter;
 import android.widget.SimpleExpandableListAdapter;
+import android.widget.Toast;
 
 public class MyGrades extends ExpandableListActivity implements LoginServiceDelegate {
 	private ProgressDialog dialog;
@@ -131,6 +132,9 @@ public class MyGrades extends ExpandableListActivity implements LoginServiceDele
 					
 		                curChildMap.put("NAME", row.text());
 		                curChildMap.put("GRADE", getResources().getString(R.string.grade) + ": " + row.siblingElements().get(row.siblingIndex()+4).text());
+		                //children = new ArrayList<Map<String, String>>();
+		                
+		                
 					}
 					
 
@@ -149,8 +153,25 @@ public class MyGrades extends ExpandableListActivity implements LoginServiceDele
 				childData.add(children);
 
 
+				Elements averageTableRows = doc.getElementsByClass("subHeaderBack");
 				
-				Trace.i("data", tables.size() + "");
+				Elements averageTableColumns = averageTableRows.get(9).getElementsByClass("error");
+				Map<String, String> curGroupMap = new HashMap<String, String>();
+				Map<String, String> curChildMap = new HashMap<String, String>();
+				
+				curGroupMap.put("NAME", getResources().getString(R.string.grades_average));
+				groupData.add(curGroupMap);
+				
+				children = new ArrayList<Map<String, String>>();
+				curChildMap.put("NAME", averageTableColumns.get(0).text().replace("-", ""));
+				children.add(curChildMap);
+				childData.add(children);
+				//Trace.i("mo", averageTableColumns.get(0).text());
+				
+				
+				
+				
+				//Trace.i("data", tables.size() + "");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -182,7 +203,7 @@ public class MyGrades extends ExpandableListActivity implements LoginServiceDele
 	}
 
 	public void loginSuccess(String cookie, String am, String surname,
-			String name, int loginMode) {
+		String name, int loginMode) {
 		// TODO Auto-generated method stub
 		
 		dialog.dismiss();
@@ -196,6 +217,29 @@ public class MyGrades extends ExpandableListActivity implements LoginServiceDele
 	public void loginFailed(int status, int loginMode) {
 		// TODO Auto-generated method stub
 		
+		dialog.dismiss();
+		if (status == LoginService.RESPONSE_BADUSERPASS) {
+			String studentColumnName = (loginMode == LoginService.LOGIN_MODE_HYDRA ? "hydra_student" : "pithia_student");
+			String cookieColumnName = (loginMode == LoginService.LOGIN_MODE_HYDRA ? "hydra_cookie" : "pithia_cookie");
+			
+			Toast.makeText(getBaseContext(), R.string.wrong_user_pass,
+					Toast.LENGTH_SHORT).show();
+			
+			DatabaseManager dbManager = new DatabaseManager(this);
+			dbManager.deleteSetting(studentColumnName);
+			dbManager.deleteSetting(cookieColumnName);
+			
+		} else if (status == LoginService.RESPONSE_TIMEOUT) {
+
+			Toast.makeText(getBaseContext(), R.string.net_timeout,
+					Toast.LENGTH_SHORT).show();
+		} else if (status == LoginService.RESPONSE_SERVICEUNAVAILABLE) {
+			Toast.makeText(getBaseContext(),
+					getResources().getString(R.string.pithia_down),
+					Toast.LENGTH_SHORT).show();
+		}
+		
+		finish();
 	}
 	
 }
