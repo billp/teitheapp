@@ -27,13 +27,13 @@
         <activity android:name=".ExtraLauncher" />
         <activity
             android:name=".DiplomaNumber"
-            android:theme="@style/MyLightTheme.NoShadow"
-             android:configChanges="orientation" />
+            android:configChanges="orientation"
+            android:theme="@style/MyLightTheme.NoShadow" />
         <activity android:name=".Home" />
         <activity
             android:name=".MyGrades"
-            android:theme="@style/MyLightTheme.NoShadow"
-             android:configChanges="orientation" />
+            android:configChanges="orientation"
+            android:theme="@style/MyLightTheme.NoShadow" />
         <activity android:name=".Preferences" />
         <activity
             android:name=".Login"
@@ -41,6 +41,9 @@
         <activity
             android:name=".InfoDialog"
             android:theme="@style/Theme.CustomDialog" />
+        <activity
+            android:name=".MyInfo"
+            android:theme="@style/MyLightTheme.NoShadow" />
     </application>
 
 </manifest>

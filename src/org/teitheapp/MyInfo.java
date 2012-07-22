@@ -29,7 +29,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DiplomaNumber extends Activity implements LoginServiceDelegate {
+public class MyInfo extends Activity implements LoginServiceDelegate {
 	private ProgressDialog dialog;
 	private DatabaseManager dbManager;
 	private String cookie;
@@ -63,16 +63,17 @@ public class DiplomaNumber extends Activity implements LoginServiceDelegate {
 		
 	}
 	
-	private class DownloadWebPageTask extends AsyncTask<Void, Void,Integer> {
+	private class DownloadWebPageTask extends AsyncTask<Void, Void, Bundle> {
 		
 		
-		protected Integer doInBackground(Void... params) {
+		protected Bundle doInBackground(Void... params) {
 		
-			Integer coursesLeft = null;
+			Bundle bundle = new Bundle();
 			String cookie = dbManager.getSetting("pithia_cookie").getText().split("\\s")[0];
 			
+			
 			try {
-				HttpGet get = new HttpGet(new URI(Constants.URL_PITHIA_MYGRADES));
+				HttpGet get = new HttpGet(new URI(Constants.URL_PITHIA_MYINFO));
 				
 				get.addHeader("Cookie", "login=True; " + cookie);
 				
@@ -84,45 +85,64 @@ public class DiplomaNumber extends Activity implements LoginServiceDelegate {
 
 				Document doc = Jsoup.parse(data);
 				
-				Elements averageTableRows = doc.getElementsByClass("subHeaderBack");
-				Element averageTableColumn = averageTableRows.get(9);
+				Elements tableRows = doc.getElementsByClass("tableBold");
+				Elements tableRowsRegistration = doc.getElementsByAttributeValue("width", "80%").get(0).getElementsByClass("tablecell");
 				
-				//Get number of courses
-				Pattern pattern = Pattern.compile(".*:\\s([^\\s]+)\\s");
-				Matcher matcher = pattern.matcher(averageTableColumn.text());
+				String surname, name, aem, department, semester, program, registration_info;
 				
-				matcher.find();
+				surname = tableRows.get(10).siblingElements().get(0).text();
+				name = tableRows.get(11).siblingElements().get(0).text();
+				aem = tableRows.get(12).siblingElements().get(0).text();
+				department =  tableRows.get(13).siblingElements().get(0).text();
+				semester = tableRows.get(14).siblingElements().get(0).text();
+				program = tableRows.get(15).siblingElements().get(0).text();
+		
 				
-				coursesLeft = 35 - Integer.parseInt(matcher.group(1));
-			
-				Trace.i("courses", coursesLeft + "");
+				Trace.i("dsa", tableRowsRegistration.get(1).text());
+				
+				//registration_info = "";
+				
+				registration_info = "Ακάδ. έτος: " + tableRowsRegistration.get(0).text() + ", Περίοδος: " + tableRowsRegistration.get(1).text() + ", Εξάμηνο: " + tableRowsRegistration.get(2).text() ;
+				
+				bundle.putString("surname", surname);
+				bundle.putString("name", name);
+				bundle.putString("aem", aem);
+				bundle.putString("department", department);
+				bundle.putString("semester", semester);
+				bundle.putString("program", program);
+				bundle.putString("registration_info", registration_info);
+
+
+
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 			dialog.dismiss();
+			return bundle;
 			
 			
-			return coursesLeft;
 		}
 		
-		protected void onPostExecute(Integer result) {
-			setContentView(R.layout.diploma);
-			TextView tv = (TextView)findViewById(R.id.diploma_text);
-			Trace.i("courses", result + "");
+		protected void onPostExecute(Bundle bundle) {
+			setContentView(R.layout.my_info);
+			TextView tvSurname = (TextView)findViewById(R.id.my_info_surname);
+			TextView tvName = (TextView)findViewById(R.id.my_info_name);
+			TextView tvAem = (TextView)findViewById(R.id.my_info_aem);
+			TextView tvDepartment = (TextView)findViewById(R.id.my_info_department);
+			TextView tvSemester = (TextView)findViewById(R.id.my_info_semester);
+			TextView tvProgram = (TextView)findViewById(R.id.my_info_program);
+			TextView tvRegistrationInfo = (TextView)findViewById(R.id.my_info_resistration);
 			
-			//hresult = 25;
-			
-			if (result > 1) {
-				tv.setText(Html.fromHtml(getResources().getString(R.string.diploma_number_text1) + " <font color='green'><b>" + result + "</b></font> " + getResources().getString(R.string.diploma_number_text4)));
-			}
-			else if (result == 1) {
-				tv.setText(Html.fromHtml(getResources().getString(R.string.diploma_number_text2) + "  <font color='green'><b>" + result + "</b></font> " + getResources().getString(R.string.diploma_number_text3)));
-			}
-			else {
-				tv.setText(Html.fromHtml("<font color='green'>" + getResources().getString(R.string.diploma_number_text5) + "</font>"));
-			}
+			tvSurname.setText(bundle.getString("surname"));
+			tvName.setText(bundle.getString("name"));
+			tvAem.setText(bundle.getString("aem"));
+			tvDepartment.setText(bundle.getString("department"));
+			tvSemester.setText(bundle.getString("semester"));
+			tvProgram.setText(bundle.getString("program"));
+			tvRegistrationInfo.setText(bundle.getString("registration_info"));
 		}
 	}
 

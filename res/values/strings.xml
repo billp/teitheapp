@@ -6,7 +6,7 @@
     <string name="tab_info_text">Πληροφορίες</string>
     <string name="tab_services_text">Υπηρεσίες</string>
     <string name="tab_extra_services_text">Extra</string>
-	<string name="sample_text"><Data><![CDATA[ Την Τρίτη 12/6/2012 και ώρα 9:00 στην αίθουσα τηλεδιάσκεψης του ΤΕΙΘ θα γίνει παρουσίαση της πτυχιακής εργασίας της φοιτήτριας
+    <string name="sample_text"><Data>            <![CDATA[ Την Τρίτη 12/6/2012 και ώρα 9:00 στην αίθουσα τηλεδιάσκεψης του ΤΕΙΘ θα γίνει παρουσίαση της πτυχιακής εργασίας της φοιτήτριας
 ΜΙΧΑΗΛ ΑΙΚΑΤΕΡΙΝΗΣ του ΑΘΑΝΑΣΙΟΥ (AM: 052756) με θέμα:<br />
 "Υπολογιστικά Νέφη και ανάπτυξη εφαρμογών στο Google Cloud".<br />
 <br />
@@ -14,42 +14,49 @@
 <ul>
 <li>Διαμαντάρας Κωνσταντίνος</li>
 <li>Ηλιούδης Χρήστος</li>
-<li>Ράπτης Πασχάλης</li></ul>  ]]> </Data></string>
-	<string name="info_hydra_login">Πρέπει να συνδεθείς με το Hydra για να χρησιμοποιήσεις την υπηρεσία.\n (Ρυθμίσεις > Λογαριασμοί)</string>
-	<string name="info_pithia_login">Πρέπει να συνδεθείς με το Pithia για να χρησιμοποιήσεις την υπηρεσία.\n(Ρυθμίσεις > Λογαριασμοί)</string>
-	<string name="pref_hydra_login">Hydra login</string>
+<li>Ράπτης Πασχάλης</li></ul>  ]]>
+        </Data></string>
+    <string name="info_hydra_login">Πρέπει να συνδεθείς με το Hydra για να χρησιμοποιήσεις την υπηρεσία.\n (Ρυθμίσεις > Λογαριασμοί)</string>
+    <string name="info_pithia_login">Πρέπει να συνδεθείς με το Pithia για να χρησιμοποιήσεις την υπηρεσία.\n(Ρυθμίσεις > Λογαριασμοί)</string>
+    <string name="pref_hydra_login">Hydra login</string>
+    <string name="pref_accounts">Λογαριασμοί</string>
+    <string name="pref_hydra">Συνδεση με το Hydra</string>
+    <string name="pref_hydra_summary">Λογαριασμός στο Hydra</string>
+    <string name="pref_pithia">Σύνδεση με το Pithia</string>
+    <string name="pref_pithia_summary">Λογαριασμός στο Pithia</string>
+    <string name="pref_location">Τοποθεσία</string>
+    <string name="pref_location_checkin">Ενημέρωση τοποθεσίας</string>
+    <string name="pref_location_checkin_summary">Αυτόματη ενημέρωση όταν βρίσκεστε στο Ίδρυμα</string>
+    <string name="pref_location_checkin_name">Εμφάνιση ονόματος</string>
+    <string name="pref_location_checkin_name_summary">Απενεργοποιήστε τη ρύθμιση αν δεν θέλετε να φαίνεται το όνομά σας</string>
+    <string name="pref_hydra_announcements">Ανακοινώσεις hydra</string>
+    <string name="pref_hydra_announcements_notifications">Ενημέρωση</string>
+    <string name="pref_hydra_announcements_notifications_summary">Ενημέρωση για νέες ανακοινώσεις</string>
+    <string name="pref_hydra_announcements_notifications_interval">Έλεγχος κάθε...</string>
+    <string name="pref_hydra_announcements_notifications_interval_summary">Ορίστε κάθε πόσα λεπτά θα γίνεται έλεγχος ανακοινώσεων</string>
+    <string name="login_text">Όνομα χρήστη</string>
+    <string name="password_text">Κωδικός πρόσβασης</string>
+    <string name="login_login_btn">Είσοδος</string>
+    <string name="login_cancel_btn">Ακύρωση</string>
+    <string name="login_loading">Γίνεται είσοδος...</string>
+    <string name="pithia_down">Το σύστημα Pithia δεν είναι διαθέσιμο αυτή τη στιγμή</string>
+    <string name="wrong_user_pass">Έδωσες λάθος στοιχεία</string>
+    <string name="login_success">Έχεις συνδεθεί ως </string>
+    <string name="net_timeout">Λήξη χρονικού ορίου σύνδεσης</string>
+    <string name="reading_data">Γίνεται λήψη δεδομένων...</string>
+    <string name="grade">Βαθμός</string>
+    <string name="grades_average">Γενικός μέσος όρος</string>
+    <string name="diploma_number_text1">Σου απομένουν</string>
+    <string name="diploma_number_text2">Σου απομένει</string>
+    <string name="diploma_number_text3">μάθημα για να πάρεις πτυχίο</string>
+    <string name="diploma_number_text4">μαθήματα για να πάρεις πτυχίο</string>
+    <string name="diploma_number_text5">Συγχαρητήρια!!! Είσαι πτυχιούχος!</string>
+    <string name="my_info_txt1">Επώνυμο:</string>
+    <string name="my_info_txt2">Όνομα:</string>
+    <string name="my_info_txt3">ΑEΜ:</string>
+    <string name="my_info_txt4">Τμήμα:</string>
+    <string name="my_info_txt5">Εξάμηνο:</string>
+    <string name="my_info_txt6">Πρόγραμμα Σπουδών:</string>
+    <string name="my_info_txt7">Στοιχεία εγγραφής:</string>
 
-
-	<string name="pref_accounts">Λογαριασμοί</string>
-	<string name="pref_hydra">Συνδεση με το Hydra</string>
-	<string name="pref_hydra_summary">Λογαριασμός στο Hydra</string>
-	<string name="pref_pithia">Σύνδεση με το Pithia</string>
-	<string name="pref_pithia_summary">Λογαριασμός στο Pithia</string>
-	<string name="pref_location">Τοποθεσία</string>
-	<string name="pref_location_checkin">Ενημέρωση τοποθεσίας</string>
-	<string name="pref_location_checkin_summary">Αυτόματη ενημέρωση όταν βρίσκεστε στο Ίδρυμα</string>
-	<string name="pref_location_checkin_name">Εμφάνιση ονόματος</string>
-	<string name="pref_location_checkin_name_summary">Απενεργοποιήστε τη ρύθμιση αν δεν θέλετε να φαίνεται το όνομά σας</string>
-	<string name="pref_hydra_announcements">Ανακοινώσεις hydra</string>
-	<string name="pref_hydra_announcements_notifications">Ενημέρωση</string>
-	<string name="pref_hydra_announcements_notifications_summary">Ενημέρωση για νέες ανακοινώσεις</string>
-	<string name="pref_hydra_announcements_notifications_interval">Έλεγχος κάθε...</string>
-	<string name="pref_hydra_announcements_notifications_interval_summary">Ορίστε κάθε πόσα λεπτά θα γίνεται έλεγχος ανακοινώσεων</string>
-	<string name="login_text">Όνομα χρήστη</string>
-	<string name="password_text">Κωδικός πρόσβασης</string>
-	<string name="login_login_btn">Είσοδος</string>
-	<string name="login_cancel_btn">Ακύρωση</string>
-	<string name="login_loading">Γίνεται είσοδος...</string>
-	<string name="pithia_down">Το σύστημα Pithia δεν είναι διαθέσιμο αυτή τη στιγμή</string>
-	<string name="wrong_user_pass">Έδωσες λάθος στοιχεία</string>
-	<string name="login_success">Έχεις συνδεθεί ως </string>
-	<string name="net_timeout">Λήξη χρονικού ορίου σύνδεσης</string>
-	<string name="reading_data">Γίνεται λήψη δεδομένων...</string>
-	<string name="grade">Βαθμός</string>
-	<string name="grades_average">Γενικός μέσος όρος</string>
-	<string name="diploma_number_text1">Σου απομένουν</string>
-	<string name="diploma_number_text2">Σου απομένει</string>
-	<string name="diploma_number_text3">μάθημα για να πάρεις πτυχίο</string>
-	<string name="diploma_number_text4">μαθήματα για να πάρεις πτυχίο</string>
-	<string name="diploma_number_text5">Συγχαρητήρια!!! Είσαι πτυχιούχος!</string>
 </resources>

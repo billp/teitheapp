@@ -8,6 +8,8 @@ public class Constants {
 	public static final String URL_PITHIA_LOGIN = URL_PITHIA + "/unistudent/login.asp";
 	
 	public static final String URL_PITHIA_MYGRADES = URL_PITHIA + "/unistudent/stud_CResults.asp?studPg=1&mnuid=mnu3&";
+	public static final String URL_PITHIA_MYINFO = URL_PITHIA + "/unistudent/studentMain.asp?mnuid=student&";
+	
 	
 	public static final int TIMEOUT_CONNECTION = 5000;
 	public static final int TIMEOUT_SOCKET_CONNECTION = 0;

@@ -134,6 +134,10 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 		Intent intent = new Intent();
 		
 		switch (pos) {
+			case ITEM_MY_INFO: 
+				intent.setClass(this, MyInfo.class);
+				startActivity(intent);
+				break;
 			case ITEM_NUMBER_OF_COURSES_LEFT: 
 				intent.setClass(this, DiplomaNumber.class);
 	        	startActivity(intent);

@@ -206,12 +206,14 @@ public class MyGrades extends ExpandableListActivity implements LoginServiceDele
 		String name, int loginMode) {
 		// TODO Auto-generated method stub
 		
-		dialog.dismiss();
+		//dialog.dismiss();
 
 		Trace.i("relogin", "true");
 		new DownloadWebPageTask().execute();
-		dialog = ProgressDialog.show(this, "", getResources()
-				.getString(R.string.reading_data), true);
+		dialog.setMessage(getResources()
+				.getString(R.string.reading_data));
+		//dialog = ProgressDialog.show(this, "", getResources()
+		//		.getString(R.string.reading_data), true);
 	}
 
 	public void loginFailed(int status, int loginMode) {
