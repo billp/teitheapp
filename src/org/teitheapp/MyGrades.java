@@ -31,10 +31,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
 
-public class MyGrades extends ExpandableListActivity implements LoginServiceDelegate {
+public class MyGrades extends Activity implements LoginServiceDelegate {
 	private ProgressDialog dialog;
 	private DatabaseManager dbManager;
 	private String cookie;
@@ -185,6 +186,10 @@ public class MyGrades extends ExpandableListActivity implements LoginServiceDele
 		}
 		
 		protected void onPostExecute(Object[] result) {
+			setContentView(R.layout.my_grades);
+			
+			ExpandableListView exListView = (ExpandableListView)findViewById(R.id.my_grades_listview);
+			
 	        // Set up our adapter
 			//mAdapter = new SimpleExpandableListAdapter(context, groupData, expandedGroupLayout, collapsedGroupLayout, groupFrom, groupTo, childData, childLayout, lastChildLayout, childFrom, childTo)
 	        mAdapter = new SimpleExpandableListAdapter(
@@ -198,7 +203,7 @@ public class MyGrades extends ExpandableListActivity implements LoginServiceDele
 	                new String[] { "NAME", "GRADE" },
 	                new int[] { R.id.explist_text1, R.id.explist_text2 }
 	                );
-	        setListAdapter(mAdapter);
+	        exListView.setAdapter(mAdapter);
 		}
 	}
 

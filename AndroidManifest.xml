@@ -34,6 +34,10 @@
             android:name=".MyGrades"
             android:configChanges="orientation"
             android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".MyCourseDeclaration"
+            android:configChanges="orientation"
+            android:theme="@style/MyLightTheme.NoShadow" />
         <activity android:name=".Preferences" />
         <activity
             android:name=".Login"
