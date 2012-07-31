@@ -58,5 +58,5 @@
     <string name="my_info_txt5">Εξάμηνο:</string>
     <string name="my_info_txt6">Πρόγραμμα Σπουδών:</string>
     <string name="my_info_txt7">Στοιχεία εγγραφής:</string>
-
+	<string name="teacher_info_txt1">Αναζήτηση:</string>
 </resources>

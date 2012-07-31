@@ -149,7 +149,10 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 			case ITEM_MY_GRADES:
 	        	intent.setClass(this, MyGrades.class);
 	        	startActivity(intent);
-				
+				break;
+			case ITEM_TEACHER_INFO:
+	        	intent.setClass(this, TeacherInfo.class);
+	        	startActivity(intent);
 				break;
 			default:
 				Toast.makeText(ServicesLauncher.this,

@@ -78,6 +78,8 @@ public class LoginService {
 				if (LOGIN_MODE == LOGIN_MODE_HYDRA) {
 					strCookie = new DefaultHttpClient().execute(new HttpGet(new URI(Constants.URL_HYDRA_LOGIN))).getFirstHeader("Set-Cookie").getValue().split(";")[0];
 					
+					Trace.i("cookieee", strCookie);
+					
 					post = new HttpPost(new URI(Constants.URL_HYDRA_LOGIN));
 
 					nameValuePairs.add(new BasicNameValuePair("am", user));
@@ -130,6 +132,8 @@ public class LoginService {
 				post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				
 				HttpResponse response = defaultHttpClient.execute(post);
+				
+				//Trace.i("lala", response.getFirstHeader("Set-Cookie").getValue());
 				
 				//strCookie = response.getFirstHeader("Set-Cookie").getValue()
 				//		.split(";")[0];
