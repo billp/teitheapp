@@ -42,6 +42,10 @@
             android:name=".TeacherInfo"
             android:configChanges="orientation"
             android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".ViewTeacher"
+            android:configChanges="orientation"
+            android:theme="@style/Theme.CustomDialog" />
         <activity android:name=".Preferences" />
         <activity
             android:name=".Login"

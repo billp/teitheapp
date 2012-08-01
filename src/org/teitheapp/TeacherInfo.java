@@ -1,7 +1,11 @@
 package org.teitheapp;
 
+import java.io.Serializable;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -12,22 +16,37 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.teitheapp.classes.LoginService;
 import org.teitheapp.classes.LoginServiceDelegate;
+import org.teitheapp.classes.Teacher;
 import org.teitheapp.utils.DatabaseManager;
 import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class TeacherInfo extends Activity implements LoginServiceDelegate {
 	private ProgressDialog dialog;
 	private DatabaseManager dbManager;
+	private ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+	ArrayList<Teacher> teachersClone;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,10 +76,9 @@ public class TeacherInfo extends Activity implements LoginServiceDelegate {
 		
 	}
 	
-	private class DownloadWebPageTask extends AsyncTask<Void, Void, Bundle> {
+	private class DownloadWebPageTask extends AsyncTask<Void, Void, Void> {
 		
-		
-		protected Bundle doInBackground(Void... params) {
+		protected Void doInBackground(Void... params) {
 		
 			Bundle bundle = new Bundle();
 			String cookie = dbManager.getSetting("hydra_cookie").getText().split("\\s")[0];
@@ -81,44 +99,79 @@ public class TeacherInfo extends Activity implements LoginServiceDelegate {
 
 				Document doc = Jsoup.parse(data);
 				
+				
 				Elements tableRows = doc.getElementsByClass("data");
 				
-				for (Element el: tableRows ) {
-					Elements children = el.getElementsByTag("td");
+				
+				
+				for (int i = 3; i < tableRows.size(); i++) {
+					Element curRow = tableRows.get(i);
 					
-					Trace.i("dsa", children.get(0).text());
+					Elements children = curRow.getElementsByTag("td");
+					
+					String name, surname, role, phone, email;
+					
+					//Trace.i("row", curRow.html());					
+					surname = children.get(0).text();
+					name = children.get(1).text();
+					role = children.get(2).text();
+					phone = children.get(3).text();
+					email = children.get(4).text();
+
+					teachers.add(new Teacher(surname, name, role, phone, email));
+					
+					Trace.i("teacher: ", "name: " + name + ", surname: " + surname + ", role: " + role + ", phone: " + phone + ", email: " + email);
 				}
 				
 				
-
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 			dialog.dismiss();
-			return bundle;
 			
-			
+			return null;
 		}
 		
-		protected void onPostExecute(Bundle bundle) {
-			setContentView(R.layout.my_info);
-			TextView tvSurname = (TextView)findViewById(R.id.my_info_surname);
-			TextView tvName = (TextView)findViewById(R.id.my_info_name);
-			TextView tvAem = (TextView)findViewById(R.id.my_info_aem);
-			TextView tvDepartment = (TextView)findViewById(R.id.my_info_department);
-			TextView tvSemester = (TextView)findViewById(R.id.my_info_semester);
-			TextView tvProgram = (TextView)findViewById(R.id.my_info_program);
-			TextView tvRegistrationInfo = (TextView)findViewById(R.id.my_info_resistration);
+		protected void onPostExecute(Void v) {
+			setContentView(R.layout.teacher_info);
 			
-			tvSurname.setText(bundle.getString("surname"));
-			tvName.setText(bundle.getString("name"));
-			tvAem.setText(bundle.getString("aem"));
-			tvDepartment.setText(bundle.getString("department"));
-			tvSemester.setText(bundle.getString("semester"));
-			tvProgram.setText(bundle.getString("program"));
-			tvRegistrationInfo.setText(bundle.getString("registration_info"));
+			ListView list = (ListView)findViewById(R.id.teacher_list);
+			
+			final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(TeacherInfo.this);
+			list.setAdapter(adapter);
+			
+			EditText filterText = (EditText)findViewById(R.id.filterText);
+
+			filterText.addTextChangedListener(new TextWatcher() {
+				public void onTextChanged(CharSequence s, int start, int before,
+			      int count) {
+					adapter.filter();
+					adapter.notifyDataSetChanged();
+			    }
+			 
+			    // @Override
+			     public void beforeTextChanged(CharSequence s, int start, int count,
+			      int after) {
+			     }
+			 
+			     //@Override
+			     public void afterTextChanged(Editable s) {
+			     }
+			});
+			
+			list.setOnItemClickListener(new OnItemClickListener() {
+
+				public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+					
+					Intent intent = new Intent(TeacherInfo.this, ViewTeacher.class);
+					intent.putExtra("teacher", (Serializable)teachersClone.get(position));
+					startActivity(intent);
+				}
+			}); 
 		}
 	}
 
@@ -164,4 +217,53 @@ public class TeacherInfo extends Activity implements LoginServiceDelegate {
 		finish();
 	}
 	
+	public class MySimpleArrayAdapter extends ArrayAdapter<String> {
+		private final Context context;
+
+
+		public void filter() {
+			teachersClone = new ArrayList<Teacher>();
+			EditText filterText = (EditText)findViewById(R.id.filterText);
+			
+			for (Teacher curTeacher: teachers) {
+				String fullName = curTeacher.getSurname() + " " + curTeacher.getName();
+				String regex = "^" + filterText.getText().toString() + ".*";
+				Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+				Matcher m = pattern.matcher(fullName);
+				
+				if (m.matches()) {
+					teachersClone.add(curTeacher);
+				}
+			}
+		}
+		
+		
+		public MySimpleArrayAdapter(Context context) {
+			super(context, R.layout.teacher_row);
+			filter();
+			this.context = context;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View rowView = inflater.inflate(R.layout.teacher_row, parent, false);
+			
+			TextView textView = (TextView) rowView.findViewById(R.id.teacher_row_txt1);
+			TextView textView2 = (TextView) rowView.findViewById(R.id.teacher_row_txt2);
+			
+			String role = (teachersClone.get(position).getRole().equals("") ? "n/a" : teachersClone.get(position).getRole());
+			
+			textView.setText(teachersClone.get(position).getSurname() + " " + teachersClone.get(position).getName());
+			textView2.setText(role);
+		
+			return rowView;
+		}
+		
+		@Override
+		public int getCount() {
+		    return teachersClone.size();
+		}
+	}
 }

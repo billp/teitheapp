@@ -59,4 +59,8 @@
     <string name="my_info_txt6">Πρόγραμμα Σπουδών:</string>
     <string name="my_info_txt7">Στοιχεία εγγραφής:</string>
 	<string name="teacher_info_txt1">Αναζήτηση:</string>
+	<string name="teacher_info_txt2">Ρόλος:</string>
+	<string name="teacher_info_txt3">Τηλέφωνο:</string>
+	<string name="teacher_info_txt4">E-Mail:</string>
+	<string name="close">Κλείσιμο</string>
 </resources>

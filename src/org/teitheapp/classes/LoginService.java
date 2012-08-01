@@ -81,6 +81,8 @@ public class LoginService {
 					Trace.i("cookieee", strCookie);
 					
 					post = new HttpPost(new URI(Constants.URL_HYDRA_LOGIN));
+					
+					post.addHeader("Cookie", strCookie);
 
 					nameValuePairs.add(new BasicNameValuePair("am", user));
 					nameValuePairs.add(new BasicNameValuePair("pass", pass));
