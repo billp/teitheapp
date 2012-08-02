@@ -174,16 +174,17 @@ public final class R {
         public static final int expanded_list_item1=0x7f030003;
         public static final int expanded_list_item2=0x7f030004;
         public static final int home=0x7f030005;
-        public static final int launcher_grid=0x7f030006;
-        public static final int launcher_item=0x7f030007;
-        public static final int main=0x7f030008;
-        public static final int my_declaration=0x7f030009;
-        public static final int my_grades=0x7f03000a;
-        public static final int my_info=0x7f03000b;
-        public static final int tab_indicator=0x7f03000c;
-        public static final int teacher_info=0x7f03000d;
-        public static final int teacher_row=0x7f03000e;
-        public static final int view_teacher=0x7f03000f;
+        public static final int hydra_announcements_main=0x7f030006;
+        public static final int launcher_grid=0x7f030007;
+        public static final int launcher_item=0x7f030008;
+        public static final int main=0x7f030009;
+        public static final int my_declaration=0x7f03000a;
+        public static final int my_grades=0x7f03000b;
+        public static final int my_info=0x7f03000c;
+        public static final int tab_indicator=0x7f03000d;
+        public static final int teacher_info=0x7f03000e;
+        public static final int teacher_row=0x7f03000f;
+        public static final int view_teacher=0x7f030010;
     }
     public static final class menu {
         public static final int title_icon=0x7f0a0000;

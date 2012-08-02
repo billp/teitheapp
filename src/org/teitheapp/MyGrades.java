@@ -72,9 +72,6 @@ public class MyGrades extends Activity implements LoginServiceDelegate {
 	}
 	
 	private class DownloadWebPageTask extends AsyncTask<Void, Void, Object[]> {
-		private List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
-		private List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
-		private List<Map<String, String>> children = new ArrayList<Map<String, String>>();
 		 
 		protected Object[] doInBackground(Void... params) {
 		

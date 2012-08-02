@@ -48,6 +48,10 @@
             android:theme="@style/Theme.CustomDialog" />
         <activity android:name=".Preferences" />
         <activity
+            android:name=".HydraAnnouncements"
+            android:configChanges="orientation"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
             android:name=".Login"
             android:theme="@style/Theme.CustomDialog" />
         <activity

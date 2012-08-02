@@ -150,6 +150,10 @@ public class ServicesLauncher extends Activity implements OnItemClickListener {
 	        	intent.setClass(this, MyGrades.class);
 	        	startActivity(intent);
 				break;
+			case ITEM_HYDRA_ANNOUNCEMENTS:
+	        	intent.setClass(this, HydraAnnouncements.class);
+	        	startActivity(intent);
+				break;
 			case ITEM_TEACHER_INFO:
 	        	intent.setClass(this, TeacherInfo.class);
 	        	startActivity(intent);
