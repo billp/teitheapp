@@ -3,13 +3,12 @@ package org.teitheapp.classes;
 import java.util.Date;
 
 public class Announcement {
-	private String body, category, author, title, attachmentUrl;
-	private Date date;
+	private String body, category, author, title, attachmentUrl, date;
 	
 	
 	
 	public Announcement(String body, String category, String author, String title,
-			String attachmentUrl, Date date) {
+			String attachmentUrl, String date) {
 		super();
 		this.category = category;
 		this.author = author;
@@ -70,12 +69,12 @@ public class Announcement {
 	}
 
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -84,5 +83,13 @@ public class Announcement {
 		return !this.attachmentUrl.equals("");
 	}
 
+
+	@Override
+	public String toString() {
+		return "Announcement [body=" + body + ", category=" + category
+				+ ", author=" + author + ", title=" + title
+				+ ", attachmentUrl=" + attachmentUrl + ", date=" + date + "]";
+	}
+	
 
 }

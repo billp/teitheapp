@@ -1,10 +1,13 @@
 package org.teitheapp;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -28,8 +31,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,30 +45,61 @@ public class HydraAnnouncements extends Activity implements
 	private DatabaseManager dbManager;
 	private ArrayList<Announcement> announcements;
 	private String cookie;
-	private int selectedAnnouncementIndex = 0;
+	private int selectedAnnouncementIndex = 1;
+	private boolean updateInBackground = false;
+	
+	
+	//views
+	private TextView txtTitle, txtDate, txtAuthor, txtCurrent;
+	private WebView wvHomeArticle;
+	private ProgressBar progress;	
+	private ImageView leftButton, rightButton;
+	
+	private DownloadWebPageTask announcementsDownloader;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		dbManager = new DatabaseManager(this);
-
+		setContentView(R.layout.hydra_announcements_main);
+		
+		//Set onClick listeners (right/left buttons)
+		txtTitle = (TextView)findViewById(R.id.txtHomeTitle);
+		txtDate = (TextView)findViewById(R.id.txtDate);
+		txtAuthor = (TextView)findViewById(R.id.txtAuthor);
+		txtCurrent = (TextView)findViewById(R.id.txtCurrent);
+		wvHomeArticle = (WebView)findViewById(R.id.txtHomeArticle);
+		progress = (ProgressBar)findViewById(R.id.progress);
+		
+		wvHomeArticle.setBackgroundColor(0x00000000);
+		
+		leftButton = (ImageView)findViewById(R.id.imgArrowLeft);
+		rightButton = (ImageView)findViewById(R.id.imgArrowRight);
+		
+		leftButton.setClickable(true);
+		rightButton.setClickable(true);
+		
+		leftButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				moveToAnnouncementAtIndex(selectedAnnouncementIndex-1);
+			}
+		});
+		
+		rightButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				moveToAnnouncementAtIndex(selectedAnnouncementIndex+1);
+			}
+		});
 		
 		if (dbManager.getNumberOfAnnouncements() > 0) {
-			setContentView(R.layout.hydra_announcements_main);
+			//announcements = dbManager.getAnnouncements();
 			
-			TextView txtTitle = (TextView)findViewById(R.id.txtHomeTitle);
-			WebView wvHomeArticle = (WebView)findViewById(R.id.txtHomeArticle);
-			
-			announcements = dbManager.getAnnouncements();
-			
-			Announcement curAnnouncement = announcements.get(1);
-			
-			
-			
-			txtTitle.setText(curAnnouncement.getTitle());
-			wvHomeArticle.loadDataWithBaseURL("fake://not/needed", curAnnouncement.getBody(), "text/html", "utf-8", "");
-			
-			return;
+			moveToAnnouncementAtIndex(selectedAnnouncementIndex);
+			progress.setVisibility(View.VISIBLE);
+			updateInBackground = true;
+
 		}
 		
 		Long time = Long.parseLong(dbManager.getSetting("hydra_cookie")
@@ -83,16 +120,58 @@ public class HydraAnnouncements extends Activity implements
 					preferences.getString("hydra_pass", null), this);
 			ls.login();
 
-			dialog = ProgressDialog.show(this, "",
-					getResources().getString(R.string.login_loading), true);
+			if (!updateInBackground) {
+			
+				dialog = ProgressDialog.show(this, "",
+						getResources().getString(R.string.login_loading), true);
+			}
 
 		} else {
-			new DownloadWebPageTask().execute();
-			dialog = ProgressDialog.show(this, "",
+			announcementsDownloader = new DownloadWebPageTask();
+			announcementsDownloader.execute();
+			
+			if (!updateInBackground) {
+				dialog = ProgressDialog.show(this, "",
 					getResources().getString(R.string.reading_data), true);
+			}
 
 			dbManager.close();
 		}
+
+	}
+	
+	private void moveToAnnouncementAtIndex(int index) {
+		// TODO Auto-generated method stub
+		
+		selectedAnnouncementIndex = index;
+		
+		if (selectedAnnouncementIndex == 1) {
+			leftButton.setVisibility(View.INVISIBLE);
+		} else {
+			leftButton.setVisibility(View.VISIBLE);
+		}
+		if (selectedAnnouncementIndex == dbManager.getNumberOfAnnouncements()) {
+			rightButton.setVisibility(View.INVISIBLE);
+		} else {
+			rightButton.setVisibility(View.VISIBLE);
+		}
+		
+		Announcement curAnnouncement = dbManager.getAnnouncementAtIndex(selectedAnnouncementIndex);
+		
+		Trace.i("ann", curAnnouncement.toString());
+		
+		txtTitle.setText(curAnnouncement.getTitle());
+		wvHomeArticle.loadDataWithBaseURL("fake://fake", curAnnouncement.getBody(), "text/html", "utf-8", "");
+		txtDate.setText(curAnnouncement.getDate());
+		txtAuthor.setText(curAnnouncement.getAuthor());
+		txtCurrent.setText(selectedAnnouncementIndex + "/" + dbManager.getNumberOfAnnouncements());
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		announcementsDownloader.cancel(false);
+		super.onBackPressed();
 
 	}
 
@@ -115,35 +194,71 @@ public class HydraAnnouncements extends Activity implements
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 				HttpResponse response = defaultHttpClient.execute(get);
 
-				String data = Net.readStringFromInputStream(response
-						.getEntity().getContent(), "utf8");
+				String curString;
+				StringBuffer data = new StringBuffer();
 
-				Document doc = Jsoup.parse(data);
+				InputStream is = response.getEntity().getContent();
+				InputStreamReader isr = new InputStreamReader(is, "utf8");
+				while( (curString = Net.readStringFromInputStream(isr, 512)) != null ) {
+					if (isCancelled()) {
+						Trace.i("cancel", "cancelled!");
+						return null;
+					}
+					data.append(curString);
+				}
+				
+				
+				//String data = Net.readStringFromInputStream(response
+				//		.getEntity().getContent(), "utf8");
+
+				Document doc = Jsoup.parse(data.toString());
 
 				Elements rows = doc.getElementsByClass("data").tagName("tr");
 
-				String announcementTitle, announcementBody, announcementCategory, announcementAuthor, announcementAttachmentLink;
-				Date announcementDate;
+				String announcementTitle, announcementBody, announcementCategory, announcementAuthor, announcementAttachmentLink, announcementDate;
 
+				announcements = new ArrayList<Announcement>();
+				
 				for (int i = 4; i < rows.size(); i++) {
 
 					Element el = rows.get(i);
 
 					announcementBody = el.attr("onmouseover");
 
-					String pattern = "(return overlib\\(\\')(.+?)(\\,TEXTCOLOR.+)";
+					String pattern = "return overlib\\(\'(.+?)\',TEXTCOLOR.+";
 					announcementBody = announcementBody.replaceAll(pattern,
-							"$2");
-
+							"$1");
+					
+					announcementTitle = announcementBody.replaceAll("<div class=\"title\">([^>]+)</div>.*", "$1");
+					announcementTitle = announcementTitle.replace("\\r", "");
+					announcementTitle = announcementTitle.replace("&amp;", "&");
+					announcementTitle = announcementTitle.replace("&quot;", "\"");
+					announcementTitle = announcementTitle.replace("\\'", "\'");
+					
+					announcementBody = announcementBody.replaceAll("<div class=\"title\">[^>]+</div>(.*)", "$1");
+					announcementBody = announcementBody.replace("\\r", "");
+					announcementBody = announcementBody.replace("\\'", "\'");
+					announcementBody = announcementBody.replace("&quot;", "\"");
+					announcementBody = announcementBody.replace("&amp;", "&");
+					
+					
+					//Replace all links with 'link'
+					Pattern p = Pattern.compile("(https?://[^ <)]+)([ <)])");
+					
+					Matcher m = p.matcher(announcementBody);
+					
+					while (m.find()) {
+						String url = m.group(1);
+						announcementBody = announcementBody.replace(url, "<a href=\"" + url + "\">link</a>");
+					}
+					
 					Trace.i("data", announcementBody);
 
 					Elements children = el.getElementsByTag("td");
 
 					announcementCategory = children.get(0).text();
 					announcementAuthor = children.get(1).text();
-					announcementDate = new Date(children.get(2).text());
-					announcementTitle = children.get(3).text();
-
+					announcementDate = children.get(2).text();
 					
 					Trace.i("ann", announcementCategory + " "
 							+ announcementAuthor + " " + announcementTitle);
@@ -173,7 +288,12 @@ public class HydraAnnouncements extends Activity implements
 					Announcement thisAnnouncement = announcements.get(i);
 					dbManager.insertAnnouncement(thisAnnouncement);
 				}
+				
+				announcements = null;
+				System.gc();
 				Trace.i("announcements inserted to db:" , numberToAdd + "");
+				
+
 
 				// Trace.i("data", tables.size() + "");
 			} catch (Exception e) {
@@ -181,7 +301,7 @@ public class HydraAnnouncements extends Activity implements
 				e.printStackTrace();
 			}
 
-			dialog.dismiss();
+
 
 			// Trace.i("childData", childData.size() + "");
 
@@ -189,8 +309,14 @@ public class HydraAnnouncements extends Activity implements
 		}
 
 		protected void onPostExecute(Void v) {
-			setContentView(R.layout.hydra_announcements_main);
-
+			if (!updateInBackground) {
+				dialog.dismiss();
+				
+				//Move to first announcement
+				moveToAnnouncementAtIndex(1);
+			} else {
+				progress.setVisibility(View.INVISIBLE);
+			}
 		}
 	}
 
@@ -202,8 +328,12 @@ public class HydraAnnouncements extends Activity implements
 		dbManager.close();
 
 		Trace.i("relogin", "true");
-		new DownloadWebPageTask().execute();
-		dialog.setMessage(getResources().getString(R.string.reading_data));
+		announcementsDownloader = new DownloadWebPageTask();
+		announcementsDownloader.execute();
+		
+		if (!updateInBackground) {
+			dialog.setMessage(getResources().getString(R.string.reading_data));
+		}
 		// dialog = ProgressDialog.show(this, "", getResources()
 		// .getString(R.string.reading_data), true);
 	}
