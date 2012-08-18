@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="8dip"
+     >
+
+    <EditText
+        android:id="@+id/attachment_path"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView1">
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/attachment_path"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/attachment_path"
+        android:layout_marginLeft="15dip"
+        android:gravity="center_vertical|right"
+        android:text="Path:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/attachment_path"
+        android:layout_marginTop="7dip"
+        android:layout_centerHorizontal="true"
+        android:text="Download" />
+
+</RelativeLayout>

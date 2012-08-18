@@ -58,6 +58,9 @@
             android:name=".InfoDialog"
             android:theme="@style/Theme.CustomDialog" />
         <activity
+            android:name=".DownloadAttachment"
+            android:theme="@style/Theme.CustomDialog" />
+        <activity
             android:name=".MyInfo"
             android:theme="@style/MyLightTheme.NoShadow" />
     </application>

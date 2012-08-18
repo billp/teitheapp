@@ -99,6 +99,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		return statement.simpleQueryForLong();
 	}
 	
+	public void removeAllAnnouncements() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		String sql = "delete from " + tableAnnouncementsName;
+		db.execSQL(sql);
+	}
+	
 	public Announcement getAnnouncementAtIndex(int index) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
