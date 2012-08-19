@@ -52,6 +52,7 @@ public class HydraAnnouncements extends Activity implements
 	private int selectedAnnouncementIndex = 1;
 	private Announcement selectedAnnouncement;
 	private boolean updateInBackground = false;
+	private boolean offline = false;
 	
 	
 	//views
@@ -177,7 +178,9 @@ public class HydraAnnouncements extends Activity implements
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		announcementsDownloader.cancel(false);
+		if (!offline) {
+			announcementsDownloader.cancel(false);
+		}
 		super.onBackPressed();
 
 	}
@@ -283,7 +286,7 @@ public class HydraAnnouncements extends Activity implements
 					Announcement newAnnouncement = new Announcement(announcementBody,
 							announcementCategory, announcementAuthor,
 							announcementTitle, announcementAttachmentLink,
-							announcementDate);
+							announcementDate, i);
 					
 					announcements.add(newAnnouncement);
 				}
@@ -292,6 +295,8 @@ public class HydraAnnouncements extends Activity implements
 				
 				//Add the required announcements to database
 				diff = announcements.size() - (int)dbManager.getNumberOfAnnouncements();
+				
+				//dbManager.removeAllAnnouncements();
 				
 				for (int i = 0; i < diff; i++) {
 					Announcement thisAnnouncement = announcements.get(i);
@@ -433,4 +438,13 @@ public class HydraAnnouncements extends Activity implements
 	        
 	        return false;
 	    }
+
+	public void netError(String errMsg) {
+		// TODO Auto-generated method stub
+		this.offline = true;
+		this.progress.setVisibility(View.INVISIBLE);
+		Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+	
+		
+	}
 }

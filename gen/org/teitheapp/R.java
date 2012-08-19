@@ -223,6 +223,7 @@ public final class R {
         public static final int my_info_txt5=0x7f08002d;
         public static final int my_info_txt6=0x7f08002e;
         public static final int my_info_txt7=0x7f08002f;
+        public static final int net_error=0x7f080039;
         public static final int net_timeout=0x7f080020;
         public static final int new_announcements_fetched=0x7f080035;
         public static final int new_announcements_fetched2=0x7f080036;

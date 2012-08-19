@@ -20,14 +20,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	static final String tableAnnouncementsName = "announcements";
 
 	public DatabaseManager(Context context) {
-		super(context, dbName, null, 3);
+		super(context, dbName, null, 1);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL("CREATE TABLE " + tableSettingsName + " (id integer primary key autoincrement, name text not null, data text not null)");
-		db.execSQL("CREATE TABLE " + tableAnnouncementsName + " (id integer primary key autoincrement, title text not null, body text not null, author text not null, category text not null, date string, attachment_url text not null)");
+		db.execSQL("CREATE TABLE " + tableSettingsName + " ('id' integer primary key autoincrement, 'name' text not null, 'data' text not null)");
+		db.execSQL("CREATE TABLE " + tableAnnouncementsName + " ('id' integer primary key autoincrement, 'title' text not null, 'body' text not null, 'author' text not null, 'category' text not null, 'date' string, 'attachment_url' text not null, 'order' integer)");
 	}
 
 	@Override
@@ -60,6 +60,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		cv.put("category", ann.getCategory());
 		cv.put("date", ann.getDate());
 		cv.put("attachment_url", ann.getAttachmentUrl());
+		cv.put("'order'", ann.getOrder());
 		
 		db.insert(tableAnnouncementsName, null, cv);
 		// db.execSQL(@"insert into settings(name, text) values (")
@@ -71,9 +72,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		Cursor c = db.query(tableAnnouncementsName, new String[] {"*"}, null,
-				null, null, null, null);
+				null, null, null, "order asc");
 
 		String announcementTitle, announcementBody, announcementCategory, announcementAuthor, announcementAttachmentLink, announcementDate;
+		Integer announcementOrder;
 		
 		while (c.moveToNext()) {
 			announcementTitle = c.getString(c.getColumnIndex("title"));
@@ -82,8 +84,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			announcementCategory = c.getString(c.getColumnIndex("category"));
 			announcementDate = c.getString(c.getColumnIndex("date"));
 			announcementAttachmentLink = c.getString(c.getColumnIndex("attachment_url"));
+			announcementOrder = c.getInt(c.getColumnIndex("order"));
 			
-			announcements.add(new Announcement(announcementBody, announcementCategory, announcementAuthor, announcementTitle, announcementAttachmentLink, announcementDate));
+			announcements.add(new Announcement(announcementBody, announcementCategory, announcementAuthor, announcementTitle, announcementAttachmentLink, announcementDate, announcementOrder));
 		}
 		
 		return announcements;
@@ -109,12 +112,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	public Announcement getAnnouncementAtIndex(int index) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
-		Cursor c = db.query(tableAnnouncementsName, new String[] {"*"}, "id=?",
-				new String[] { ""+ index }, null, null, null);
+		Cursor c = db.query(tableAnnouncementsName, new String[] {"*"}, null,
+				null, null, null, "`order` asc");
 
 		String announcementTitle, announcementBody, announcementCategory, announcementAuthor, announcementAttachmentLink, announcementDate;
+		Integer announcementOrder;
 		
-		c.moveToFirst();
+		c.moveToPosition(index-1);
 		
 		announcementTitle = c.getString(c.getColumnIndex("title"));
 		announcementBody = c.getString(c.getColumnIndex("body"));
@@ -122,8 +126,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		announcementCategory = c.getString(c.getColumnIndex("category"));
 		announcementDate = c.getString(c.getColumnIndex("date"));
 		announcementAttachmentLink = c.getString(c.getColumnIndex("attachment_url"));
+		announcementOrder = c.getInt(c.getColumnIndex("order"));
 			
-		return new Announcement(announcementBody, announcementCategory, announcementAuthor, announcementTitle, announcementAttachmentLink, announcementDate);
+		return new Announcement(announcementBody, announcementCategory, announcementAuthor, announcementTitle, announcementAttachmentLink, announcementDate, announcementOrder);
 		
 	}
 

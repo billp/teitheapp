@@ -4,11 +4,12 @@ import java.util.Date;
 
 public class Announcement {
 	private String body, category, author, title, attachmentUrl, date;
+	private Integer order;
 	
 	
 	
 	public Announcement(String body, String category, String author, String title,
-			String attachmentUrl, String date) {
+			String attachmentUrl, String date, Integer order) {
 		super();
 		this.category = category;
 		this.author = author;
@@ -16,6 +17,7 @@ public class Announcement {
 		this.attachmentUrl = attachmentUrl;
 		this.date = date;
 		this.body = body;
+		this.order = order;
 	}
 
 
@@ -76,6 +78,16 @@ public class Announcement {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+
+	public Integer getOrder() {
+		return order;
+	}
+
+
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 
 
