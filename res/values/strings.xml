@@ -68,4 +68,5 @@
 	<string name="no_new_announcements">Δεν υπάρχουν νέες ανακοινώσεις</string>
 	<string name="no_attachments">Δεν υπάρχει συνημμένο</string>
 	<string name="net_error">Αδυναμία σύνδεσης στο δίκτυο</string>
+	<string name="open_file">Επέλεξε με ποιά εφαρμογή θέλεις να ανοίξεις το αρχείο</string>
 </resources>

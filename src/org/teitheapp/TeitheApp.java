@@ -1,5 +1,7 @@
 package org.teitheapp;
 
+import org.teitheapp.utils.DatabaseManager;
+
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +23,21 @@ public class TeitheApp extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		setTabs();
+		
+
+		
+		//prepare mimetype table
+		/*Thread thread = new Thread(new Runnable() {
+			public void run() {
+				// TODO Auto-generated method stub
+				DatabaseManager dbManager = new DatabaseManager(TeitheApp.this);
+				
+				if (dbManager.getNumberOfMimeTypes() == 0) {
+					dbManager.insertMimeTypesFromInputStream(getResources().openRawResource(R.raw.mime));
+				}
+			}
+		});
+		thread.start();*/
 	}
 
 	private void setTabs() {

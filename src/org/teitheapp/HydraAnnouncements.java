@@ -201,7 +201,7 @@ public class HydraAnnouncements extends Activity implements
 				HttpGet get = new HttpGet(new URI(
 						Constants.URL_HYDRA_ANNOUNCEMENTS));
 
-				get.addHeader("Cookie", "login=True; " + cookie);
+				get.addHeader("Cookie", cookie);
 
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 				HttpResponse response = defaultHttpClient.execute(get);
@@ -282,6 +282,8 @@ public class HydraAnnouncements extends Activity implements
 
 					announcementAttachmentLink = announcementAttachmentLink
 							.replaceAll(pattern, "$1");
+					
+					announcementAttachmentLink = announcementAttachmentLink.replace("&amp;", "&");
 
 					Announcement newAnnouncement = new Announcement(announcementBody,
 							announcementCategory, announcementAuthor,
@@ -401,6 +403,9 @@ public class HydraAnnouncements extends Activity implements
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		
 		//MenuItem attMenu = (MenuItem)findViewById(R.id.menu_attachment);
+		//announcementsDownloader.cancel(false);
+		//progress.setVisibility(View.INVISIBLE);
+		//dbManager.close();
 		
 		if (!selectedAnnouncement.hasAttachment()) {
 			//Toast.makeText(getBaseContext(), R.string.no_attachments, Toast.LENGTH_SHORT).show();
@@ -432,6 +437,7 @@ public class HydraAnnouncements extends Activity implements
 	            case R.id.menu_attachment:
 	            	Intent intent = new Intent();
 	            	intent.setClass(this, DownloadAttachment.class);
+	            	intent.putExtra("url", selectedAnnouncement.getAttachmentUrl());
 	                startActivity(intent);
 	                return true;
 	        }
@@ -444,7 +450,5 @@ public class HydraAnnouncements extends Activity implements
 		this.offline = true;
 		this.progress.setVisibility(View.INVISIBLE);
 		Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
-	
-		
 	}
 }

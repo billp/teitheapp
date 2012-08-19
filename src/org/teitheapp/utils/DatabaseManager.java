@@ -1,9 +1,13 @@
 package org.teitheapp.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.teitheapp.classes.Announcement;
+import org.teitheapp.classes.MimeType;
 import org.teitheapp.classes.Setting;
 
 import android.content.ContentValues;
@@ -18,9 +22,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	static final String dbName = "teitheapp_db";
 	static final String tableSettingsName = "settings";
 	static final String tableAnnouncementsName = "announcements";
+	static final String tableMimeTypes = "mimetypes";
 
 	public DatabaseManager(Context context) {
-		super(context, dbName, null, 1);
+		super(context, dbName, null, 6);
 	}
 
 	@Override
@@ -28,6 +33,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		db.execSQL("CREATE TABLE " + tableSettingsName + " ('id' integer primary key autoincrement, 'name' text not null, 'data' text not null)");
 		db.execSQL("CREATE TABLE " + tableAnnouncementsName + " ('id' integer primary key autoincrement, 'title' text not null, 'body' text not null, 'author' text not null, 'category' text not null, 'date' string, 'attachment_url' text not null, 'order' integer)");
+		db.execSQL("CREATE TABLE " + tableMimeTypes + " ('id' integer primary key autoincrement, 'mime_type' text not null, 'ext' text not null)");
 	}
 
 	@Override
@@ -36,6 +42,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 		db.execSQL("drop table if exists " + tableSettingsName);
 		db.execSQL("drop table if exists " + tableAnnouncementsName);
+		db.execSQL("drop table if exists " + tableMimeTypes);
 		onCreate(db);
 	}
 
@@ -152,5 +159,45 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 		db.execSQL("delete from " + tableSettingsName + " where name = '"
 				+ name + "'");
+	}
+	
+	public long getNumberOfMimeTypes() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		String sql = "select count(*) from " + tableMimeTypes;
+		SQLiteStatement statement = db.compileStatement(sql);
+		
+		//Check if the table isn't empty
+		return statement.simpleQueryForLong();
+	}
+	
+	public void insertMimeTypesFromInputStream(InputStream is) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		
+		String curLine;
+		
+		try {
+			while ((curLine = br.readLine()) != null) {
+				db.execSQL(curLine);
+				Trace.i("line", curLine);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public MimeType getMimeType(String ext) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		Cursor c = db.query(tableMimeTypes, new String[] {"*"}, "ext=?",
+				new String[] {ext}, null, null, null);
+
+		c.moveToFirst();
+		
+		MimeType mime = new MimeType(c.getString(c.getColumnIndex("mime_type")), (c.getString(c.getColumnIndex("ext"))));
+		return mime;
 	}
 }
