@@ -12,7 +12,7 @@
         android:background="@color/background"
         android:gravity="center"
 
-        android:text="Η δήλωσή μου"
+        android:text="Οι βαθμολογίες μου"
         android:textColor="@color/home_category_text"
         android:textSize="15dp"
         android:textStyle="bold" />

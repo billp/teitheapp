@@ -153,7 +153,17 @@ public class MyGrades extends Activity implements LoginServiceDelegate {
 
 				Elements averageTableRows = doc.getElementsByClass("subHeaderBack");
 				
-				Elements averageTableColumns = averageTableRows.get(9).getElementsByClass("error");
+				Element averageTableColumn = null;
+				
+				for (Element el:averageTableRows) {
+					if (el.text().contains("ΓΕΝΙΚΑ ΣΥΝΟΛΑ")) {
+						averageTableColumn = el;
+					}
+				}
+				
+				Elements averageTableColumns = averageTableColumn.getElementsByClass("error");
+				
+				
 				Map<String, String> curGroupMap = new HashMap<String, String>();
 				Map<String, String> curChildMap = new HashMap<String, String>();
 				
