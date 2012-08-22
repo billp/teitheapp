@@ -85,7 +85,16 @@ public class DiplomaNumber extends Activity implements LoginServiceDelegate {
 				Document doc = Jsoup.parse(data);
 				
 				Elements averageTableRows = doc.getElementsByClass("subHeaderBack");
-				Element averageTableColumn = averageTableRows.get(9);
+				
+				Element averageTableColumn = null;
+				
+				for (Element el:averageTableRows) {
+					if (el.text().contains("ΓΕΝΙΚΑ ΣΥΝΟΛΑ")) {
+						averageTableColumn = el;
+					}
+				}
+				
+				//Element averageTableColumn = averageTableRows.get(9);
 				
 				//Get number of courses
 				Pattern pattern = Pattern.compile(".*:\\s([^\\s]+)\\s");
@@ -167,5 +176,9 @@ public class DiplomaNumber extends Activity implements LoginServiceDelegate {
 		
 		finish();
 	}
-	
+	public void netError(String errMsg) {
+		// TODO Auto-generated method stub
+		Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+		finish();
+	}
 }

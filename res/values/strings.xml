@@ -63,4 +63,11 @@
 	<string name="teacher_info_txt3">Τηλέφωνο:</string>
 	<string name="teacher_info_txt4">E-Mail:</string>
 	<string name="close">Κλείσιμο</string>
+	<string name="new_announcements_fetched">Υπάρχουν</string>
+	<string name="new_announcements_fetched2">νέες ανακοινώσεις</string>
+	<string name="no_new_announcements">Δεν υπάρχουν νέες ανακοινώσεις</string>
+	<string name="no_attachments">Δεν υπάρχει συνημμένο</string>
+	<string name="net_error">Αδυναμία σύνδεσης στο δίκτυο</string>
+	<string name="open_file">Επέλεξε με ποιά εφαρμογή θέλεις να ανοίξεις το αρχείο</string>
+	<string name="downloading_attachment">Λήψη συνημμένου</string>
 </resources>

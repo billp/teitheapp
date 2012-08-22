@@ -27,10 +27,14 @@ import org.teitheapp.utils.Trace;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
@@ -46,7 +50,9 @@ public class HydraAnnouncements extends Activity implements
 	private ArrayList<Announcement> announcements;
 	private String cookie;
 	private int selectedAnnouncementIndex = 1;
+	private Announcement selectedAnnouncement;
 	private boolean updateInBackground = false;
+	private boolean offline = false;
 	
 	
 	//views
@@ -111,7 +117,7 @@ public class HydraAnnouncements extends Activity implements
 		Trace.i("time", minutesElapsed + "");
 
 		// Re-login if required
-		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT) {
+		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT || !dbManager.getSetting("last_ip").getText().equals(Net.getLocalIpAddress())) {
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(this);
 
@@ -137,7 +143,6 @@ public class HydraAnnouncements extends Activity implements
 
 			dbManager.close();
 		}
-
 	}
 	
 	private void moveToAnnouncementAtIndex(int index) {
@@ -165,19 +170,23 @@ public class HydraAnnouncements extends Activity implements
 		txtDate.setText(curAnnouncement.getDate());
 		txtAuthor.setText(curAnnouncement.getAuthor());
 		txtCurrent.setText(selectedAnnouncementIndex + "/" + dbManager.getNumberOfAnnouncements());
+		
+		selectedAnnouncement = curAnnouncement;
 	}
 	
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		announcementsDownloader.cancel(false);
+		if (!offline) {
+			announcementsDownloader.cancel(false);
+		}
 		super.onBackPressed();
 
 	}
 
-	private class DownloadWebPageTask extends AsyncTask<Void, Void, Void> {
+	private class DownloadWebPageTask extends AsyncTask<Void, Void, Integer> {
 
-		protected Void doInBackground(Void... params) {
+		protected Integer doInBackground(Void... params) {
 
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("Cookie", cookie));
@@ -185,11 +194,13 @@ public class HydraAnnouncements extends Activity implements
 			String cookie = dbManager.getSetting("hydra_cookie").getText()
 					.split("\\s")[0];
 
+			int count = 0;
+			
 			try {
 				HttpGet get = new HttpGet(new URI(
 						Constants.URL_HYDRA_ANNOUNCEMENTS));
 
-				get.addHeader("Cookie", "login=True; " + cookie);
+				get.addHeader("Cookie", cookie);
 
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 				HttpResponse response = defaultHttpClient.execute(get);
@@ -199,13 +210,27 @@ public class HydraAnnouncements extends Activity implements
 
 				InputStream is = response.getEntity().getContent();
 				InputStreamReader isr = new InputStreamReader(is, "utf8");
+				
+				Integer totalLength = 0;
+				
 				while( (curString = Net.readStringFromInputStream(isr, 512)) != null ) {
 					if (isCancelled()) {
 						Trace.i("cancel", "cancelled!");
 						return null;
 					}
+					
+					totalLength += 512;
+					
+					if (totalLength > 1024 * 50) {
+						break;
+					}
+					
+					Trace.i("512 bytes: ", curString);
+					
 					data.append(curString);
 				}
+				
+				isr.close();
 				
 				
 				//String data = Net.readStringFromInputStream(response
@@ -219,7 +244,15 @@ public class HydraAnnouncements extends Activity implements
 
 				announcements = new ArrayList<Announcement>();
 				
-				for (int i = 4; i < rows.size(); i++) {
+				int step = 1;
+				int order = 0;
+				
+				if (dbManager.getNumberOfAnnouncements() > 0) {
+					order = dbManager.getAnnouncementMinimumOrder()-1;
+					step = -1;	
+				}
+				
+				for (int i = 4; i < rows.size()-1; i++) {
 
 					Element el = rows.get(i);
 
@@ -270,11 +303,15 @@ public class HydraAnnouncements extends Activity implements
 
 					announcementAttachmentLink = announcementAttachmentLink
 							.replaceAll(pattern, "$1");
+					
+					announcementAttachmentLink = announcementAttachmentLink.replace("&amp;", "&");
 
 					Announcement newAnnouncement = new Announcement(announcementBody,
 							announcementCategory, announcementAuthor,
 							announcementTitle, announcementAttachmentLink,
-							announcementDate);
+							announcementDate, order);
+					
+					order += step;
 					
 					announcements.add(newAnnouncement);
 				}
@@ -282,16 +319,26 @@ public class HydraAnnouncements extends Activity implements
 				//Trace.i("number", dbManager.getNumberOfAnnouncements() +"");
 				
 				//Add the required announcements to database
-				int numberToAdd = announcements.size() - (int)dbManager.getNumberOfAnnouncements();
+				//diff = announcements.size() - (int)dbManager.getNumberOfAnnouncements();
 				
-				for (int i = 0; i < numberToAdd; i++) {
+				//dbManager.removeAllAnnouncements();
+				
+				for (int i = 0; i < announcements.size(); i++) {
 					Announcement thisAnnouncement = announcements.get(i);
+					
+					if (dbManager.announcementExists(thisAnnouncement)) {
+						break;
+					}
+					
+					count++;
+					
 					dbManager.insertAnnouncement(thisAnnouncement);
 				}
 				
 				announcements = null;
-				System.gc();
-				Trace.i("announcements inserted to db:" , numberToAdd + "");
+								
+				//System.gc();
+				//Trace.i("announcements inserted to db:" , numberToAdd + "");
 				
 
 
@@ -301,14 +348,12 @@ public class HydraAnnouncements extends Activity implements
 				e.printStackTrace();
 			}
 
-
-
 			// Trace.i("childData", childData.size() + "");
 
-			return null;
+			return new Integer(count);
 		}
 
-		protected void onPostExecute(Void v) {
+		protected void onPostExecute(Integer count) {
 			if (!updateInBackground) {
 				dialog.dismiss();
 				
@@ -316,6 +361,15 @@ public class HydraAnnouncements extends Activity implements
 				moveToAnnouncementAtIndex(1);
 			} else {
 				progress.setVisibility(View.INVISIBLE);
+			
+				if (count != 0) {
+					moveToAnnouncementAtIndex(1);
+					Toast.makeText(getBaseContext(), getResources().getString(R.string.new_announcements_fetched) + " " + count + " " + getResources().getString(R.string
+							.new_announcements_fetched2), Toast.LENGTH_LONG).show();
+				}
+				else {
+					Toast.makeText(getBaseContext(), R.string.no_new_announcements, Toast.LENGTH_LONG).show();
+				}
 			}
 		}
 	}
@@ -366,5 +420,63 @@ public class HydraAnnouncements extends Activity implements
 		}
 
 		finish();
+	}
+	
+	
+	//Attachment
+	
+	@Override
+	
+	
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		
+		//MenuItem attMenu = (MenuItem)findViewById(R.id.menu_attachment);
+		//announcementsDownloader.cancel(false);
+		//progress.setVisibility(View.INVISIBLE);
+		//dbManager.close();
+		
+		if (!selectedAnnouncement.hasAttachment()) {
+			//Toast.makeText(getBaseContext(), R.string.no_attachments, Toast.LENGTH_SHORT).show();
+			menu.getItem(0).setEnabled(false);
+		} else {
+			menu.getItem(0).setEnabled(true);
+		}
+			
+		Trace.i("annnnn", selectedAnnouncement.getAttachmentUrl() + " ");
+		return true;
+	}
+	
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+
+		
+        // Inflate the currently selected menu XML resource.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.attachment_menu, menu);
+        
+        return true;
+    }
+	
+	 @Override
+	    public boolean onOptionsItemSelected(MenuItem item) {
+	        switch (item.getItemId()) {
+	            // For "Title only": Examples of matching an ID with one assigned in
+	            //                   the XML
+	            case R.id.menu_attachment:
+	            	Intent intent = new Intent();
+	            	intent.setClass(this, DownloadAttachment.class);
+	            	intent.putExtra("url", selectedAnnouncement.getAttachmentUrl());
+	                startActivity(intent);
+	                return true;
+	        }
+	        
+	        return false;
+	    }
+
+	public void netError(String errMsg) {
+		// TODO Auto-generated method stub
+		this.offline = true;
+		this.progress.setVisibility(View.INVISIBLE);
+		Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
 	}
 }

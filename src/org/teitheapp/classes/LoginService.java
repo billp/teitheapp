@@ -4,33 +4,31 @@ import java.io.InputStream;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.teitheapp.Constants;
-import org.teitheapp.R;
 import org.teitheapp.utils.DatabaseManager;
 import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 public class LoginService {
 	public final static int LOGIN_MODE_HYDRA = 1;
@@ -157,7 +155,7 @@ public class LoginService {
 			} catch (SocketTimeoutException e) {
 				return new String[]{null, "timeout"};
 			} catch (Exception e) {
-				Trace.e("error", e.toString());
+				return new String[]{e.toString(), "neterror"};
 			}
 			return new String[] {strCookie, strResponse};
 		}
@@ -166,9 +164,16 @@ public class LoginService {
 
 			//dialog.dismiss();
 
+			String lastIpAddressField = "last_ip";
+			
 			if (result[1].equals("timeout")) {
 				
 				delegate.loginFailed(RESPONSE_TIMEOUT, LOGIN_MODE);
+				return;
+			}
+			
+			if (result[1].endsWith("neterror")) {
+				delegate.netError(result[0]);
 				return;
 			}
 			
@@ -186,7 +191,7 @@ public class LoginService {
 					// Now create matcher object.
 					Matcher m = r.matcher(result[1]);
 
-					String am, name, surName, fatherName;
+					String am, name, surName;
 
 					m.find();
 					am = m.group(1).trim();
@@ -196,16 +201,6 @@ public class LoginService {
 
 					surName = parts[0];
 					name = parts[1];
-					fatherName = parts[2];
-
-					//Toast.makeText(
-					//		getBaseContext(),
-					//		getResources().getString(R.string.login_success)
-					//				+ " " + name + " " + surName,
-					//		Toast.LENGTH_LONG).show();
-
-					//finish();
-					
 					
 					String cookie = result[0];
 					
@@ -213,18 +208,20 @@ public class LoginService {
 					Date date = new java.util.Date();
 					
 					DatabaseManager dbManager = new DatabaseManager((Context)delegate);
-
+					
+					String cookieFieldName = "hydra_cookie";
 					String studentFieldName = "hydra_student";
-					String cookieFileldName = "hydra_cookie";
 					
 					//Remove previous login sessions from db
 					dbManager.deleteSetting(studentFieldName);
-					dbManager.deleteSetting(cookieFileldName);
+					dbManager.deleteSetting(cookieFieldName);
+					dbManager.deleteSetting(lastIpAddressField);
 
 					dbManager.insertSetting(new Setting(studentFieldName, am + ";"
 							+ surName + ";" + name));
-					dbManager.insertSetting(new Setting(cookieFileldName, cookie + " "
+					dbManager.insertSetting(new Setting(cookieFieldName, cookie + " "
 							+ date.getTime()));
+					dbManager.insertSetting(new Setting(lastIpAddressField, Net.getLocalIpAddress()));
 					
 					dbManager.close();
 
@@ -248,7 +245,6 @@ public class LoginService {
 					
 					String am, name, surName;
 					Matcher m = null;
-
 					
 					m = Pattern.compile("<td class=\"tableBold\">ΑEΜ: </td>[^<]+<td colspan=\"3\">([^<]+)").matcher(result[1]);
 					m.find();
@@ -268,18 +264,20 @@ public class LoginService {
 					Date date = new java.util.Date();
 					
 					DatabaseManager dbManager = new DatabaseManager((Context)delegate);
-
+					
+					String cookieFieldName = "pithia_cookie";
 					String studentFieldName = "pithia_student";
-					String cookieFileldName = "pithia_cookie";
 					
 					//Remove previous login sessions from db
 					dbManager.deleteSetting(studentFieldName);
-					dbManager.deleteSetting(cookieFileldName);
+					dbManager.deleteSetting(cookieFieldName);
+					dbManager.deleteSetting(lastIpAddressField);
 
 					dbManager.insertSetting(new Setting(studentFieldName, am + ";"
 							+ surName + ";" + name));
-					dbManager.insertSetting(new Setting(cookieFileldName, cookie + " "
+					dbManager.insertSetting(new Setting(cookieFieldName, cookie + " "
 							+ date.getTime()));
+					dbManager.insertSetting(new Setting(lastIpAddressField, Net.getLocalIpAddress()));
 
 					dbManager.close();
 					dbManager = null;
