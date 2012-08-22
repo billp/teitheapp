@@ -2,6 +2,7 @@ package org.teitheapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 	// references to our images
 	private TypedArray icons = null;
 	private String[] iconsDesc = null;
+	final static int ITEM_BASIC_INFO = 0;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,9 +86,23 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 		// TODO Auto-generated method stub
-		Toast.makeText(InformationsLauncher.this,
-				"Έκανες κλικ στο '" + iconsDesc[position] + "'",
-				Toast.LENGTH_SHORT).show();
+		startService(position);
+	}
+	
+	private void startService(int pos) {
+		Intent intent = new Intent();
+		
+		switch (pos) {
+			case ITEM_BASIC_INFO: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			default:
+				Toast.makeText(InformationsLauncher.this,
+						"Έκανες κλικ στο '" + iconsDesc[pos] + "'",
+						Toast.LENGTH_SHORT).show();
+				break;
+		}
 	}
 	
 }
