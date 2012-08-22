@@ -211,6 +211,7 @@ public final class R {
         public static final int diploma_number_text3=0x7f090026;
         public static final int diploma_number_text4=0x7f090027;
         public static final int diploma_number_text5=0x7f090028;
+        public static final int downloading_attachment=0x7f09003b;
         public static final int grade=0x7f090022;
         public static final int grades_average=0x7f090023;
         public static final int info_hydra_login=0x7f090006;

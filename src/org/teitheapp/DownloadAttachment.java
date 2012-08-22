@@ -81,7 +81,7 @@ public class DownloadAttachment extends Activity implements
 				} else {
 					new DownloadWebPageTask().execute(url);
 					dialog = ProgressDialog.show(DownloadAttachment.this, "", getResources()
-							.getString(R.string.reading_data), true);
+							.getString(R.string.downloading_attachment), true);
 				}
 				
 			}
@@ -165,7 +165,7 @@ public class DownloadAttachment extends Activity implements
 			Trace.i("relogin", "true");
 			new DownloadWebPageTask().execute(url);
 			dialog.setMessage( getResources()
-					.getString(R.string.reading_data));
+					.getString(R.string.downloading_attachment));
 			//dialog = ProgressDialog.show(this, "", getResources()
 					//.getString(R.string.reading_data), true);
 			

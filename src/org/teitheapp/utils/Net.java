@@ -3,6 +3,10 @@ package org.teitheapp.utils;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 import android.app.Activity;
 
@@ -19,6 +23,7 @@ public class Net extends Activity {
 			int charsReaded = 0;
 			while ((charsReaded = isr.read(buff)) != -1) {
 				strData.append(buff, 0, charsReaded);
+	
 			}
 		} catch (Exception e) {
 			
@@ -63,6 +68,24 @@ public class Net extends Activity {
 		}
 		return strData.toString();
 	}
+	
+	public static String getLocalIpAddress() {
+	    try {
+	        for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+	            NetworkInterface intf = en.nextElement();
+	            for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+	                InetAddress inetAddress = enumIpAddr.nextElement();
+	                if (!inetAddress.isLoopbackAddress()) {
+	                    return inetAddress.getHostAddress().toString();
+	                }
+	            }
+	        }
+	    } catch (SocketException ex) {
+	        Trace.i("err", ex.toString());
+	    }
+	    return null;
+	}
+
 	
 	
 }

@@ -12,7 +12,7 @@ public class Constants {
 	public static final String URL_PITHIA_MY_DECLARATION = URL_PITHIA + "/unistudent/stud_NewClass.asp?studPg=1&mnuid=diloseis;newDil&";
 	
 	public static final String URL_HYDRA_TEACHER_INFO = URL_HYDRA + "/s/index.php?m=itdep-staffliststud&_lang=el";
-	public static final String URL_HYDRA_ANNOUNCEMENTS = URL_HYDRA + "/s/index.php?m=itdep-bbstud";
+	public static final String URL_HYDRA_ANNOUNCEMENTS = URL_HYDRA + "/s/index.php?m=itdep-bbstud&_lang=el";
 	
 	public static final int TIMEOUT_CONNECTION = 5000;
 	public static final int TIMEOUT_SOCKET_CONNECTION = 0;

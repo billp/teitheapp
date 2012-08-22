@@ -138,6 +138,26 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		return new Announcement(announcementBody, announcementCategory, announcementAuthor, announcementTitle, announcementAttachmentLink, announcementDate, announcementOrder);
 		
 	}
+	
+	public boolean announcementExists(Announcement ann) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		Cursor c = db.query(tableAnnouncementsName, new String[] {"*"}, "title=?",
+			  new String[] {ann.getTitle()}, null, null, null);
+
+		return (c.getCount() > 0);
+	}
+	
+	public int getAnnouncementMinimumOrder() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		Cursor c = db.query(tableAnnouncementsName, new String[] {"*"}, null,
+			  null, null, null, "`order` asc");
+
+		c.moveToFirst();
+		
+		return (c.getInt(c.getColumnIndex("order")));
+	}
 
 	public Setting getSetting(String name) {
 		SQLiteDatabase db = this.getWritableDatabase();

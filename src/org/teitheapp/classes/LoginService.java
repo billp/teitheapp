@@ -164,6 +164,8 @@ public class LoginService {
 
 			//dialog.dismiss();
 
+			String lastIpAddressField = "last_ip";
+			
 			if (result[1].equals("timeout")) {
 				
 				delegate.loginFailed(RESPONSE_TIMEOUT, LOGIN_MODE);
@@ -189,7 +191,7 @@ public class LoginService {
 					// Now create matcher object.
 					Matcher m = r.matcher(result[1]);
 
-					String am, name, surName, fatherName;
+					String am, name, surName;
 
 					m.find();
 					am = m.group(1).trim();
@@ -199,16 +201,6 @@ public class LoginService {
 
 					surName = parts[0];
 					name = parts[1];
-					fatherName = parts[2];
-
-					//Toast.makeText(
-					//		getBaseContext(),
-					//		getResources().getString(R.string.login_success)
-					//				+ " " + name + " " + surName,
-					//		Toast.LENGTH_LONG).show();
-
-					//finish();
-					
 					
 					String cookie = result[0];
 					
@@ -216,18 +208,20 @@ public class LoginService {
 					Date date = new java.util.Date();
 					
 					DatabaseManager dbManager = new DatabaseManager((Context)delegate);
-
+					
+					String cookieFieldName = "hydra_cookie";
 					String studentFieldName = "hydra_student";
-					String cookieFileldName = "hydra_cookie";
 					
 					//Remove previous login sessions from db
 					dbManager.deleteSetting(studentFieldName);
-					dbManager.deleteSetting(cookieFileldName);
+					dbManager.deleteSetting(cookieFieldName);
+					dbManager.deleteSetting(lastIpAddressField);
 
 					dbManager.insertSetting(new Setting(studentFieldName, am + ";"
 							+ surName + ";" + name));
-					dbManager.insertSetting(new Setting(cookieFileldName, cookie + " "
+					dbManager.insertSetting(new Setting(cookieFieldName, cookie + " "
 							+ date.getTime()));
+					dbManager.insertSetting(new Setting(lastIpAddressField, Net.getLocalIpAddress()));
 					
 					dbManager.close();
 
@@ -251,7 +245,6 @@ public class LoginService {
 					
 					String am, name, surName;
 					Matcher m = null;
-
 					
 					m = Pattern.compile("<td class=\"tableBold\">ΑEΜ: </td>[^<]+<td colspan=\"3\">([^<]+)").matcher(result[1]);
 					m.find();
@@ -271,18 +264,20 @@ public class LoginService {
 					Date date = new java.util.Date();
 					
 					DatabaseManager dbManager = new DatabaseManager((Context)delegate);
-
+					
+					String cookieFieldName = "pithia_cookie";
 					String studentFieldName = "pithia_student";
-					String cookieFileldName = "pithia_cookie";
 					
 					//Remove previous login sessions from db
 					dbManager.deleteSetting(studentFieldName);
-					dbManager.deleteSetting(cookieFileldName);
+					dbManager.deleteSetting(cookieFieldName);
+					dbManager.deleteSetting(lastIpAddressField);
 
 					dbManager.insertSetting(new Setting(studentFieldName, am + ";"
 							+ surName + ";" + name));
-					dbManager.insertSetting(new Setting(cookieFileldName, cookie + " "
+					dbManager.insertSetting(new Setting(cookieFieldName, cookie + " "
 							+ date.getTime()));
+					dbManager.insertSetting(new Setting(lastIpAddressField, Net.getLocalIpAddress()));
 
 					dbManager.close();
 					dbManager = null;

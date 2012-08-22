@@ -117,7 +117,7 @@ public class HydraAnnouncements extends Activity implements
 		Trace.i("time", minutesElapsed + "");
 
 		// Re-login if required
-		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT) {
+		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT || !dbManager.getSetting("last_ip").getText().equals(Net.getLocalIpAddress())) {
 			SharedPreferences preferences = PreferenceManager
 					.getDefaultSharedPreferences(this);
 
@@ -143,7 +143,6 @@ public class HydraAnnouncements extends Activity implements
 
 			dbManager.close();
 		}
-
 	}
 	
 	private void moveToAnnouncementAtIndex(int index) {
@@ -195,7 +194,7 @@ public class HydraAnnouncements extends Activity implements
 			String cookie = dbManager.getSetting("hydra_cookie").getText()
 					.split("\\s")[0];
 
-			int diff = 0;
+			int count = 0;
 			
 			try {
 				HttpGet get = new HttpGet(new URI(
@@ -211,13 +210,27 @@ public class HydraAnnouncements extends Activity implements
 
 				InputStream is = response.getEntity().getContent();
 				InputStreamReader isr = new InputStreamReader(is, "utf8");
+				
+				Integer totalLength = 0;
+				
 				while( (curString = Net.readStringFromInputStream(isr, 512)) != null ) {
 					if (isCancelled()) {
 						Trace.i("cancel", "cancelled!");
 						return null;
 					}
+					
+					totalLength += 512;
+					
+					if (totalLength > 1024 * 50) {
+						break;
+					}
+					
+					Trace.i("512 bytes: ", curString);
+					
 					data.append(curString);
 				}
+				
+				isr.close();
 				
 				
 				//String data = Net.readStringFromInputStream(response
@@ -231,7 +244,15 @@ public class HydraAnnouncements extends Activity implements
 
 				announcements = new ArrayList<Announcement>();
 				
-				for (int i = 4; i < rows.size(); i++) {
+				int step = 1;
+				int order = 0;
+				
+				if (dbManager.getNumberOfAnnouncements() > 0) {
+					order = dbManager.getAnnouncementMinimumOrder()-1;
+					step = -1;	
+				}
+				
+				for (int i = 4; i < rows.size()-1; i++) {
 
 					Element el = rows.get(i);
 
@@ -288,7 +309,9 @@ public class HydraAnnouncements extends Activity implements
 					Announcement newAnnouncement = new Announcement(announcementBody,
 							announcementCategory, announcementAuthor,
 							announcementTitle, announcementAttachmentLink,
-							announcementDate, i);
+							announcementDate, order);
+					
+					order += step;
 					
 					announcements.add(newAnnouncement);
 				}
@@ -296,12 +319,19 @@ public class HydraAnnouncements extends Activity implements
 				//Trace.i("number", dbManager.getNumberOfAnnouncements() +"");
 				
 				//Add the required announcements to database
-				diff = announcements.size() - (int)dbManager.getNumberOfAnnouncements();
+				//diff = announcements.size() - (int)dbManager.getNumberOfAnnouncements();
 				
 				//dbManager.removeAllAnnouncements();
 				
-				for (int i = 0; i < diff; i++) {
+				for (int i = 0; i < announcements.size(); i++) {
 					Announcement thisAnnouncement = announcements.get(i);
+					
+					if (dbManager.announcementExists(thisAnnouncement)) {
+						break;
+					}
+					
+					count++;
+					
 					dbManager.insertAnnouncement(thisAnnouncement);
 				}
 				
@@ -318,11 +348,9 @@ public class HydraAnnouncements extends Activity implements
 				e.printStackTrace();
 			}
 
-
-
 			// Trace.i("childData", childData.size() + "");
 
-			return new Integer(diff);
+			return new Integer(count);
 		}
 
 		protected void onPostExecute(Integer count) {
