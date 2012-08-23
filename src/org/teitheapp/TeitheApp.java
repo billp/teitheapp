@@ -38,6 +38,8 @@ public class TeitheApp extends TabActivity {
 			}
 		});
 		thread.start();*/
+		
+		//startService(new Intent(this, HydraAnnouncementsService.class));
 	}
 
 	private void setTabs() {
