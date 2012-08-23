@@ -260,6 +260,7 @@ public class LoginService {
 
 					String cookie = result[0];
 					
+					
 					//Insert login data to database
 					Date date = new java.util.Date();
 					

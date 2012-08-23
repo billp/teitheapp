@@ -227,11 +227,16 @@ public class TeacherInfo extends Activity implements LoginServiceDelegate {
 			
 			for (Teacher curTeacher: teachers) {
 				String fullName = curTeacher.getSurname() + " " + curTeacher.getName();
-				String regex = "^" + filterText.getText().toString() + ".*";
-				Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-				Matcher m = pattern.matcher(fullName);
 				
-				if (m.matches()) {
+				String regex = "^" + filterText.getText().toString() + ".*";
+				
+				Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+				Pattern pattern2 = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+				
+				Matcher m = pattern.matcher(curTeacher.getSurname());
+				Matcher m2 = pattern2.matcher(curTeacher.getName());
+				
+				if (m.matches() || m2.matches()) {
 					teachersClone.add(curTeacher);
 				}
 			}
