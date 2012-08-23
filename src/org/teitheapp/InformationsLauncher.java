@@ -22,6 +22,16 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 	private TypedArray icons = null;
 	private String[] iconsDesc = null;
 	final static int ITEM_BASIC_INFO = 0;
+	final static int ITEM_STUDY = 1;
+	final static int ITEM_DEGREE = 2;
+	final static int ITEM_D_SUPPORT = 3;
+	final static int ITEM_E_SUPPORT = 4;
+	final static int ITEM_STUDENT = 5;
+	final static int ITEM_ORGANIZE = 6;
+	final static int ITEM_COURSES = 7;
+	final static int ITEM_LINKS = 8;
+	final static int ITEM_PHOTOS = 9;
+	final static int ITEM_CONTACT = 10;
 	
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +107,47 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 				intent.setClass(this, BasicInfo.class);
 				startActivity(intent);
 				break;
-			default:
+			case ITEM_STUDY: 
+				intent.setClass(this, Study.class);
+				startActivity(intent);
+				break;
+		/*	case ITEM_DEGREE: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_D_SUPPORT: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_E_SUPPORT: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_STUDENT: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_ORGANIZE: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_COURSES: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_LINKS: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_PHOTOS: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+			case ITEM_CONTACT: 
+				intent.setClass(this, BasicInfo.class);
+				startActivity(intent);
+				break;
+		*/	default:
 				Toast.makeText(InformationsLauncher.this,
 						"Έκανες κλικ στο '" + iconsDesc[pos] + "'",
 						Toast.LENGTH_SHORT).show();

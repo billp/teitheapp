@@ -67,6 +67,9 @@
         <activity
             android:name=".BasicInfo"
             android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Study"
+            android:theme="@style/MyLightTheme.NoShadow" />
     </application>
 
 </manifest>

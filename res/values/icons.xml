@@ -1,22 +1,28 @@
 <resources>
 	<array name="info_icons">
-		<item>@drawable/icon_info_info</item>
-		<item>@drawable/icon_info_program</item>
-		<item>@drawable/icon_info_web</item>
-		<item>@drawable/icon_info_sitesdb</item>
-		<item>@drawable/icon_info_camera</item>
-		<item>@drawable/icon_info_student</item>
+	    <item>@drawable/icon_info_department</item>
+		<item>@drawable/icon_info_study</item>
+		<item>@drawable/icon_info_degree</item>
 		<item>@drawable/icon_info_help</item>
+		<item>@drawable/icon_info_edu_support</item>
+		<item>@drawable/icon_info_student</item>
+		<item>@drawable/icon_info_program</item>
+		<item>@drawable/icon_info_courses</item>
+		<item>@drawable/icon_info_links</item>
+		<item>@drawable/icon_info_photos</item>
 		<item>@drawable/icon_info_contact</item>
 	</array>
 	<array name="info_icons_desc">
-		<item>Βασικές πληροφορίες</item>
-		<item>Πρόγραμμα σπουδών</item>
-		<item>Χρήσιμοι σύνδεσμοι</item>
-		<item>Ιστοσελίδες καθηγητών</item>
+		<item>Το Τμήμα</item>
+		<item>Οι Σπουδές</item>
+		<item>Το Πτυχίο</item>
+		<item>Διοικητική Υποστήριξη</item>
+		<item>Εκπαιδευτική Υποστήριξη</item>
+		<item>Φοιτητική Μέριμνα</item>
+		<item>Οργάνωση Μαθημάτων</item>
+		<item>Τα Μαθήματα</item>
+		<item>Χρήσιμοι Σύνδεσμοι</item>
 		<item>Φωτογραφίες</item>
-		<item>Φοιτητικά θέματα</item>
-		<item>Υποστήριξη</item>
 		<item>Επικοινωνία</item>
 	</array>
 	<array name="services_icons">
