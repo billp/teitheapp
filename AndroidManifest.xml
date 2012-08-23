@@ -70,8 +70,7 @@
             android:theme="@style/MyLightTheme.NoShadow" />
 
         <service
-            android:name=".HydraAnnouncementsService"
-            android:process=":remote" >
+            android:name=".HydraAnnouncementsService" >
             <intent-filter>
                 <action android:name="com.example.android.apis.app.REMOTE_SERVICE" />
             </intent-filter>

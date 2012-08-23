@@ -426,8 +426,6 @@ public class HydraAnnouncements extends Activity implements
 	//Attachment
 	
 	@Override
-	
-	
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		
 		//MenuItem attMenu = (MenuItem)findViewById(R.id.menu_attachment);
