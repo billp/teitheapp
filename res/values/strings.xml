@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Υπηρεσίες ΑΤΕΙΘ</string>
+    <string name="photos">Φωτογραφίες</string>
     <string name="tab_home_text">Αρχική</string>
     <string name="tab_info_text">Πληροφορίες</string>
     <string name="tab_services_text">Υπηρεσίες</string>

@@ -37,6 +37,8 @@ public class BasicInfo extends Activity {
 		setContentView(R.layout.basic_information);
 		
 		WebView wvBasicInfo = (WebView)findViewById(R.id.basic_info);
+		wvBasicInfo.setBackgroundColor(0);
+		wvBasicInfo.setBackgroundResource(R.drawable.backg);
 		
 		wvBasicInfo.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	}

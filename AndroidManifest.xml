@@ -71,6 +71,38 @@
         <activity
             android:name=".Study"
             android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Degree"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Dsupport"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Esupport"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Student"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Organize"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Links"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Contact"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        
+        <activity
+            android:label="@string/photos"
+            android:name=".AndroidGridLayoutActivity" />
+        
+        <!-- FullImageActivity -->
+        <activity 
+            android:name=".FullImageActivity"
+            android:label="@string/photos" />
+        
+    	
         <service
             android:name=".HydraAnnouncementsService" >
             <intent-filter>

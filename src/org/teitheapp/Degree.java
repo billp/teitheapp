@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-public class Study extends Activity {
+public class Degree extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class Study extends Activity {
 		String encoding = "utf-8";
 		String line = "";
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.studies)));
+		BufferedReader br = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.degree)));
 		
 		try {
 			while((line = br.readLine()) != null) {
@@ -32,11 +32,13 @@ public class Study extends Activity {
 		}
 		
 		
-		setContentView(R.layout.studies);
-		WebView wvStudies = (WebView)findViewById(R.id.studies);
-		wvStudies.setBackgroundColor(0);
-		wvStudies.setBackgroundResource(R.drawable.backg);
-		wvStudies.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
+		setContentView(R.layout.degree);
+		WebView wvDegree = (WebView)findViewById(R.id.degree);	
+		wvDegree.setBackgroundColor(0);
+		wvDegree.setBackgroundResource(R.drawable.backg);
+		wvDegree.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	}
+	
+	
 
 }

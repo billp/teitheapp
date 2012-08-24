@@ -111,43 +111,44 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 				intent.setClass(this, Study.class);
 				startActivity(intent);
 				break;
-		/*	case ITEM_DEGREE: 
-				intent.setClass(this, BasicInfo.class);
+			case ITEM_DEGREE: 
+				intent.setClass(this, Degree.class);
 				startActivity(intent);
 				break;
-			case ITEM_D_SUPPORT: 
-				intent.setClass(this, BasicInfo.class);
+		  	case ITEM_D_SUPPORT: 
+				intent.setClass(this, Dsupport.class);
 				startActivity(intent);
 				break;
-			case ITEM_E_SUPPORT: 
-				intent.setClass(this, BasicInfo.class);
+		    case ITEM_E_SUPPORT: 
+				intent.setClass(this, Esupport.class);
 				startActivity(intent);
 				break;
 			case ITEM_STUDENT: 
-				intent.setClass(this, BasicInfo.class);
+				intent.setClass(this, Student.class);
 				startActivity(intent);
 				break;
 			case ITEM_ORGANIZE: 
+				intent.setClass(this, Organize.class);
+				startActivity(intent);
+				break;
+		/*	case ITEM_COURSES: 
 				intent.setClass(this, BasicInfo.class);
 				startActivity(intent);
 				break;
-			case ITEM_COURSES: 
-				intent.setClass(this, BasicInfo.class);
-				startActivity(intent);
-				break;
+		*/
 			case ITEM_LINKS: 
-				intent.setClass(this, BasicInfo.class);
+				intent.setClass(this, Links.class);
 				startActivity(intent);
 				break;
 			case ITEM_PHOTOS: 
-				intent.setClass(this, BasicInfo.class);
+				intent.setClass(this, AndroidGridLayoutActivity.class);
 				startActivity(intent);
 				break;
 			case ITEM_CONTACT: 
-				intent.setClass(this, BasicInfo.class);
+				intent.setClass(this, Contact.class);
 				startActivity(intent);
 				break;
-		*/	default:
+			default:
 				Toast.makeText(InformationsLauncher.this,
 						"Έκανες κλικ στο '" + iconsDesc[pos] + "'",
 						Toast.LENGTH_SHORT).show();

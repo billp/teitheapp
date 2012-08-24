@@ -8,19 +8,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-public class Study extends Activity {
+public class Links extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+	
 		StringBuilder html = new StringBuilder("");
 		String mime = "text/html";
 		String encoding = "utf-8";
 		String line = "";
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.studies)));
+		BufferedReader br = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.links)));
 		
 		try {
 			while((line = br.readLine()) != null) {
@@ -31,12 +31,12 @@ public class Study extends Activity {
 			e.printStackTrace();
 		}
 		
-		
-		setContentView(R.layout.studies);
-		WebView wvStudies = (WebView)findViewById(R.id.studies);
-		wvStudies.setBackgroundColor(0);
-		wvStudies.setBackgroundResource(R.drawable.backg);
-		wvStudies.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
+		setContentView(R.layout.links);
+		WebView wvLinks = (WebView)findViewById(R.id.links);	
+		wvLinks.setBackgroundColor(0);
+		wvLinks.setBackgroundResource(R.drawable.backg);
+		wvLinks.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
+	
 	}
 
 }
