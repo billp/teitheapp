@@ -115,7 +115,6 @@
             </intent-filter>
         </receiver>
 
->>>>>>> branch 'master' of https://github.com/billp/teitheapp.git
     </application>
 
 </manifest>
