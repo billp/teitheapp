@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+	<TextView
+        android:id="@+id/txtHomeCategory"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/background"
+        android:gravity="center"
+
+        android:text="Τα Μαθήματα"
+        android:textColor="@color/home_category_text"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+	
+    <ExpandableListView
+        android:id="@+id/my_courses_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+    </ExpandableListView>
+
+</LinearLayout>
