@@ -25,6 +25,7 @@
                 android:summary="@string/pref_hydra_announcements_notifications_interval_summary"
                 android:entries="@array/hydra_intervals_labels"
                 android:entryValues="@array/hydra_intervals"
+                android:defaultValue="1800000"
                 android:dialogTitle="@string/pref_hydra_announcements_notifications_interval" 
                 android:dependency="hydra_notifications_enabled" />
     </PreferenceCategory>

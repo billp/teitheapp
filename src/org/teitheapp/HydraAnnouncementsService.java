@@ -21,6 +21,7 @@ import org.jsoup.select.Elements;
 import org.teitheapp.classes.Announcement;
 import org.teitheapp.classes.LoginService;
 import org.teitheapp.classes.LoginServiceDelegate;
+import org.teitheapp.classes.Setting;
 import org.teitheapp.utils.DatabaseManager;
 import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
@@ -36,6 +37,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
 public class HydraAnnouncementsService extends Service implements
@@ -54,22 +56,28 @@ public class HydraAnnouncementsService extends Service implements
 
 		dbManager = new DatabaseManager(this);
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-		Long time = Long.parseLong(dbManager.getSetting("hydra_cookie")
-				.getText().split("\\s")[1]);
+		
+		Setting hydraCookie = dbManager.getSetting("hydra_cookie");
+		
+		if (hydraCookie == null) {
+			Trace.i("hydra_service", "no login");
+			//stopSelf();
+			return;
+		}
+		
+		Long time = Long.parseLong(hydraCookie.getText().split("\\s")[1]);
 		int minutesElapsed = (int) (TimeUnit.MILLISECONDS
 				.toSeconds(new java.util.Date().getTime()) - TimeUnit.MILLISECONDS
 				.toSeconds(time)) / 60;
 
 		Trace.i("time", minutesElapsed + "");
 
-		Boolean notificationsEnabled = preferences.getBoolean(
-				"hydra_notifications_enabled", false);
+		//Boolean notificationsEnabled = preferences.getBoolean(
+		//		"hydra_notifications_enabled", false);
 
-		if (!notificationsEnabled) {
-
-			stopSelf();
-		}
+		//if (!notificationsEnabled) {
+		//	stopSelf();
+		//}
 
 		// Re-login if required
 		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT
@@ -87,6 +95,8 @@ public class HydraAnnouncementsService extends Service implements
 			updateAnnouncements();
 			dbManager.close();
 		}
+		
+		//showNotification();
 
 	}
 
@@ -104,14 +114,14 @@ public class HydraAnnouncementsService extends Service implements
 		return null;
 	}
 
-	private void showNotification() {
+	private void showNotification(int number) {
 		// In this sample, we'll use the same text for the ticker and the
 		// expanded notification
 		// CharSequence text = getText(R.string.remote_service_started);
 
 		// Set the icon, scrolling text and timestamp
 		Notification notification = new Notification(R.drawable.arrow_down,
-				"service started", System.currentTimeMillis());
+				String.format("%d new announcements", number), System.currentTimeMillis());
 
 		// The PendingIntent to launch our activity if the user selects this
 		// notification
@@ -119,7 +129,7 @@ public class HydraAnnouncementsService extends Service implements
 				new Intent(this, HydraAnnouncements.class), 0);
 
 		// Set the info for the views that show in the notification panel.
-		notification.setLatestEventInfo(this, "Hydra", "service_Started",
+		notification.setLatestEventInfo(this, "Hydra", "Pame",
 				contentIntent);
 
 		// Send the notification.
@@ -293,6 +303,8 @@ public class HydraAnnouncementsService extends Service implements
 						dbManager.insertAnnouncement(thisAnnouncement);
 					}
 					
+
+					
 					Trace.i("number of announcements: ", count + "");
 
 				} catch (Exception e) {
@@ -302,6 +314,19 @@ public class HydraAnnouncementsService extends Service implements
 
 				if (thread.isInterrupted()) {
 					return;
+				}
+				
+				//if (count > 0) {
+				showNotification(count);
+				//}
+				
+				int interval = Integer.parseInt(preferences.getString("hydra_notifications_interval", ""));
+				Trace.i("interval", interval + "");
+				try {
+					Thread.sleep(interval);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 				thread = new Thread(runnable);
@@ -359,6 +384,15 @@ public class HydraAnnouncementsService extends Service implements
 	
 	public void netError(String errMsg) {
 		// TODO Auto-generated method stub
-
+		int interval = Integer.parseInt(preferences.getString("hydra_notifications_interval", ""));
+		try {
+			Thread.sleep(interval);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		thread = new Thread(runnable);
+		thread.start();
 	}
 }

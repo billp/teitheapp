@@ -103,11 +103,8 @@
             android:label="@string/photos" />
         
     	
-        <service
+        <service android:enabled="true"
             android:name=".HydraAnnouncementsService" >
-            <intent-filter>
-                <action android:name="com.example.android.apis.app.REMOTE_SERVICE" />
-            </intent-filter>
         </service>
         <receiver android:name=".BootCompletedIntentReceiver" >
             <intent-filter>

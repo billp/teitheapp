@@ -1,17 +1,17 @@
 <resources>
     <!-- Used in View/Spinner1.java -->
     <string-array name="hydra_intervals_labels">
-        <item>1 λεπτό</item>
         <item>5 λεπτά</item>
         <item>15 λεπτά</item>
         <item>30 λεπτά</item>
-        <item>60 λεπτά</item>
+        <item>1 ώρα</item>
+        <item>5 ώρες</item>
     </string-array>
     <string-array name="hydra_intervals">
-        <item>1</item>
-        <item>5</item>
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
+        <item>300000</item>
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>18000000</item>
     </string-array>  
 </resources>
