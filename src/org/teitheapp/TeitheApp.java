@@ -1,5 +1,7 @@
 package org.teitheapp;
 
+import org.teitheapp.utils.Trace;
+
 import android.R.bool;
 import android.app.ActivityManager;
 import android.app.TabActivity;
@@ -119,26 +121,32 @@ public class TeitheApp extends TabActivity {
 		boolean hydraNotificationsEnabled = preferences.getBoolean("hydra_notifications_enabled", false);
 		Intent serviceIntent = new Intent(this, HydraAnnouncementsService.class);
 		
+		Trace.i("hydra_notifications_enabled", hydraNotificationsEnabled + "");
+		
 		if (hydraNotificationsEnabled) {
 			if (!isServiceRunning()) {
 				startService(serviceIntent);
+			//	Trace.i("hydra_notifications_enabled", "service_started");
 			}
 		} else {
 			if (isServiceRunning()) {
 				stopService(serviceIntent);
+			//	Trace.i("hydra_notifications_enabled", "service_stopped");
 			}
 		}
-		
-
 	}
 	
 	private boolean isServiceRunning() {
 	    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	    	Trace.i("service name", service.service.getClassName());
 	        if ("org.teitheapp.HydraAnnouncementsService".equals(service.service.getClassName())) {
+	        	 
+	        	Trace.i("service", "is running");
 	            return true;
 	        }
 	    }
+	    Trace.i("service", "is not running");
 	    return false;
 	}
 

@@ -71,4 +71,6 @@
 	<string name="net_error">Αδυναμία σύνδεσης στο δίκτυο</string>
 	<string name="open_file">Επέλεξε με ποιά εφαρμογή θέλεις να ανοίξεις το αρχείο</string>
 	<string name="downloading_attachment">Λήψη συνημμένου</string>
+	<string name="notification_new_announcemnt">νέα ανακοίνωση</string>
+	<string name="notification_new_announcemnts">νέες ανακοινώσεις</string>
 </resources>
