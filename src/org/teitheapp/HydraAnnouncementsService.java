@@ -407,16 +407,13 @@ public class HydraAnnouncementsService extends Service implements
 	
 	
 	public void netError(String errMsg) {
-		// TODO Auto-generated method stub
-		int interval = Integer.parseInt(preferences.getString("hydra_notifications_interval", ""));
 		try {
-			Thread.sleep(interval);
+			Thread.sleep(300000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		thread = new Thread(runnable);
-		thread.start();
+		updateAnnouncements();
 	}
 }
