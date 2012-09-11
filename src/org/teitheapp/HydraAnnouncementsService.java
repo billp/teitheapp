@@ -216,6 +216,15 @@ public class HydraAnnouncementsService extends Service implements
 
 					isr.close();
 
+					String name = dbManager.getSetting("hydra_student").getText().split(";")[1];
+					
+					//Check for server login timeout (hack)
+					if (!data.toString().contains(name)) {
+						thread = new Thread(runnable);
+						thread.start();
+						return;
+					}
+					
 					// String data = Net.readStringFromInputStream(response
 					// .getEntity().getContent(), "utf8");
 

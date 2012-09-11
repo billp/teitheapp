@@ -87,10 +87,12 @@ public class DiplomaNumber extends Activity implements LoginServiceDelegate {
 				Elements averageTableRows = doc.getElementsByClass("subHeaderBack");
 				
 				Element averageTableColumn = null;
+				//averageTableColumn = doc.getElementsMatchingText("ΓΕΝΙΚΑ ΣΥΝΟΛΑ ΠΕΡΑΣΜΕΝΩΝ ΜΑΘΗΜΑΤΩΝ").get(0);
 				
 				for (Element el:averageTableRows) {
-					if (el.text().contains("ΓΕΝΙΚΑ ΣΥΝΟΛΑ")) {
+					if (el.text().contains("ΓΕΝΙΚΑ ΣΥΝΟΛΑ ΠΕΡΑΣΜΕΝΩΝ ΜΑΘΗΜΑΤΩΝ")) {
 						averageTableColumn = el;
+						break;
 					}
 				}
 				

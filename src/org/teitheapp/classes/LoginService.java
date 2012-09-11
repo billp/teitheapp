@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -22,6 +23,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.teitheapp.Constants;
 import org.teitheapp.utils.DatabaseManager;
 import org.teitheapp.utils.Net;
@@ -141,7 +146,7 @@ public class LoginService {
 				//Trace.i("headers", strCookie);
 
 				strResponse = Net.readStringFromInputStream(data, encoding);
-
+				//Trace.i("response", "a"+ strResponse + "a");
 				/*
 				 * byte[] buffer = new byte[512]; int bytesReaded = 0; while
 				 * ((bytesReaded = data.read(buffer)) != -1) {
@@ -245,6 +250,15 @@ public class LoginService {
 					
 					String am, name, surName;
 					Matcher m = null;
+					
+					
+					
+					Document doc = Jsoup.parse(result[1]);
+					Elements elements = doc.getElementsMatchingOwnText("Επώνυμο");
+					
+			
+					
+					Trace.i("elements", "a" + elements.get(0) + "a");
 					
 					m = Pattern.compile("<td class=\"tableBold\">ΑEΜ: </td>[^<]+<td colspan=\"3\">([^<]+)").matcher(result[1]);
 					m.find();
