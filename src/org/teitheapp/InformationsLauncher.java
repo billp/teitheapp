@@ -30,8 +30,11 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 	final static int ITEM_ORGANIZE = 6;
 	final static int ITEM_COURSES = 7;
 	final static int ITEM_LINKS = 8;
-	final static int ITEM_PHOTOS = 9;
-	final static int ITEM_CONTACT = 10;
+	final static int ITEM_STUFF_LINKS = 9;
+	final static int ITEM_STUDENT_LINKS = 10;
+	final static int ITEM_PHOTOS = 11;
+	final static int ITEM_CONTACT = 12;
+	
 	
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -140,6 +143,14 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 				intent.setClass(this, Links.class);
 				startActivity(intent);
 				break;
+			case ITEM_STUFF_LINKS: 
+				intent.setClass(this, Stufflinks.class);
+				startActivity(intent);
+				break;	
+			case ITEM_STUDENT_LINKS: 
+				intent.setClass(this, Studentlinks.class);
+				startActivity(intent);
+				break;
 			case ITEM_PHOTOS: 
 				intent.setClass(this, AndroidGridLayoutActivity.class);
 				startActivity(intent);
@@ -148,6 +159,7 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 				intent.setClass(this, Contact.class);
 				startActivity(intent);
 				break;
+			
 			default:
 				Toast.makeText(InformationsLauncher.this,
 						"Έκανες κλικ στο '" + iconsDesc[pos] + "'",

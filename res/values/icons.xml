@@ -9,8 +9,11 @@
 		<item>@drawable/icon_info_program</item>
 		<item>@drawable/icon_info_courses</item>
 		<item>@drawable/icon_info_links</item>
+		<item>@drawable/icon_info_stuff_links</item>
+		<item>@drawable/icon_info_student_links</item>
 		<item>@drawable/icon_info_photos</item>
 		<item>@drawable/icon_info_contact</item>
+		
 	</array>
 	<array name="info_icons_desc">
 		<item>Το Τμήμα</item>
@@ -22,6 +25,8 @@
 		<item>Οργάνωση Μαθημάτων</item>
 		<item>Τα Μαθήματα</item>
 		<item>Χρήσιμοι Σύνδεσμοι</item>
+		<item>Ιστοσελίδες Καθηγητών</item>
+		<item>Ιστοσελίδες Φοιτητών</item>
 		<item>Φωτογραφίες</item>
 		<item>Επικοινωνία</item>
 	</array>

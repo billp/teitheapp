@@ -94,7 +94,12 @@
         <activity
             android:name=".Contact"
             android:theme="@style/MyLightTheme.NoShadow" />
-        
+       <activity
+            android:name=".Stufflinks"
+            android:theme="@style/MyLightTheme.NoShadow" />
+       <activity
+            android:name=".Studentlinks"
+            android:theme="@style/MyLightTheme.NoShadow" />
         <activity
             android:label="@string/photos"
             android:name=".AndroidGridLayoutActivity" />
