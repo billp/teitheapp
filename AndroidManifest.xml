@@ -103,6 +103,12 @@
         <activity
             android:label="@string/photos"
             android:name=".AndroidGridLayoutActivity" />
+        <activity
+            android:name=".Buservice"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
+            android:name=".Chatservice"
+            android:theme="@style/MyLightTheme.NoShadow" />
         
         <!-- FullImageActivity -->
         <activity 
