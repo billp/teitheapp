@@ -3,28 +3,27 @@
 require_once("./config.php");
 
 class Database {
-   // global $mysql_sock, $mysql_user, $mysql_
+
 
     public static function connect_to_database() {
-        $link = mysql_connect('localhost:/home/student/x0809/vpanag/mysql/run/mysql.sock', 'teitheapp', 'runtothehills');
+    	global $db;
+    	$link = mysql_connect($db['sock'], $db['user'], $db['pass']);
         if (!$link) {
             die('Could not connect: ' . mysql_error());
         }
 
-        mysql_select_db("teitheapp", $link);        
+        mysql_select_db($db['db_name'], $link);        
 
         return $link;
     }
 
-    function close_database() {
+    function close_database($link) {
         mysql_close($link);
     }
 
     function execute($sql, $link) {
-        mysql_query($sql, $link);    
+        return mysql_query($sql, $link);    
     }
-
-    
 }
 
 ?>

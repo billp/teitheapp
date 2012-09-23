@@ -220,6 +220,7 @@ public class HydraAnnouncementsService extends Service implements
 					
 					//Check for server login timeout (hack)
 					if (!data.toString().contains(name)) {
+						//thread.stop();
 						thread = new Thread(runnable);
 						thread.start();
 						return;
@@ -355,7 +356,6 @@ public class HydraAnnouncementsService extends Service implements
 				Trace.i("interval", interval + "");
 				try {
 					Thread.sleep(interval);
-					
 					thread = new Thread(runnable);
 					thread.start();
 					
@@ -417,7 +417,7 @@ public class HydraAnnouncementsService extends Service implements
 	
 	public void netError(String errMsg) {
 		try {
-			Thread.sleep(300000);
+			Thread.sleep(60000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
