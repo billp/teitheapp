@@ -53,49 +53,8 @@ public class HydraAnnouncementsService extends Service implements
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-
-		dbManager = new DatabaseManager(this);
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		Setting hydraCookie = dbManager.getSetting("hydra_cookie");
-		
-		if (hydraCookie == null) {
-			Trace.i("hydra_service", "no login");
-			stopSelf();
-			return;
-		}
-		
-		Long time = Long.parseLong(hydraCookie.getText().split("\\s")[1]);
-		int minutesElapsed = (int) (TimeUnit.MILLISECONDS
-				.toSeconds(new java.util.Date().getTime()) - TimeUnit.MILLISECONDS
-				.toSeconds(time)) / 60;
-
-		Trace.i("time", minutesElapsed + "");
-
-		//Boolean notificationsEnabled = preferences.getBoolean(
-		//		"hydra_notifications_enabled", false);
-
-		//if (!notificationsEnabled) {
-		//	stopSelf();
-		//}
-
-		// Re-login if required
-		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT
-				|| !dbManager.getSetting("last_ip").getText()
-						.equals(Net.getLocalIpAddress())) {
-			SharedPreferences preferences = PreferenceManager
-					.getDefaultSharedPreferences(this);
-
-			LoginService ls = new LoginService(LoginService.LOGIN_MODE_HYDRA,
-					preferences.getString("hydra_login", null),
-					preferences.getString("hydra_pass", null), this);
-			ls.login();
-
-		} else {
-			updateAnnouncements();
-			dbManager.close();
-		}
-		
+		updateAnnouncements();
 		//showNotification();
 
 	}
@@ -171,6 +130,20 @@ public class HydraAnnouncementsService extends Service implements
 
 	public void updateAnnouncements() {
 		
+		if (timeOutExceded()) {
+			 SharedPreferences preferences = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			 LoginService ls = new LoginService(LoginService.LOGIN_MODE_HYDRA,
+					preferences.getString("hydra_login", null),
+					preferences.getString("hydra_pass", null), this);
+			ls.login();
+			return;
+		}
+		
+		if (thread != null) {
+			thread.interrupt();
+		}
+		
 		runnable = new Runnable() {
 			public void run() {
 				
@@ -220,6 +193,7 @@ public class HydraAnnouncementsService extends Service implements
 					
 					//Check for server login timeout (hack)
 					if (!data.toString().contains(name)) {
+						//thread.stop();
 						thread = new Thread(runnable);
 						thread.start();
 						return;
@@ -355,7 +329,6 @@ public class HydraAnnouncementsService extends Service implements
 				Trace.i("interval", interval + "");
 				try {
 					Thread.sleep(interval);
-					
 					thread = new Thread(runnable);
 					thread.start();
 					
@@ -417,12 +390,56 @@ public class HydraAnnouncementsService extends Service implements
 	
 	public void netError(String errMsg) {
 		try {
-			Thread.sleep(300000);
+			Thread.sleep(60000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		updateAnnouncements();
+	}
+	
+	public boolean timeOutExceded() {
+		dbManager = new DatabaseManager(this);
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		Setting hydraCookie = dbManager.getSetting("hydra_cookie");
+		
+		/*if (hydraCookie == null) {
+			Trace.i("hydra_service", "no login");
+			stopSelf();
+			return false;
+		}*/
+		
+		Long time = Long.parseLong(hydraCookie.getText().split("\\s")[1]);
+		int minutesElapsed = (int) (TimeUnit.MILLISECONDS
+				.toSeconds(new java.util.Date().getTime()) - TimeUnit.MILLISECONDS
+				.toSeconds(time)) / 60;
+
+		Trace.i("time", minutesElapsed + "");
+
+		// Re-login if required
+		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT
+				|| !dbManager.getSetting("last_ip").getText()
+						.equals(Net.getLocalIpAddress())) {
+			
+
+			return true;
+			
+			/*
+			 * SharedPreferences preferences = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			 * LoginService ls = new LoginService(LoginService.LOGIN_MODE_HYDRA,
+					preferences.getString("hydra_login", null),
+					preferences.getString("hydra_pass", null), this);
+			ls.login();*/
+
+		} else {
+			
+			return false;
+			
+			/*updateAnnouncements();
+			dbManager.close();*/
+		}
 	}
 }

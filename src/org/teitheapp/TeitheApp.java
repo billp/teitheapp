@@ -1,5 +1,7 @@
 package org.teitheapp;
 
+import org.teitheapp.classes.Setting;
+import org.teitheapp.utils.DatabaseManager;
 import org.teitheapp.utils.Trace;
 
 import android.R.bool;
@@ -123,8 +125,18 @@ public class TeitheApp extends TabActivity {
 		
 		Trace.i("hydra_notifications_enabled", hydraNotificationsEnabled + "");
 		
+		DatabaseManager dbManager = new DatabaseManager(this);
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		Setting hydraCookie = dbManager.getSetting("hydra_cookie");
+		
+		if (hydraCookie == null) {
+			Trace.i("hydra_service", "no login");
+		}
+
+		
 		if (hydraNotificationsEnabled) {
-			if (!isServiceRunning()) {
+			if (!isServiceRunning() && hydraCookie != null) {
 				startService(serviceIntent);
 			//	Trace.i("hydra_notifications_enabled", "service_started");
 			}
