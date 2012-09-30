@@ -134,11 +134,10 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 				intent.setClass(this, Organize.class);
 				startActivity(intent);
 				break;
-		/*	case ITEM_COURSES: 
-				intent.setClass(this, BasicInfo.class);
+			case ITEM_COURSES: 
+				intent.setClass(this, Courses.class);
 				startActivity(intent);
 				break;
-		*/
 			case ITEM_LINKS: 
 				intent.setClass(this, Links.class);
 				startActivity(intent);
