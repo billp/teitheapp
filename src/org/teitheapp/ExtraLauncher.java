@@ -2,6 +2,7 @@ package org.teitheapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ public class ExtraLauncher extends Activity {
 	// references to our images
 	private TypedArray icons = null;
 	private String[] iconsDesc = null;
+	final static int ITEM_BUSLINE = 0;
+	final static int ITEM_CHAT = 1;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,9 +37,9 @@ public class ExtraLauncher extends Activity {
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				Toast.makeText(ExtraLauncher.this,
-						"Έκανες κλικ στο '" + iconsDesc[position] + "'",
-						Toast.LENGTH_SHORT).show();
+				
+				startService(position);
+				
 			}
 		});
 	}
@@ -81,6 +84,29 @@ public class ExtraLauncher extends Activity {
 			textView.setText(iconsDesc[position]);
 
 			return itemView;
+		}
+	}
+	
+	
+	private void startService(int pos) {
+		Intent intent = new Intent();
+		
+		switch (pos) {
+			case ITEM_BUSLINE: 
+				intent.setClass(this, Buservice.class);
+				startActivity(intent);
+				break;
+		/*	case ITEM_CHAT: 
+				intent.setClass(this, Study.class);
+				startActivity(intent);
+				break;
+		*/
+			
+			default:
+				Toast.makeText(ExtraLauncher.this,
+						"Έκανες κλικ στο '" + iconsDesc[pos] + "'",
+						Toast.LENGTH_SHORT).show();
+				break;
 		}
 	}
 }
