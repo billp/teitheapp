@@ -1,0 +1,5 @@
+action=?:
+  -"bus_line":
+    -- mode = null							επιστρέφει όλες τις καταχωρήσεις
+    -- mode = add & starting_point = [1,2] & progress = [0-100]		προσθέτει μία καταχώριση
+    -- mode = delete & id = [id] 					διαγράφει μία καταχώρηση

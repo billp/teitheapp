@@ -2,6 +2,7 @@ package org.teitheapp;
 
 import java.net.URI;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -20,6 +21,7 @@ import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -39,7 +41,6 @@ public class Buservice extends Activity {
 	private Button btnSend;
 
 	private int startingPoint;
-	private JSONObject lastBusLineUpdate;
 	
 	private ProgressDialog dialog;
 	SharedPreferences preferences;
@@ -198,7 +199,7 @@ public class Buservice extends Activity {
 		protected void onPostExecute(JSONArray busLines) {
 			TextView tvHistory = (TextView) findViewById(R.id.txtHistory);
 			ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar1);
-			tvHistory.setText("");
+			tvHistory.setText(Html.fromHtml(""));
 
 			for (int i = 0; i < busLines.length(); i++) {
 				try {
@@ -211,16 +212,22 @@ public class Buservice extends Activity {
 					} else {
 						from = "ΤΕΙ";
 					}
-
+					
+					Date updateTime = new Date((long)curBusLine.getInt("update_time") * 1000);
+					String strUpdateTime = String.format("%d/%d %d:%02d", updateTime.getDay(), updateTime.getMonth(), updateTime.getHours(), updateTime.getMinutes());
+					
 					String line = String.format(
 							"Πλ.: %s%% Ενημέρωση: %s Από: %s",
 							curBusLine.getString("progress"),
-							curBusLine.getString("update_time"), from);
+							strUpdateTime, from);
 
-					tvHistory.append(line + "\n");
+
 
 					if (i == 0) {
 						pb.setProgress(curBusLine.getInt("progress"));
+						tvHistory.append(Html.fromHtml("<b>" + line + "</b><br />"));
+					} else {
+						tvHistory.append(Html.fromHtml(line + "<br />"));
 					}
 
 				} catch (JSONException e) {
@@ -274,7 +281,6 @@ public class Buservice extends Activity {
 
 		protected void onPostExecute(JSONObject jsonResponse) {
 			try {
-				lastBusLineUpdate = jsonResponse;
 				int busUpdateId = jsonResponse.getInt("id");
 				
 				Editor pEditor = preferences.edit();

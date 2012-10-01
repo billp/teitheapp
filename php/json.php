@@ -10,8 +10,8 @@
     
     if ($action == "bus_line") {
     	if ($mode == "") {
-    		$sql = "SELECT `id`, DATE_FORMAT(`update_time`, '%e/%c %H:%i') as `update_time`, `starting_point`, `progress` 
-    				FROM `bus_line` ORDER BY `id` DESC limit 5";
+    		$sql = "SELECT `id`,UNIX_TIMESTAMP(`update_time`) as `update_time`, `starting_point`, `progress` 
+    				FROM `bus_line` ORDER BY `update_time` DESC limit 5";
     		$result = mysql_query($sql, $link);
     		
     		$bus_lines = array();
@@ -23,7 +23,7 @@
     			
     			$json_row['id'] = (int)$row['id'];
     			$json_row['starting_point'] = (int)$row['starting_point'];
-    			$json_row['update_time'] = $row['update_time'];
+    			$json_row['update_time'] = (int)$row['update_time'];
     			$json_row['progress'] = (int)$row['progress'];
     		
     			array_push($bus_lines, $json_row);
