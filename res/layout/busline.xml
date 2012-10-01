@@ -16,16 +16,30 @@
         android:textSize="15dp"
         android:textStyle="bold" />
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
-        android:max="100"
-        android:progress="0" />
+        android:orientation="horizontal"
+        android:gravity="center" >
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:max="100"
+            android:progress="0" />
+
+        <ImageView
+            android:id="@+id/imgRefresh"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/refresh" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txtHistory"
@@ -63,9 +77,9 @@
             android:layout_marginRight="5dp"
             android:maxHeight="35dp"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp" />
+            android:paddingRight="8dp"
+            android:paddingTop="10dp" />
 
         <TextView
             android:id="@+id/txtPercent"
@@ -84,13 +98,13 @@
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/radioButton1"
+            android:id="@+id/rbNSS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Από ΝΣΣ" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/rbTEI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -104,9 +118,10 @@
         android:gravity="center" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btnSetProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="Αποστολή" />
     </LinearLayout>
 

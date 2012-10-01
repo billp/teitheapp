@@ -73,6 +73,7 @@
 	<string name="downloading_attachment">Λήψη συνημμένου</string>
 	<string name="notification_new_announcemnt">νέα ανακοίνωση</string>
 	<string name="notification_new_announcemnts">νέες ανακοινώσεις</string>
+	<string name="updating_bus_line">ενημέρωση γραμμής</string>
 	
     <drawable name="white">#ffffff</drawable>
     <drawable name="blue">#2554C7</drawable>

@@ -26,18 +26,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".Empty" />
-        <activity android:name=".InformationsLauncher" />
-        <activity android:name=".ServicesLauncher" />
-        <activity android:name=".ExtraLauncher" />
+        <activity android:name=".InformationsLauncher"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ServicesLauncher"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ExtraLauncher"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DiplomaNumber"
             android:configChanges="orientation"
-            android:theme="@style/MyLightTheme.NoShadow" />
-        <activity android:name=".Home" />
+            android:theme="@style/MyLightTheme.NoShadow" 
+            android:screenOrientation="portrait" />
+        <activity android:name=".Home"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MyGrades"
             android:configChanges="orientation"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MyCourseDeclaration"
             android:configChanges="orientation"
@@ -45,70 +51,91 @@
         <activity
             android:name=".TeacherInfo"
             android:configChanges="orientation"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ViewTeacher"
             android:configChanges="orientation"
-            android:theme="@style/Theme.CustomDialog" />
+            android:theme="@style/Theme.CustomDialog"
+            android:screenOrientation="portrait" />
         <activity android:name=".Preferences" />
         <activity
             android:name=".HydraAnnouncements"
             android:configChanges="orientation"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Login"
-            android:theme="@style/Theme.CustomDialog" />
+            android:theme="@style/Theme.CustomDialog"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".InfoDialog"
-            android:theme="@style/Theme.CustomDialog" />
+            android:theme="@style/Theme.CustomDialog"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DownloadAttachment"
-            android:theme="@style/Theme.CustomDialog" />
+            android:theme="@style/Theme.CustomDialog"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MyInfo"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".BasicInfo"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Study"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Degree"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Dsupport"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Esupport"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Student"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Organize"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Links"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Contact"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
        <activity
             android:name=".Stufflinks"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
        <activity
             android:name=".Studentlinks"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:label="@string/photos"
-            android:name=".AndroidGridLayoutActivity" />
+            android:name=".AndroidGridLayoutActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Buservice"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Chatservice"
-            android:theme="@style/MyLightTheme.NoShadow" />
+            android:theme="@style/MyLightTheme.NoShadow"
+            android:screenOrientation="portrait" />
         
         <!-- FullImageActivity -->
         <activity 
@@ -117,10 +144,6 @@
         
         <activity android:name=".Courses"
                   android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         
     	
