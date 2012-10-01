@@ -132,7 +132,7 @@ public class Buservice extends Activity {
 				}
 				
 				String url = null;
-				if (now - lastBusInsertion > 60 * 60 * 15 * 1000) {
+				if (now - lastBusInsertion > 60 * 15 * 1000l) {
 					url = String.format("%s?action=bus_line&mode=add&starting_point=%d&progress=%d",
 							Constants.API_URL, startingPoint, sb.getProgress());
 				 
