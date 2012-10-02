@@ -84,6 +84,50 @@
     		}
     	}
     }
+    else if ($action == "students_online") {
+    	if ($mode == "") {
+    		$sql = "SELECT `id`, UNIX_TIMESTAMP(`update_time`) as `update_time`, `name`, `surname` 
+    				FROM `students_online` ORDER BY `surname`, `name` ASC";
+    		$result = mysql_query($sql, $link);
+    		
+    		$bus_lines = array();
+    		
+    		while ($row = mysql_fetch_assoc($result)) {
+    			$json_row = array();
+    			
+    			$json_row['id'] = (int)$row['id'];
+    			$json_row['name'] = $row['name'];
+    			$json_row['surname'] = $row['surname'];
+    			$json_row['update_time'] = (int)$row['update_time'];
+    		
+    			array_push($bus_lines, $json_row);
+    		}
+    		echo json_encode($bus_lines);
+    	}
+    	else if ($mode == "checkin") {
+        	$name = $_GET['name'];
+       	 	$surname = $_GET['surname'];
+        
+        	//Remove old rows
+        	$sql = "DELETE FROM `students_online` WHERE UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(`update_time`) > 60 * 10";
+        	Database::execute($sql, $link);
+     
+        	$rows_deleted = mysql_affected_rows($link);
+        
+        	$sql = "INSERT INTO `students_online` (`name`, `surname`, `update_time`) VALUES ('$name', '$surname', now())";
+    	    Database::execute($sql, $link);
+    	    
+    	    if (mysql_affected_rows($link) > 0) {
+    			$json['status'] = "success";
+    			$json['rows_deleted'] = $rows_deleted;
+    			echo json_encode($json);
+    		} else {
+    			$json['status'] = "failed";
+    			echo json_encode($json);
+    		}
+
+    	}
+    }
     
     Database::close_database($link);
 ?>
