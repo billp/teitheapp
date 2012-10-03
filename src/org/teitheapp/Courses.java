@@ -38,11 +38,12 @@ public class Courses extends ExpandableListActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Μαθήματα");
+        //menu.setHeaderTitle("Sample menu");
         //menu.add(0, 0, 0, R.string.expandable_list_sample_action);
     }
     
-    @Override
+    
+      @Override
     public boolean onContextItemSelected(MenuItem item) {
         ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item.getMenuInfo();
 
@@ -63,11 +64,7 @@ public class Courses extends ExpandableListActivity {
         
         return false;
     }
-    
-   // public boolean OnChildClickListener(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-    	
-   // }
-    
+  
 
     /**
      * A simple adapter which maintains an ArrayList of photo resource Ids. 
@@ -77,7 +74,7 @@ public class Courses extends ExpandableListActivity {
      */
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         // Sample data set.  children[i] contains the children (String[]) for groups[i].
-        private String[] groups = { "Α' Εξάμηνο", "Β' Εξάμηνο", "Γ' Εξάμηνο", "Δ' Εξάμηνο", "Ε' Εξάμηνο", "ΣΤ' Εξάμηνο", "Ζ' Εξάμηνο", "Η' Εξάμηνο" };
+    	private String[] groups = { "Α' Εξάμηνο", "Β' Εξάμηνο", "Γ' Εξάμηνο", "Δ' Εξάμηνο", "Ε' Εξάμηνο", "ΣΤ' Εξάμηνο", "Ζ' Εξάμηνο", "Η' Εξάμηνο" };
         private String[][] children = {
                 { "Εισαγωγή στη Πληροφορική", "Αλγοριθμική και Προγραμματισμός", "Ψηφιακά Συστήματα", "Μαθηματική Ανάλυση", "Δεξιότητες Επικοινωνίας/Κοινωνικά Δίκτυα" },
                 { "Αντικειμενοστραφής Προγραμματισμός", "Εισαγωγή στα Λειτουργικά Συστήματα", "Διακριτά Μαθηματικά", "Γλώσσες και Τεχνολογίες Ιστού", "Πληροφοριακά Συστήματα Ι" },
@@ -114,7 +111,6 @@ public class Courses extends ExpandableListActivity {
             textView.setPadding(36, 0, 0, 0);
             return textView;
         }
-        
         
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                 View convertView, ViewGroup parent) {

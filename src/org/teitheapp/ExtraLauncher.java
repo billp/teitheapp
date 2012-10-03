@@ -96,11 +96,11 @@ public class ExtraLauncher extends Activity {
 				intent.setClass(this, Buservice.class);
 				startActivity(intent);
 				break;
-		/*	case ITEM_CHAT: 
-				intent.setClass(this, Study.class);
+			case ITEM_CHAT: 
+				intent.setClass(this, Chatservice.class);
 				startActivity(intent);
 				break;
-		*/
+		
 			
 			default:
 				Toast.makeText(ExtraLauncher.this,
