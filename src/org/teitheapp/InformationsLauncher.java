@@ -39,7 +39,7 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.launcher_grid);
+		setContentView(R.layout.launcher_grid3);
 
 		// Initialize the launcher icons
 		icons = getResources().obtainTypedArray(R.array.info_icons);

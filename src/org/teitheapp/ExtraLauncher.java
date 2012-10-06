@@ -26,7 +26,7 @@ public class ExtraLauncher extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.launcher_grid);
+		setContentView(R.layout.launcher_grid2);
 
 		// Initialize the launcher icons
 		icons = getResources().obtainTypedArray(R.array.extra_icons);
