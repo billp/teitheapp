@@ -1,6 +1,8 @@
 package org.teitheapp;
 
 import java.net.URI;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -214,12 +216,14 @@ public class Buservice extends Activity {
 					}
 					
 					Date updateTime = new Date((long)curBusLine.getInt("update_time") * 1000);
-					String strUpdateTime = String.format("%d/%d %d:%02d", updateTime.getDay(), updateTime.getMonth(), updateTime.getHours(), updateTime.getMinutes());
+					//String strUpdateTime = String.format("%d/%d %d:%02d", updateTime.getDay(), updateTime.getMonth(), updateTime.getHours(), updateTime.getMinutes());
+					Format dateFormat = new SimpleDateFormat("[dd/MM HH:mm]");
+					
 					
 					String line = String.format(
 							"Πλ.: %s%% Ενημέρωση: %s Από: %s",
 							curBusLine.getString("progress"),
-							strUpdateTime, from);
+							dateFormat.format(updateTime), from);
 
 
 

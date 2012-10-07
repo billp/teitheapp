@@ -129,8 +129,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyLightTheme.NoShadow" />
         <activity
-            android:name=".AndroidGridLayoutActivity"
+            android:name=".PhotosActivity"
             android:label="@string/photos"
+            android:theme="@style/MyLightTheme.NoShadow"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Buservice"
@@ -144,6 +145,7 @@
         <!-- FullImageActivity -->
         <activity
             android:name=".FullImageActivity"
+            android:theme="@style/MyLightTheme.NoShadow"
             android:label="@string/photos" />
         <activity
             android:name=".Courses"

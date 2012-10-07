@@ -12,7 +12,9 @@ public class Home extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 
-		WebView webview = (WebView) findViewById(R.id.txtHomeArticle);
+		/*
+		 WebView webview = (WebView) findViewById(R.id.txtHomeArticle);
+		 
 		
 		String sampleText = getString(R.string.sample_text);
 		
@@ -28,7 +30,7 @@ public class Home extends Activity {
 		int dp = (int)(pixel/getResources().getDisplayMetrics().density);
 		
 		webview.setBackgroundColor(0x00000000);
-		
+		*/
 		 
 	}
 }

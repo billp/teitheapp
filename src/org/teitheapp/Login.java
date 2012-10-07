@@ -176,6 +176,7 @@ public class Login extends Activity implements OnClickListener,
 	
 	public void netError(String errMsg) {
 		// TODO Auto-generated method stub
+		dialog.dismiss();
 		Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
 	}
 }

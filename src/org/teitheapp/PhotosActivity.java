@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-public class AndroidGridLayoutActivity extends Activity {
+public class PhotosActivity extends Activity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

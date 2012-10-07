@@ -1,6 +1,9 @@
 package org.teitheapp;
 
 import java.net.URI;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.http.HttpResponse;
@@ -9,18 +12,25 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.teitheapp.classes.Setting;
+import org.teitheapp.utils.DatabaseManager;
 import org.teitheapp.utils.Net;
 import org.teitheapp.utils.Trace;
 
+import android.R.bool;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -111,19 +121,27 @@ public class Chatservice extends Activity {
 				try {
 					JSONObject curChatRow = chatrows.getJSONObject(i);
 
+					//Calendar mydate = Calendar.getInstance();
+					//mydate.setTimeInMillis((long)curChatRow.getLong("update_time")*1000);
+
+					
 					String chatrow = curChatRow.getString("text");
 					String name = curChatRow.getString("student_name");
-					Date updateTime = new Date((long)curChatRow.getInt("update_time") * 1000);
+					Date updateTime = new java.util.Date((long)curChatRow.getLong("update_time") * 1000);
+					
+					Format dateFormat = new SimpleDateFormat("[dd/MM HH:mm]");
 					
 					String strUpdateTime = String.format("[%d/%d %d:%02d]", updateTime.getDay(), updateTime.getMonth(), updateTime.getHours(), updateTime.getMinutes());
+					//String strUpdateTime = String.format("[%d/%d %d:%02d]", mydate.DAY_OF_MONTH, mydate.MONTH, mydate.HOUR, mydate.MINUTE);
+
 					
 					String line = String.format(
 							"%s &lt;%s&gt; %s",
-							strUpdateTime,
-							name, chatrow);
+							dateFormat.format(updateTime),
+							String.format("<b>%s</b>", name), chatrow);
 
 					
-					chatext.append(Html.fromHtml(line + "<br />"));
+					chatext.append(Html.fromHtml(line + "<br /><br />"));
 					
 
 				} catch (JSONException e) {
@@ -146,20 +164,30 @@ public class Chatservice extends Activity {
 			super.onPreExecute();
 
 			if (!dialog.isShowing()) {
-			
 				dialog = ProgressDialog.show(Chatservice.this, "", getResources().getString(R.string.reading_data), true);
 			}
 		}
 
 		protected JSONArray doInBackground(Void... params) {
 			JSONArray chatrows = null;
-
+			
 			try {
-				HttpGet get = new HttpGet(new URI(String.format("%s?action=chat&mode=add&student_name=%s&text=%s",
-						Constants.API_URL, "arxidakas", java.net.URLEncoder.encode(editext.getEditableText().toString(), "UTF-8"))));
+				DatabaseManager dbManager = new DatabaseManager(Chatservice.this);
+			    Setting hydraStudent = dbManager.getSetting("hydra_student");
+			    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Chatservice.this);
+			    boolean showName = preferences.getBoolean("chat_show_name", false);
+			    
+			    String name = "Anonymous";
+			    
+			    if (hydraStudent != null && showName) {
+			    	name = String.format("%s %s", hydraStudent.getText().split(";")[1], hydraStudent.getText().split(";")[2]);
+			    }
+			    
+			    HttpGet get = new HttpGet(new URI(String.format("%s?action=chat&mode=add&student_name=%s&text=%s",
+						Constants.API_URL, java.net.URLEncoder.encode(name), java.net.URLEncoder.encode(editext.getEditableText().toString(), "UTF-8"))));
 
-				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-				HttpResponse response = defaultHttpClient.execute(get);
+			    DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+			    HttpResponse response = defaultHttpClient.execute(get);
 
 				String data = Net.readStringFromInputStream(response
 						.getEntity().getContent(), "utf-8");
@@ -182,7 +210,12 @@ public class Chatservice extends Activity {
 			GetChatRows gcr = new GetChatRows();
 			gcr.execute();
 			
-			
+			InputMethodManager imm = (InputMethodManager)getSystemService(
+				      Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(editext.getWindowToken(), 0);
+				
+			editext.setText("");
+
 
 			dialog.dismiss();
 			//dialog = null;

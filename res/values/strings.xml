@@ -25,7 +25,7 @@
     <string name="pref_hydra_summary">Λογαριασμός στο Hydra</string>
     <string name="pref_pithia">Σύνδεση με το Pithia</string>
     <string name="pref_pithia_summary">Λογαριασμός στο Pithia</string>
-    <string name="pref_location">Τοποθεσία</string>
+    <string name="pref_location">Συνομιλία</string>
     <string name="pref_location_checkin">Ενημέρωση τοποθεσίας</string>
     <string name="pref_location_checkin_summary">Αυτόματη ενημέρωση όταν βρίσκεστε στο Ίδρυμα</string>
     <string name="pref_location_checkin_name">Εμφάνιση ονόματος</string>
@@ -74,6 +74,4 @@
 	<string name="notification_new_announcemnt">νέα ανακοίνωση</string>
 	<string name="notification_new_announcemnts">νέες ανακοινώσεις</string>
 	<string name="updating_bus_line">ενημέρωση γραμμής</string>
-	
-    
 </resources>

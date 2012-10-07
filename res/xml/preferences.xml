@@ -32,14 +32,9 @@
     
     <PreferenceCategory android:title="@string/pref_location" >
           <CheckBoxPreference
-                android:key="location_enabled"
-                android:title="@string/pref_location_checkin"
-                android:summary="@string/pref_location_checkin_summary" />
-          <CheckBoxPreference
-                android:key="location_name_enabled"
+                android:key="chat_show_name"
                 android:title="@string/pref_location_checkin_name"
-                android:summary="@string/pref_location_checkin_name_summary"
-                android:dependency="location_enabled" />
+                android:summary="@string/pref_location_checkin_name_summary" />
     </PreferenceCategory>
 
 

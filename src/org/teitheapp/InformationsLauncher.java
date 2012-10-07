@@ -151,7 +151,7 @@ public class InformationsLauncher extends Activity implements OnItemClickListene
 				startActivity(intent);
 				break;
 			case ITEM_PHOTOS: 
-				intent.setClass(this, AndroidGridLayoutActivity.class);
+				intent.setClass(this, PhotosActivity.class);
 				startActivity(intent);
 				break;
 			case ITEM_CONTACT: 
