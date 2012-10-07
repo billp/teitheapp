@@ -108,7 +108,7 @@ public class Courses extends ExpandableListActivity {
             // Center the text vertically
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             // Set the text starting position
-            textView.setPadding(36, 0, 0, 0);
+            textView.setPadding(66, 0, 0, 0);
             return textView;
         }
         
