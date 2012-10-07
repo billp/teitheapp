@@ -295,7 +295,7 @@ public class HydraAnnouncementsService extends Service implements
 						announcements.add(newAnnouncement);
 					}
 
-					/*for (int i = 0; i < announcements.size(); i++) {
+					for (int i = 0; i < announcements.size(); i++) {
 						Announcement thisAnnouncement = announcements.get(i);
 
 						if (dbManager.announcementExists(thisAnnouncement)) {
@@ -305,8 +305,8 @@ public class HydraAnnouncementsService extends Service implements
 						count++;
 
 						dbManager.insertAnnouncement(thisAnnouncement);
-					}*/
-				for (int i = announcements.size()-1; i >= 0; i--) {
+					}
+				/*for (int i = announcements.size()-1; i >= 0; i--) {
 					Announcement thisAnnouncement = announcements.get(i);
 
 					if (!dbManager.announcementExists(thisAnnouncement)) {
@@ -315,7 +315,7 @@ public class HydraAnnouncementsService extends Service implements
 						dbManager.insertAnnouncement(thisAnnouncement);
 					}
 
-				}
+				}*/
 					
 					Trace.i("number of announcements: ", count + "");
 
