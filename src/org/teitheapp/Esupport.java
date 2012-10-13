@@ -34,7 +34,7 @@ public class Esupport extends Activity {
 		setContentView(R.layout.esupport);
 		WebView wvEsupport = (WebView)findViewById(R.id.esupport);	
 		wvEsupport.setBackgroundColor(0);
-		wvEsupport.setBackgroundResource(R.drawable.backg);
+		wvEsupport.setBackgroundResource(R.drawable.backrepeat4);
 		wvEsupport.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	
 	

@@ -34,7 +34,7 @@ public class Organize extends Activity {
 		setContentView(R.layout.organize);
 		WebView wvOrganize = (WebView)findViewById(R.id.organize);	
 		wvOrganize.setBackgroundColor(0);
-		wvOrganize.setBackgroundResource(R.drawable.backg);
+		wvOrganize.setBackgroundResource(R.drawable.backrepeat4);
 		wvOrganize.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 		
 	}

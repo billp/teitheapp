@@ -34,7 +34,7 @@ public class Stufflinks extends Activity {
 		setContentView(R.layout.stufflinks);
 		WebView wvDsupport = (WebView)findViewById(R.id.stufflinks);	
 		wvDsupport.setBackgroundColor(0);
-		wvDsupport.setBackgroundResource(R.drawable.backg);
+		wvDsupport.setBackgroundResource(R.drawable.backrepeat4);
 		wvDsupport.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	}
 

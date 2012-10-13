@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Υπηρεσίες ΑΤΕΙΘ</string>
+    <string name="app_name">it.teithe.app</string>
     <string name="photos">Φωτογραφίες</string>
     <string name="tab_home_text">Αρχική</string>
     <string name="tab_info_text">Πληροφορίες</string>

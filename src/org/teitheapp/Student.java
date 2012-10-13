@@ -34,7 +34,7 @@ public class Student extends Activity {
 		setContentView(R.layout.student);
 		WebView wvStudent = (WebView)findViewById(R.id.student);	
 		wvStudent.setBackgroundColor(0);
-		wvStudent.setBackgroundResource(R.drawable.backg);
+		wvStudent.setBackgroundResource(R.drawable.backrepeat4);
 		wvStudent.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	
 	}

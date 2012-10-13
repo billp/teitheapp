@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/backrepeat4" >
 
     <TextView
         android:id="@+id/txtHomeCategory"
@@ -10,7 +11,9 @@
         android:layout_height="35dp"
         android:layout_marginBottom="5dp"
         android:background="@color/background"
+        android:drawableLeft="@drawable/bus"
         android:gravity="center"
+        android:paddingLeft="20dip"
         android:text="Πληρότητα Γραμμής 52 - ΟΑΣΘ"
         android:textColor="@color/home_category_text"
         android:textSize="15dp"
@@ -47,7 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textColor="@color/home_category_text"
         android:textSize="14dp" />
 
     <TextView
@@ -57,7 +59,9 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="25dp"
         android:background="@color/background"
+        android:drawableLeft="@drawable/plus"
         android:gravity="center"
+        android:paddingLeft="20dip"
         android:text="Καταχώριση Πληρότητας"
         android:textColor="@color/home_category_text"
         android:textSize="15dp"

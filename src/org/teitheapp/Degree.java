@@ -35,7 +35,7 @@ public class Degree extends Activity {
 		setContentView(R.layout.degree);
 		WebView wvDegree = (WebView)findViewById(R.id.degree);	
 		wvDegree.setBackgroundColor(0);
-		wvDegree.setBackgroundResource(R.drawable.backg);
+		wvDegree.setBackgroundResource(R.drawable.backrepeat4);
 		wvDegree.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	}
 	

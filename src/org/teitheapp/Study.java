@@ -35,7 +35,7 @@ public class Study extends Activity {
 		setContentView(R.layout.studies);
 		WebView wvStudies = (WebView)findViewById(R.id.studies);
 		wvStudies.setBackgroundColor(0);
-		wvStudies.setBackgroundResource(R.drawable.backg);
+		wvStudies.setBackgroundResource(R.drawable.backrepeat4);
 		wvStudies.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	}
 

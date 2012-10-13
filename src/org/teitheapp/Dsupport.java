@@ -34,7 +34,7 @@ public class Dsupport extends Activity {
 		setContentView(R.layout.dsupport);
 		WebView wvDsupport = (WebView)findViewById(R.id.dsupport);	
 		wvDsupport.setBackgroundColor(0);
-		wvDsupport.setBackgroundResource(R.drawable.backg);
+		wvDsupport.setBackgroundResource(R.drawable.backrepeat4);
 		wvDsupport.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	
 	}

@@ -34,7 +34,7 @@ public class Contact extends Activity {
 		setContentView(R.layout.contact);
 		WebView wvContact = (WebView)findViewById(R.id.contact);	
 		wvContact.setBackgroundColor(0);
-		wvContact.setBackgroundResource(R.drawable.backg);
+		wvContact.setBackgroundResource(R.drawable.backrepeat4);
 		wvContact.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	}
 

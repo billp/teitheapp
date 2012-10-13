@@ -34,7 +34,7 @@ public class Links extends Activity {
 		setContentView(R.layout.links);
 		WebView wvLinks = (WebView)findViewById(R.id.links);	
 		wvLinks.setBackgroundColor(0);
-		wvLinks.setBackgroundResource(R.drawable.backg);
+		wvLinks.setBackgroundResource(R.drawable.backrepeat4);
 		wvLinks.loadDataWithBaseURL(null, html.toString(), mime, encoding, null);
 	
 	}
