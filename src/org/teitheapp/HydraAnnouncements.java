@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -29,6 +30,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -60,12 +62,15 @@ public class HydraAnnouncements extends Activity implements
 	private WebView wvHomeArticle;
 	private ProgressBar progress;	
 	private ImageView leftButton, rightButton;
+	private SharedPreferences preferences;
 	
 	private DownloadWebPageTask announcementsDownloader;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		dbManager = new DatabaseManager(this);
 		setContentView(R.layout.hydra_announcements_main);
 		
@@ -103,10 +108,19 @@ public class HydraAnnouncements extends Activity implements
 			//announcements = dbManager.getAnnouncements();
 			
 			moveToAnnouncementAtIndex(selectedAnnouncementIndex);
-			progress.setVisibility(View.VISIBLE);
-			updateInBackground = true;
 
-		}
+			
+			//Check for timeout
+			if (new Date().getTime() - preferences.getLong("hydra_last_fetch", 0) < Constants.HYDRA_ANNOUNCEMENTS_FETCH_TIMEOUT) {
+				return;
+			}
+			
+			updateInBackground = true;
+			progress.setVisibility(View.VISIBLE);
+
+
+		}	
+
 		
 		Long time = Long.parseLong(dbManager.getSetting("hydra_cookie")
 				.getText().split("\\s")[1]);
@@ -116,10 +130,10 @@ public class HydraAnnouncements extends Activity implements
 
 		Trace.i("time", minutesElapsed + "");
 
+
 		// Re-login if required
 		if (minutesElapsed > Constants.HYDRA_LOGIN_TIMEOUT || !dbManager.getSetting("last_ip").getText().equals(Net.getLocalIpAddress())) {
-			SharedPreferences preferences = PreferenceManager
-					.getDefaultSharedPreferences(this);
+
 
 			LoginService ls = new LoginService(LoginService.LOGIN_MODE_HYDRA,
 					preferences.getString("hydra_login", null),
@@ -178,7 +192,9 @@ public class HydraAnnouncements extends Activity implements
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		if (!offline) {
-			announcementsDownloader.cancel(false);
+			if (announcementsDownloader != null) {
+				announcementsDownloader.cancel(false);
+			}
 		}
 		super.onBackPressed();
 
@@ -246,10 +262,12 @@ public class HydraAnnouncements extends Activity implements
 				
 				int step = 1;
 				int order = 0;
-				
+				int startingOrder = 0;
+
 				if (dbManager.getNumberOfAnnouncements() > 0) {
-					order = dbManager.getAnnouncementMinimumOrder()-1;
-					step = -1;	
+					order = dbManager.getAnnouncementMinimumOrder() - 1;
+					startingOrder = order;
+					step = -1;
 				}
 				
 				for (int i = 4; i < rows.size()-1; i++) {
@@ -314,7 +332,11 @@ public class HydraAnnouncements extends Activity implements
 					order += step;
 					
 					announcements.add(newAnnouncement);
+					
 				}
+				
+
+				
 				
 				//Trace.i("number", dbManager.getNumberOfAnnouncements() +"");
 				
@@ -322,6 +344,8 @@ public class HydraAnnouncements extends Activity implements
 				//diff = announcements.size() - (int)dbManager.getNumberOfAnnouncements();
 				
 				//dbManager.removeAllAnnouncements();
+				
+				ArrayList<Announcement> addedAnnouncements = new ArrayList<Announcement>();
 				
 				for (int i = 0; i < announcements.size(); i++) {
 					Announcement thisAnnouncement = announcements.get(i);
@@ -333,10 +357,29 @@ public class HydraAnnouncements extends Activity implements
 					count++;
 					
 					dbManager.insertAnnouncement(thisAnnouncement);
+					addedAnnouncements.add(thisAnnouncement);
+				}
+				
+				//Fix order
+				if (step == -1) {
+					
+					//startingOrder = addedAnnouncements.get(addedAnnouncements.size()-1).getOrder();
+					
+					fixOrder(addedAnnouncements);
+					
+					for (Announcement ann: addedAnnouncements) {
+						Trace.i("starting order: ", startingOrder + "");
+						ann.setOrder(startingOrder--);
+						dbManager.updateAnnouncement(ann);
+					}
 				}
 				
 				announcements = null;
-								
+				
+			     Editor editor = preferences.edit();
+			     editor.putLong("hydra_last_fetch", new Date().getTime());
+			     editor.commit();
+				
 				//System.gc();
 				//Trace.i("announcements inserted to db:" , numberToAdd + "");
 				
@@ -476,5 +519,22 @@ public class HydraAnnouncements extends Activity implements
 		this.offline = true;
 		this.progress.setVisibility(View.INVISIBLE);
 		Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+	
+		
+		//finish();
+	}
+	
+	public void fixOrder(ArrayList<Announcement> array) {
+		int j = array.size()-1;
+		for (int i = 0; i < array.size() / 2; i++) {
+			swapAnnouncements(i, j--, array);
+		}
+	}
+	
+	public void swapAnnouncements(int i, int j, ArrayList<Announcement> array) {
+		Announcement temp = array.get(i);
+		
+		array.set(i, announcements.get(j));
+		array.set(j, temp);
 	}
 }

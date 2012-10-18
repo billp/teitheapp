@@ -23,4 +23,8 @@ public class Constants {
 	//Login timeouts in minutes
 	public static final int HYDRA_LOGIN_TIMEOUT = 7;
 	public static final int PITHIA_LOGIN_TIMEOUT = 7;
+	
+	
+	//Hydra announcements fetch timeout
+	public static final long HYDRA_ANNOUNCEMENTS_FETCH_TIMEOUT = 5 * 30 * 1000;
 }

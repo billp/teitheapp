@@ -275,5 +275,6 @@ public class TeacherInfo extends Activity implements LoginServiceDelegate {
 	public void netError(String errMsg) {
 		// TODO Auto-generated method stub
 		Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+		finish();
 	}
 }
