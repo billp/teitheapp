@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -33,6 +34,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -53,6 +55,8 @@ public class HydraAnnouncementsService extends Service implements
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		updateAnnouncements();
 		//showNotification();
@@ -131,8 +135,7 @@ public class HydraAnnouncementsService extends Service implements
 	public void updateAnnouncements() {
 		
 		if (timeOutExceded()) {
-			 SharedPreferences preferences = PreferenceManager
-					.getDefaultSharedPreferences(this);
+
 			 LoginService ls = new LoginService(LoginService.LOGIN_MODE_HYDRA,
 					preferences.getString("hydra_login", null),
 					preferences.getString("hydra_pass", null), this);
@@ -213,9 +216,11 @@ public class HydraAnnouncementsService extends Service implements
 
 					int step = 1;
 					int order = 0;
+					int startingOrder = 0;
 
 					if (dbManager.getNumberOfAnnouncements() > 0) {
 						order = dbManager.getAnnouncementMinimumOrder() - 1;
+						startingOrder = order;
 						step = -1;
 					}
 
@@ -291,10 +296,12 @@ public class HydraAnnouncementsService extends Service implements
 								order);
 
 						order += step;
+						Trace.i("orderrr:", order +"");
 
 						announcements.add(newAnnouncement);
 					}
-
+					ArrayList<Announcement> addedAnnouncements = new ArrayList<Announcement>();
+					
 					for (int i = 0; i < announcements.size(); i++) {
 						Announcement thisAnnouncement = announcements.get(i);
 
@@ -305,17 +312,27 @@ public class HydraAnnouncementsService extends Service implements
 						count++;
 
 						dbManager.insertAnnouncement(thisAnnouncement);
-					}
-				/*for (int i = announcements.size()-1; i >= 0; i--) {
-					Announcement thisAnnouncement = announcements.get(i);
-
-					if (!dbManager.announcementExists(thisAnnouncement)) {
-						count++;
-
-						dbManager.insertAnnouncement(thisAnnouncement);
+						addedAnnouncements.add(thisAnnouncement);
 					}
 
-				}*/
+					
+					//Fix order
+					if (step == -1) {
+						
+						//startingOrder = addedAnnouncements.get(addedAnnouncements.size()-1).getOrder();
+						
+						fixOrder(addedAnnouncements);
+						
+						for (Announcement ann: addedAnnouncements) {
+							Trace.i("starting order: ", startingOrder + "");
+							ann.setOrder(startingOrder--);
+							dbManager.updateAnnouncement(ann);
+						}
+					}
+					
+				     Editor editor = preferences.edit();
+				     editor.putLong("hydra_last_fetch", new Date().getTime());
+				     editor.commit();
 					
 					Trace.i("number of announcements: ", count + "");
 
@@ -451,5 +468,19 @@ public class HydraAnnouncementsService extends Service implements
 			/*updateAnnouncements();
 			dbManager.close();*/
 		}
+	}
+	
+	public void fixOrder(ArrayList<Announcement> array) {
+		int j = array.size()-1;
+		for (int i = 0; i < array.size() / 2; i++) {
+			swapAnnouncements(i, j--, array);
+		}
+	}
+	
+	public void swapAnnouncements(int i, int j, ArrayList<Announcement> array) {
+		Announcement temp = array.get(i);
+		
+		array.set(i, announcements.get(j));
+		array.set(j, temp);
 	}
 }

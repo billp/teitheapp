@@ -11,6 +11,8 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -136,7 +138,7 @@ public class TeitheApp extends TabActivity {
 
 		
 		if (hydraNotificationsEnabled) {
-			if (!isServiceRunning() && hydraCookie != null) {
+			if (!isServiceRunning() && hydraCookie != null && isOnline()) {
 				startService(serviceIntent);
 			//	Trace.i("hydra_notifications_enabled", "service_started");
 			}
@@ -162,4 +164,15 @@ public class TeitheApp extends TabActivity {
 	    return false;
 	}
 
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
+
+	
 }

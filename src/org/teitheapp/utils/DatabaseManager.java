@@ -156,6 +156,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 		c.moveToFirst();
 		
+		Trace.i("minimum order", "" + c.getInt(c.getColumnIndex("order")));
+		
 		return (c.getInt(c.getColumnIndex("order")));
 	}
 
@@ -219,5 +221,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		
 		MimeType mime = new MimeType(c.getString(c.getColumnIndex("mime_type")), (c.getString(c.getColumnIndex("ext"))));
 		return mime;
+	}
+	
+	public void updateAnnouncement(Announcement ann) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		db.execSQL("update " + tableAnnouncementsName + " set `order` = '" + ann.getOrder() + "' where title = '"
+				+ ann.getTitle() + "'");
+		
 	}
 }
