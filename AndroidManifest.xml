@@ -114,6 +114,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyLightTheme.NoShadow" />
         <activity
+            android:name=".Courses"
+            android:label="@string/app_name"
+            android:theme="@style/MyLightTheme.NoShadow" >
+        </activity>
+        <activity
             android:name=".Links"
             android:screenOrientation="portrait"
             android:theme="@style/MyLightTheme.NoShadow" />
@@ -148,11 +153,6 @@
             android:name=".FullImageActivity"
             android:theme="@style/MyLightTheme.NoShadow"
             android:label="@string/photos" />
-        <activity
-            android:name=".Courses"
-            android:label="@string/app_name"
-            android:theme="@style/MyLightTheme.NoShadow" >
-        </activity>
 
         <service
             android:name=".HydraAnnouncementsService"

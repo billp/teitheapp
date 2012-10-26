@@ -55,8 +55,12 @@
         android:paddingTop="20dp"
         android:paddingLeft="5dp"
         android:paddingBottom="5dp" >
-
-        <TableRow>
+    
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="bottom|center_horizontal" >
 
             <ImageView
                 android:id="@+id/imageView2"
