@@ -173,14 +173,14 @@ public class Chatservice extends Activity {
 			
 			try {
 				DatabaseManager dbManager = new DatabaseManager(Chatservice.this);
-			    Setting hydraStudent = dbManager.getSetting("hydra_student");
+			    Setting pithiaStudent = dbManager.getSetting("pithia_student");
 			    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Chatservice.this);
 			    boolean showName = preferences.getBoolean("chat_show_name", false);
 			    
 			    String name = "Anonymous";
 			    
-			    if (hydraStudent != null && showName) {
-			    	name = String.format("%s %s", hydraStudent.getText().split(";")[1], hydraStudent.getText().split(";")[2]);
+			    if (pithiaStudent != null && showName) {
+			    	name = String.format("%s %s", pithiaStudent.getText().split(";")[1], pithiaStudent.getText().split(";")[2]);
 			    }
 			    
 			    HttpGet get = new HttpGet(new URI(String.format("%s?action=chat&mode=add&student_name=%s&text=%s",

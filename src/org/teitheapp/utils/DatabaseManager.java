@@ -142,8 +142,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	public boolean announcementExists(Announcement ann) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
-		Cursor c = db.query(tableAnnouncementsName, new String[] {"*"}, "title=?",
-			  new String[] {ann.getTitle()}, null, null, null);
+		Cursor c = db.query(tableAnnouncementsName, new String[] {"*"}, "title=? AND body=?",
+			  new String[] {ann.getTitle(), ann.getBody()}, null, null, null);
+
 
 		return (c.getCount() > 0);
 	}

@@ -22,7 +22,7 @@ class Database {
     }
 
     function execute($sql, $link) {
-        return mysql_query($sql, $link);    
+        mysql_query($sql, $link);    
     }
 }
 

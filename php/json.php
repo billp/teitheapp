@@ -90,7 +90,7 @@
     				FROM `students_online` ORDER BY `surname`, `name` ASC";
     		$result = mysql_query($sql, $link);
     		
-    		$bus_lines = array();
+    		$students_rows = array();
     		
     		while ($row = mysql_fetch_assoc($result)) {
     			$json_row = array();
@@ -100,9 +100,9 @@
     			$json_row['surname'] = $row['surname'];
     			$json_row['update_time'] = (int)$row['update_time'];
     		
-    			array_push($bus_lines, $json_row);
+    			array_push($students_rows, $json_row);
     		}
-    		echo json_encode($bus_lines);
+    		echo json_encode($students_rows);
     	}
     	else if ($mode == "checkin") {
         	$name = $_GET['name'];
@@ -120,6 +120,44 @@
     	    if (mysql_affected_rows($link) > 0) {
     			$json['status'] = "success";
     			$json['rows_deleted'] = $rows_deleted;
+    			echo json_encode($json);
+    		} else {
+    			$json['status'] = "failed";
+    			echo json_encode($json);
+    		}
+
+    	}
+    }
+    else if ($action == "chat") {
+    	if ($mode == "") {
+    		$sql = "SELECT `id`, UNIX_TIMESTAMP(`update_time`) as `update_time`, `student_name`, `text` 
+    				FROM `chat` ORDER BY `update_time` DESC";
+    		$result = mysql_query($sql, $link);
+    		
+    		$chat_rows = array();
+    		
+    		while ($row = mysql_fetch_assoc($result)) {
+    			$json_row = array();
+    			
+    			$json_row['id'] = (int)$row['id'];
+    			$json_row['student_name'] = $row['student_name'];
+    			$json_row['text'] = $row['text'];
+    			$json_row['update_time'] = (int)$row['update_time'];
+    		
+    			array_push($chat_rows, $json_row);
+    		}
+    		echo json_encode($chat_rows);
+    	}
+    	else if ($mode == "add") {
+        	$student_name = $_GET['student_name'];
+       	 	$text = $_GET['text'];
+        
+       
+        	$sql = "INSERT INTO `chat` (`student_name`, `text`, `update_time`) VALUES ('$student_name', '$text', now())";
+    	    Database::execute($sql, $link);
+    	    
+    	    if (mysql_affected_rows($link) > 0) {
+    			$json['status'] = "success";
     			echo json_encode($json);
     		} else {
     			$json['status'] = "failed";
