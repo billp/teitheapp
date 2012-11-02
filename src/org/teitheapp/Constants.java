@@ -14,7 +14,12 @@ public class Constants {
 	public static final String URL_HYDRA_TEACHER_INFO = URL_HYDRA + "/s/index.php?m=itdep-staffliststud&_lang=el";
 	public static final String URL_HYDRA_ANNOUNCEMENTS = URL_HYDRA + "/s/index.php?m=itdep-bbstud&_lang=el";
 	
+	//Teithe Coursesurl
+	public static final String URL_COURSES = "http://www.it.teithe.gr/modules/courses/index.php?op=view";
+	
 	public static final String API_URL = "http://aetos.it.teithe.gr/~vpanag/teitheapp/json.php";
+	
+	
 	
 	
 	public static final int TIMEOUT_CONNECTION = 5000;
@@ -27,4 +32,6 @@ public class Constants {
 	
 	//Hydra announcements fetch timeout
 	public static final long HYDRA_ANNOUNCEMENTS_FETCH_TIMEOUT = 5 * 30 * 1000;
+	
+
 }

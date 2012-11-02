@@ -123,6 +123,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyLightTheme.NoShadow" />
         <activity
+            android:name=".ViewCourse"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyLightTheme.NoShadow" />
+        <activity
             android:name=".Contact"
             android:screenOrientation="portrait"
             android:theme="@style/MyLightTheme.NoShadow" />

@@ -1,6 +1,7 @@
 package org.teitheapp;
 
 import android.app.ExpandableListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -48,13 +49,29 @@ public class Courses extends ExpandableListActivity {
 
 		Log.d(LOG_TAG, "onChildClick: " + childPosition);
 
-		Toast.makeText(this, "Re! Me patise sto x",
-				Toast.LENGTH_SHORT).show();
+		String strCourseId = null;
+		
+		if (groupPosition == 7 && childPosition == 8) {
+			strCourseId = "4880";
+		} else if (groupPosition == 7 && childPosition == 9) {
+			strCourseId = "4881";
+		} else {
+			strCourseId = String.format("4%d0%d", groupPosition+1, childPosition+1);
+		}
+		
+		Intent intent = new Intent();
+    	intent.setClass(this, ViewCourse.class);
+    	intent.putExtra("sem_id", groupPosition + 1);
+    	intent.putExtra("course_id", Integer.parseInt(strCourseId));
+        startActivity(intent);
+		
+		//Toast.makeText(this, "Re! Me patise sto x",
+			//	Toast.LENGTH_SHORT).show();
 
 		return false;
 	}
 
-	@Override
+	/*@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item
 				.getMenuInfo();
@@ -82,7 +99,7 @@ public class Courses extends ExpandableListActivity {
 		}
 
 		return false;
-	}
+	}*/
 
 
 	/**

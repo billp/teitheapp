@@ -1,0 +1,20 @@
+<resources>
+	<array name="sem1">
+	    <item>@drawable/icon_info_department</item>
+		<item>@drawable/icon_info_study</item>
+		<item>@drawable/icon_info_degree</item>
+		<item>@drawable/icon_info_help</item>
+		<item>@drawable/icon_info_edu_support</item>
+		<item>@drawable/icon_info_student</item>
+		<item>@drawable/icon_info_program</item>
+		<item>@drawable/icon_info_courses</item>
+		<item>@drawable/icon_info_links</item>
+		<item>@drawable/icon_info_stuff_links</item>
+		<item>@drawable/icon_info_student_links</item>
+		<item>@drawable/icon_info_photos</item>
+		<item>@drawable/icon_info_contact</item>
+		
+	</array>
+	
+	
+</resources>
