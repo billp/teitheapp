@@ -109,8 +109,10 @@ public class TeitheApp extends TabActivity {
 			return true;
 
 		case R.id.menu_about:
-			Toast.makeText(this, "Dive into the water!", Toast.LENGTH_SHORT)
-					.show();
+			Intent info = new Intent();
+			info.setClass(this, InfoDialog.class);
+			info.putExtra("stringRes", R.string.app_info);
+            startActivity(info);
 			return true;
 		}
 

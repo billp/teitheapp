@@ -2,6 +2,9 @@ package org.teitheapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class InfoDialog extends Activity {
@@ -14,8 +17,16 @@ public class InfoDialog extends Activity {
 		int strRes = extras.getInt("stringRes");
 		
 		TextView tv = (TextView)findViewById(R.id.infotext);
+		Button close = (Button)findViewById(R.id.button1);
 		
 		tv.setText(getResources().getString(strRes));
+		close.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
 		
 	}
 }

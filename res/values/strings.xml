@@ -74,4 +74,5 @@
 	<string name="notification_new_announcemnt">νέα ανακοίνωση</string>
 	<string name="notification_new_announcemnts">νέες ανακοινώσεις</string>
 	<string name="updating_bus_line">ενημέρωση γραμμής</string>
+	<string name="app_info">it.teithe.app v1.0\n\nΑπό τους φοιτητές: Ιωάννης Βαρσάμης, Βασίλης Παναγιωτόπουλος\n\nΠτυχιακή εργασία για το τμήμα Πληροφορικής, 2012</string>
 </resources>
