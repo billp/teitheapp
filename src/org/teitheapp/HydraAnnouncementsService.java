@@ -58,6 +58,22 @@ public class HydraAnnouncementsService extends Service implements
 		
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
+		boolean hydraNotificationsEnabled = preferences.getBoolean("hydra_notifications_enabled", false);
+		Intent serviceIntent = new Intent(this, HydraAnnouncementsService.class);
+		
+		Trace.i("hydra_notifications_enabled", hydraNotificationsEnabled + "");
+		
+		DatabaseManager dbManager = new DatabaseManager(this);
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		Setting hydraCookie = dbManager.getSetting("hydra_cookie");
+
+		
+		if (!hydraNotificationsEnabled) {
+			this.stopSelf();
+			return;
+		}
+		
 		updateAnnouncements();
 		//showNotification();
 
