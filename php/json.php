@@ -131,7 +131,7 @@
     else if ($action == "chat") {
     	if ($mode == "") {
     		$sql = "SELECT `id`, UNIX_TIMESTAMP(`update_time`) as `update_time`, `student_name`, `text` 
-    				FROM `chat` ORDER BY `update_time` DESC";
+    				FROM `chat` ORDER BY `update_time` ASC";
     		$result = mysql_query($sql, $link);
     		
     		$chat_rows = array();
