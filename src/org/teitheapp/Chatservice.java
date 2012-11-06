@@ -57,6 +57,8 @@ public class Chatservice extends Activity {
 	private ProgressDialog dialog;
 	String lastJsonHash = null;
 	private String android_id;
+	private Handler handler;
+	private Runnable run;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +80,9 @@ public class Chatservice extends Activity {
 					.getString(R.string.reading_data), true);
 		}
 
-		final Handler handler = new Handler();
+		handler = new Handler();
 
-		final Runnable runn = new Runnable() {
+		run = new Runnable() {
 
 			public void run() {
 				// TODO Auto-generated method stub
@@ -88,7 +90,7 @@ public class Chatservice extends Activity {
 				handler.postDelayed(this, 2000);
 			}
 		};
-		handler.postDelayed(runn, 0);
+		handler.postDelayed(run, 0);
 
 		btnsend.setOnClickListener(new OnClickListener() {
 
@@ -297,6 +299,30 @@ public class Chatservice extends Activity {
 			// TODO: handle exception
 			return null;
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		handler.removeCallbacks(run);
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		
+		super.onBackPressed();
+		handler.removeCallbacks(run);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		//handler.postDelayed(run, 0);
 	}
 
 }
