@@ -25,12 +25,14 @@ import org.teitheapp.utils.Trace;
 import android.R.bool;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothClass.Device;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 import android.text.Html;
 import android.text.format.Time;
 import android.view.KeyEvent;
@@ -52,9 +54,9 @@ public class Chatservice extends Activity {
 	private TextView chatext;
 	private Button btnsend;
 	private ScrollView scrollView;
-	private boolean moveToBottom;
 	private ProgressDialog dialog;
 	String lastJsonHash = null;
+	private String android_id;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,8 @@ public class Chatservice extends Activity {
 			}
 		});
 
+		android_id = Secure.getString(getBaseContext().getContentResolver(),
+	            Secure.ANDROID_ID);
 	}
 
 	private class GetChatRows extends AsyncTask<Void, Void, JSONArray> {
@@ -108,8 +112,8 @@ public class Chatservice extends Activity {
 			JSONArray chatrows = null;
 
 			try {
-				HttpGet get = new HttpGet(new URI(String.format("%s/%s",
-						Constants.API_URL, "?action=chat")));
+				HttpGet get = new HttpGet(new URI(String.format("%s?action=chat&devid=%s",
+						Constants.API_URL, android_id)));
 
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 				HttpResponse response = defaultHttpClient.execute(get);
@@ -224,10 +228,10 @@ public class Chatservice extends Activity {
 				}
 
 				HttpGet get = new HttpGet(new URI(String.format(
-						"%s?action=chat&mode=add&student_name=%s&text=%s",
+						"%s?action=chat&mode=add&student_name=%s&text=%s&devid=%s",
 						Constants.API_URL, java.net.URLEncoder.encode(name),
 						java.net.URLEncoder.encode(editext.getEditableText()
-								.toString(), "UTF-8"))));
+								.toString(), "UTF-8"), android_id)));
 
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 				HttpResponse response = defaultHttpClient.execute(get);
@@ -261,6 +265,7 @@ public class Chatservice extends Activity {
 			dialog.dismiss();
 			// dialog = null;
 		}
+		
 	}
 
 	private static String convertToHex(byte[] data) {

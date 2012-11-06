@@ -150,6 +150,21 @@
     	}
     	else if ($mode == "add") {
         	$student_name = $_GET['student_name'];
+        	$dev_id = $_GET['devid'];
+        	
+        	//change student's name
+        	if ($student_name == "Anonymous") {
+        		$sum = 0;
+        		$strToEncode = substr($dev_id, -3);
+        		
+        		for ($i = 0; $i < strlen($strToEncode); $i++) {
+        			$sum += ord(substr($strToEncode, $i, 1));
+        		}
+        		
+        	
+        		$student_name = "usr" . $sum;
+        	}
+        	
        	 	$text = $_GET['text'];
         
        
