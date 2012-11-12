@@ -63,6 +63,10 @@ public class DownloadAttachment extends Activity implements
 				EditText etPath = (EditText)findViewById(R.id.attachment_path);
 				path = etPath.getText().toString();
 				
+				File filePath = new File(path);
+				filePath.mkdirs();
+
+				
 				Long time = Long.parseLong(dbManager.getSetting("hydra_cookie").getText().split("\\s")[1]);
 				int minutesElapsed = (int)(TimeUnit.MILLISECONDS.toSeconds(new java.util.Date().getTime())-TimeUnit.MILLISECONDS.toSeconds(time))/60;
 			
