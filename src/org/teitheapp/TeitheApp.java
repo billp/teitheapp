@@ -140,7 +140,7 @@ public class TeitheApp extends TabActivity {
 
 		
 		if (hydraNotificationsEnabled) {
-			if (!isServiceRunning() && hydraCookie != null && isOnline()) {
+			if (!isServiceRunning() && hydraCookie != null) {
 				startService(serviceIntent);
 			//	Trace.i("hydra_notifications_enabled", "service_started");
 			}
@@ -166,15 +166,7 @@ public class TeitheApp extends TabActivity {
 	    return false;
 	}
 
-	public boolean isOnline() {
-	    ConnectivityManager cm =
-	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
-	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-	        return true;
-	    }
-	    return false;
-	}
+
 
 	
 }

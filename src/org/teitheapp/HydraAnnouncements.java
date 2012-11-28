@@ -69,6 +69,8 @@ public class HydraAnnouncements extends Activity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Trace.i("net", "starting service");
+		
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		dbManager = new DatabaseManager(this);
@@ -230,6 +232,7 @@ public class HydraAnnouncements extends Activity implements
 				Integer totalLength = 0;
 				
 				while( (curString = Net.readStringFromInputStream(isr, 512)) != null ) {
+					Trace.i("net", "reading_data");
 					if (isCancelled()) {
 						Trace.i("cancel", "cancelled!");
 						return null;
@@ -278,14 +281,14 @@ public class HydraAnnouncements extends Activity implements
 
 					String pattern = "return overlib\\(\'(.+?)\',TEXTCOLOR.+";
 					announcementBody = announcementBody.replaceAll(pattern,
-							"$1");
-					
+					"$1");
+
 					announcementTitle = announcementBody.replaceAll("<div class=\"title\">([^>]+)</div>.*", "$1");
 					announcementTitle = announcementTitle.replace("\\r", "");
 					announcementTitle = announcementTitle.replace("&amp;", "&");
 					announcementTitle = announcementTitle.replace("&quot;", "\"");
 					announcementTitle = announcementTitle.replace("\\'", "\'");
-					
+
 					announcementBody = announcementBody.replaceAll("<div class=\"title\">[^>]+</div>(.*)", "$1");
 					announcementBody = announcementBody.replace("\\r", "");
 					announcementBody = announcementBody.replace("\\'", "\'");

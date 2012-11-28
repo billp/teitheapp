@@ -36,8 +36,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
@@ -177,6 +179,11 @@ public class HydraAnnouncementsService extends Service implements
 				int count = 0;
 
 				try {
+					
+					/*if (!isOnline()) {
+						return;
+					}*/
+					
 					HttpGet get = new HttpGet(new URI(
 							Constants.URL_HYDRA_ANNOUNCEMENTS));
 
@@ -248,28 +255,19 @@ public class HydraAnnouncementsService extends Service implements
 
 						String pattern = "return overlib\\(\'(.+?)\',TEXTCOLOR.+";
 						announcementBody = announcementBody.replaceAll(pattern,
-								"$1");
+						"$1");
 
-						announcementTitle = announcementBody.replaceAll(
-								"<div class=\"title\">([^>]+)</div>.*", "$1");
-						announcementTitle = announcementTitle
-								.replace("\\r", "");
-						announcementTitle = announcementTitle.replace("&amp;",
-								"&");
-						announcementTitle = announcementTitle.replace("&quot;",
-								"\"");
-						announcementTitle = announcementTitle.replace("\\'",
-								"\'");
+						announcementTitle = announcementBody.replaceAll("<div class=\"title\">([^>]+)</div>.*", "$1");
+						announcementTitle = announcementTitle.replace("\\r", "");
+						announcementTitle = announcementTitle.replace("&amp;", "&");
+						announcementTitle = announcementTitle.replace("&quot;", "\"");
+						announcementTitle = announcementTitle.replace("\\'", "\'");
 
-						announcementBody = announcementBody.replaceAll(
-								"<div class=\"title\">[^>]+</div>(.*)", "$1");
+						announcementBody = announcementBody.replaceAll("<div class=\"title\">[^>]+</div>(.*)", "$1");
 						announcementBody = announcementBody.replace("\\r", "");
-						announcementBody = announcementBody
-								.replace("\\'", "\'");
-						announcementBody = announcementBody.replace("&quot;",
-								"\"");
-						announcementBody = announcementBody.replace("&amp;",
-								"&");
+						announcementBody = announcementBody.replace("\\'", "\'");
+						announcementBody = announcementBody.replace("&quot;", "\"");
+						announcementBody = announcementBody.replace("&amp;", "&");
 
 						// Replace all links with 'link'
 						Pattern p = Pattern
@@ -355,6 +353,7 @@ public class HydraAnnouncementsService extends Service implements
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Trace.i("lala", "error");
 				}
 
 				if (thread.isInterrupted()) {
@@ -427,19 +426,30 @@ public class HydraAnnouncementsService extends Service implements
 					Toast.LENGTH_SHORT).show();
 		}
 
-		//finish();
-	}
-	
-	
-	public void netError(String errMsg) {
-		try {
+		/*try {
 			Thread.sleep(60000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		updateAnnouncements();
+		updateAnnouncements();*/
+	}
+	
+	
+	public void netError(String errMsg) {
+		Trace.i("login net error", "retrying in 5 minutes");
+		
+	    Handler handler = new Handler(); 
+	    handler.postDelayed(runnable, 60000); 
+		/*try {
+			Thread.sleep(60000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		updateAnnouncements();*/
 	}
 	
 	public boolean timeOutExceded() {
@@ -498,5 +508,15 @@ public class HydraAnnouncementsService extends Service implements
 		
 		array.set(i, announcements.get(j));
 		array.set(j, temp);
+	}
+	
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
 	}
 }

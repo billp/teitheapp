@@ -9,6 +9,9 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class Net extends Activity {
 
@@ -45,7 +48,7 @@ public class Net extends Activity {
 			}
 
 		} catch (Exception e) {
-			
+			//Trace.i("neterror", "unable to get data (no network?)");
 		}
 		return strData;
 	}
@@ -87,5 +90,5 @@ public class Net extends Activity {
 	}
 
 	
-	
+
 }

@@ -46,6 +46,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 public class Chatservice extends Activity {
@@ -132,6 +133,8 @@ public class Chatservice extends Activity {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+				finish();
 			}
 
 			return chatrows;
@@ -170,6 +173,9 @@ public class Chatservice extends Activity {
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					//this.dialog.setVisibility(View.INVISIBLE);
+					Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+					finish();
 				}
 			}
 
@@ -243,13 +249,17 @@ public class Chatservice extends Activity {
 
 				Trace.i("data", data);
 
-				chatrows = new JSONArray(data);
+				//chatrows = new JSONArray(data);
 
-				Trace.i("number", chatrows.length() + "");
+				//Trace.i("number", chatrows.length() + "");
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+				finish();
+				
+				Trace.i("errr", "ooooooook");
 			}
 
 			return chatrows;
