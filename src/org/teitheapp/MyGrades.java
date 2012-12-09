@@ -125,11 +125,33 @@ public class MyGrades extends Activity implements LoginServiceDelegate {
 		                Map<String, String> curChildMap = new HashMap<String, String>();
 		                children.add(curChildMap);
 						
-						
-						//Trace.i("row", row.text() + " -> " + row.siblingElements().get(row.siblingIndex()+4).text());
+		                //Document labDoc = Jsoup.parse(row.parent().nextSibling().outerHtml());
+		                
+		                Elements allTrElements = row.parent().parent().getElementsByTag("tr");
+		                int nextIndex = row.parent().siblingIndex()+1;
+		                
+		                
+		                String theoryAndLabStr = "";
+		                
+		                if (nextIndex < allTrElements.size()) {
+		                
+		                	//Document labDoc = Jsoup.parse(allTrElements.get(nextIndex).html());
+		                	Elements labTdElements = allTrElements.get(nextIndex).getElementsByTag("td");
+		                	Elements theoryTdElements = allTrElements.get(nextIndex+1).getElementsByTag("td");
+		                	
+		                	
+		                	
+		                	if (labTdElements.size() == 8 && theoryTdElements.size() == 8 && labTdElements.get(3).text().contains("ποσοστό")) {
+		                		
+		                		theoryAndLabStr = " | Εργαστήριο: " +  labTdElements.get(6).text() + " | Θεωρία: " +  theoryTdElements.get(6).text();
+		                		
+		                		//Trace.i("row--", allTrElements.get(nextIndex).getElementsByTag("td").get(6).text());
+		                		//Trace.i("lala", "--");
+		                	}
+		                }
 					
 		                curChildMap.put("NAME", row.text());
-		                curChildMap.put("GRADE", getResources().getString(R.string.grade) + ": " + row.siblingElements().get(row.siblingIndex()+4).text());
+		                curChildMap.put("GRADE", getResources().getString(R.string.grade) + ": " + row.siblingElements().get(row.siblingIndex()+4).text() + theoryAndLabStr);
 		                //children = new ArrayList<Map<String, String>>();
 		                
 		                
