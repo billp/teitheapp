@@ -133,14 +133,25 @@ public class Chatservice extends Activity {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
-				finish();
+				
+				
+				//Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+				//finish();
 			}
 
 			return chatrows;
 		}
 
 		protected void onPostExecute(JSONArray chatrows) {
+			if (chatrows == null) {
+				if (dialog.isShowing()) {		
+					Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+					dialog.dismiss();
+				}
+				
+				return;
+			}
+			
 			StringBuilder str = new StringBuilder();
 
 			for (int i = 0; i < chatrows.length(); i++) {
@@ -202,7 +213,7 @@ public class Chatservice extends Activity {
 		}
 	}
 
-	private class SendChatRow extends AsyncTask<Void, Void, JSONArray> {
+	private class SendChatRow extends AsyncTask<Void, Void, String> {
 
 		@Override
 		protected void onPreExecute() {
@@ -215,7 +226,7 @@ public class Chatservice extends Activity {
 			}
 		}
 
-		protected JSONArray doInBackground(Void... params) {
+		protected String doInBackground(Void... params) {
 			JSONArray chatrows = null;
 
 			try {
@@ -256,16 +267,25 @@ public class Chatservice extends Activity {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
-				finish();
 				
-				Trace.i("errr", "ooooooook");
+				return "error";
+				
 			}
 
-			return chatrows;
+			return "";
 		}
 
-		protected void onPostExecute(JSONArray chatrows) {
+		protected void onPostExecute(String result) {
+			
+			if (result == "error") {
+				if (dialog.isShowing()) {		
+					Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+					dialog.dismiss();
+				}
+				
+				return;
+			}
+			
 			GetChatRows gcr = new GetChatRows();
 			gcr.execute();
 

@@ -46,8 +46,6 @@ public class LoginService {
 	
 	private LoginServiceDelegate delegate;
 	
-
-
 	private String user, pass;
 
 	public int LOGIN_MODE;

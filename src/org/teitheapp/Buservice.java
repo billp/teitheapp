@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
@@ -199,6 +200,15 @@ public class Buservice extends Activity {
 		}
 
 		protected void onPostExecute(JSONArray busLines) {
+			if (busLines == null) {
+				if (dialog.isShowing()) {		
+					Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+					dialog.dismiss();
+				}
+				
+				return;
+			}
+			
 			TextView tvHistory = (TextView) findViewById(R.id.txtHistory);
 			ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar1);
 			tvHistory.setText(Html.fromHtml(""));
@@ -284,6 +294,14 @@ public class Buservice extends Activity {
 		}
 
 		protected void onPostExecute(JSONObject jsonResponse) {
+			if (jsonResponse == null) {
+				if (dialog.isShowing()) {		
+					Toast.makeText(getBaseContext(), getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+					dialog.dismiss();
+				}
+				return;
+			}
+			
 			try {
 				int busUpdateId = jsonResponse.getInt("id");
 				
