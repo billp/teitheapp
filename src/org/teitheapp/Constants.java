@@ -17,7 +17,7 @@ public class Constants {
 	//Teithe Coursesurl
 	public static final String URL_COURSES = "http://www.it.teithe.gr/modules/courses/index.php?op=view";
 	
-	public static final String API_URL = "http://aetos.it.teithe.gr/~vpanag/teitheapp/json.php";
+	public static final String API_URL = "http://returnfalse.net/teithe/json.php";
 	
 	
 	

@@ -232,7 +232,7 @@ public class Chatservice extends Activity {
 			try {
 				DatabaseManager dbManager = new DatabaseManager(
 						Chatservice.this);
-				Setting pithiaStudent = dbManager.getSetting("pithia_student");
+				Setting pithiaStudent = dbManager.getSetting("hydra_student");
 				SharedPreferences preferences = PreferenceManager
 						.getDefaultSharedPreferences(Chatservice.this);
 				boolean showName = preferences.getBoolean("chat_show_name",
